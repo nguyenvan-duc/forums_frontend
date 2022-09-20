@@ -1,0 +1,24 @@
+import { ComponentProps, useState } from 'react'
+import { useAuth } from '@/hooks'
+import { LoginModal } from '@/components/login'
+
+export function ComponentRequestAuth({children}: any) {
+  const { profile } = useAuth()
+  const [openLoginModal, setOpenLoginModal] = useState(false)
+  return (
+    <>
+      <LoginModal
+        openModel={openLoginModal}
+        handleOpen={(value: boolean) => setOpenLoginModal(value)}
+      />
+      <div
+        className='w-full relative'
+        onClick={(e) => {
+          e.preventDefault();
+          !profile&&setOpenLoginModal(true)
+        }}>
+        {children}
+      </div>
+    </>
+  )
+}
