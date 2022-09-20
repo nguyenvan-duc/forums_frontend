@@ -15,7 +15,7 @@ export function ComponentRequestAuth({children}: any) {
         className='w-full relative'
         onClick={(e) => {
           e.preventDefault();
-          !profile&&setOpenLoginModal(true)
+          !profile?.name&&setOpenLoginModal(true)
         }}>
         {children}
       </div>

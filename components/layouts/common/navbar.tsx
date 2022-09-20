@@ -37,7 +37,7 @@ export function Navbar({}: NavbarProps) {
   ]
   const handleLogout = async () => {
     await logout()
-    await reload()
+    setOpenLoginModal(true)
   }
 
   const AccountInfo = () => {
@@ -87,7 +87,11 @@ export function Navbar({}: NavbarProps) {
             <Menu as='div' className='ml-3 relative'>
               <div>
                 <Menu.Button>
-                  <div className={profile?.fpt_member&&'rounded-full p-1  ring-2 ring-amber-400 dark:ring-gray-500'}>
+                  <div
+                    className={
+                      profile?.fpt_member &&
+                      'rounded-full p-1  ring-2 ring-amber-400 dark:ring-gray-500'
+                    }>
                     <div
                       className='h-9 w-9 relative overflow-hidden  '
                       dangerouslySetInnerHTML={{
@@ -115,8 +119,13 @@ export function Navbar({}: NavbarProps) {
                             'block px-4 py-2 text-sm text-gray-700'
                           )}>
                           {profile?.name}
-                          {profile?.fpt_member&&( <span title='FPT MEMBER' className='ml-1 text-[8px] px-[2px] py-[1px] bg-amber-200 text-yellow-800 rounded-md'>FPTM</span>)} 
-                         
+                          {profile?.fpt_member && (
+                            <span
+                              title='FPT MEMBER'
+                              className='ml-1 text-[8px] px-[2px] py-[1px] bg-amber-200 text-yellow-800 rounded-md'>
+                              FPTM
+                            </span>
+                          )}
                         </a>
                       </Link>
                     )}
@@ -138,7 +147,10 @@ export function Navbar({}: NavbarProps) {
                     {({ active }) => (
                       <Link href={'/'}>
                         <a
-                          onClick={() => handleLogout()}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            handleLogout()
+                          }}
                           className={classNames(
                             active ? 'bg-gray-100' : '',
                             'block px-4 py-2 text text-sm text-gray-700'

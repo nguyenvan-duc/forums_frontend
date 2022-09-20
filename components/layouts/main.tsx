@@ -31,9 +31,6 @@ export function MainLayout({
     }
   }, [router, profile, requestAuth, fistLoading])
 
-  function backToHome(e: any) {
-    console.log('hello')
-  }
   return (
     <>
       <Navbar />

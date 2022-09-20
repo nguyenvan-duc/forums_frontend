@@ -51,7 +51,7 @@ export function CommentForm() {
     <>
       <ComponentRequestAuth>
         <h1 className='py-3'>Câu trả lời của bạn:</h1>
-        {!profile ? (
+        {!profile?.name ? (
           <div className='w-full cursor-text p-2 h-24 border border-gray-300 rounded-lg bg-gray-50'>
             <span className='text-sm text-gray-500'>Nhập câu trả lời</span>
           </div>
@@ -66,7 +66,7 @@ export function CommentForm() {
             )}
             <SimpleMdeReact
               onClick={() => {
-                !profile ? setIsLogin(false) : setIsLogin(true)
+                !profile?.name ? setIsLogin(false) : setIsLogin(true)
               }}
               value={value}
               onChange={onChange}
