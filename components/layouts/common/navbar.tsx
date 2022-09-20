@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react'
 import Link from 'next/link'
-import { useHotkeys  } from 'react-hotkeys-hook'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { useRouter } from 'next/router'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import {
@@ -45,10 +45,10 @@ export function Navbar({}: NavbarProps) {
       return (
         <>
           <div className='flex  animate-pulse flex-row items-center h-full justify-center space-x-5'>
-            <div className='w-10 bg-gray-300 h-10 rounded-full mr-2 md:mr-0'></div>
             <div className=' flex-col space-y-3 hidden md:flex'>
               <div className='w-36 bg-gray-300 h-6 rounded-md '></div>
             </div>
+            <div className='w-10 bg-gray-300 h-10 rounded-full mr-2 md:mr-0'></div>
           </div>
         </>
       )
@@ -87,12 +87,14 @@ export function Navbar({}: NavbarProps) {
             <Menu as='div' className='ml-3 relative'>
               <div>
                 <Menu.Button>
-                  <div
-                    className='h-9 w-9 relative overflow-hidden'
-                    dangerouslySetInnerHTML={{
-                      __html: profile?.avatar,
-                    }}
-                  />
+                  <div className={profile?.fpt_member&&'rounded-full p-1  ring-2 ring-amber-400 dark:ring-gray-500'}>
+                    <div
+                      className='h-9 w-9 relative overflow-hidden  '
+                      dangerouslySetInnerHTML={{
+                        __html: profile?.avatar,
+                      }}
+                    />
+                  </div>
                 </Menu.Button>
               </div>
               <Transition
@@ -113,6 +115,8 @@ export function Navbar({}: NavbarProps) {
                             'block px-4 py-2 text-sm text-gray-700'
                           )}>
                           {profile?.name}
+                          {profile?.fpt_member&&( <span title='FPT MEMBER' className='ml-1 text-[8px] px-[2px] py-[1px] bg-amber-200 text-yellow-800 rounded-md'>FPTM</span>)} 
+                         
                         </a>
                       </Link>
                     )}
