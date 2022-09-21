@@ -32,6 +32,11 @@ export default function handler(
       proxyRes.on('end', () => {
         try {
           const { accessToken, expiresIn } = JSON.parse(body)
+          if(!accessToken || !expiresIn){
+            ;(res as NextApiResponse)
+            .status(400)
+            .json({ message: 'login false' })
+          } 
           const cookies = new Cookies(req, res, {
             secure: process.env.NODE_ENV !== 'development',
           })

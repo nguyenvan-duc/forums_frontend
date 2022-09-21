@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Countdown from 'react-countdown'
 import { useRouter } from 'next/router'
@@ -35,7 +36,7 @@ export function LoginForm({ email, otpStatus, loginStatus }: LoginFormProps) {
       loginStatus(true)
     } catch (err) {
       setLoading(false)
-      console.log(err)
+      toast.error('Bạn đã nhập sai OTP, vui lòng nhập lại!')
     }
   }
   const renderer = ({ minutes, seconds, completed }: any) => {

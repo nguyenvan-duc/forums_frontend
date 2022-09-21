@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
 
@@ -22,7 +23,7 @@ export function FormRegister({ registerStatus }: FormRegisterProps) {
   } = useForm<DataRegisterProps>()
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  let avatar = `<svg  fill="none" style="width: 100%; height:auto;" role="img" xmlns="http://www.w3.org/2000/svg"><title>Margaret Brent</title><mask id="mask__beam" maskUnits="userSpaceOnUse" x="0" y="0" ><rect rx="72" fill="#FFFFFF"></rect></mask><g mask="url(#mask__beam)"><rect  fill="#fc6e3d"></rect><rect x="0" y="0"  transform="translate(6 6) rotate(356 18 18) scale(1.2)" fill="#0074b4" rx="6"></rect><g transform="translate(4 1) rotate(6 18 18)"><path d="M13,21 a1,0.75 0 0,0 10,0" fill="#FFFFFF"></path><rect x="13" y="14" width="1.5" height="2" rx="1" stroke="none" fill="#FFFFFF"></rect><rect x="21" y="14" width="1.5" height="2" rx="1" stroke="none" fill="#FFFFFF"></rect></g></g></svg>`
+  let avatar = `<svg viewBox="0 0 36 36" fill="none" role="img" xmlns="http://www.w3.org/2000/svg" ><title>Maud Nathan</title><mask id="mask__beam" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="36"><rect width="36" height="36" rx="72" fill="#FFFFFF"></rect></mask><g mask="url(#mask__beam)"><rect width="36" height="36" fill="#96b5a6"></rect><rect x="0" y="0" width="36" height="36" transform="translate(-3 7) rotate(87 18 18) scale(1)" fill="#febeac" rx="36"></rect><g transform="translate(-7 3.5) rotate(-7 18 18)"><path d="M13,19 a1,0.75 0 0,0 10,0" fill="#000000"></path><rect x="12" y="14" width="1.5" height="2" rx="1" stroke="none" fill="#000000"></rect><rect x="22" y="14" width="1.5" height="2" rx="1" stroke="none" fill="#000000"></rect></g></g></svg>`
   const handleRegister: SubmitHandler<DataRegisterProps> = async ({
     name,
     email,
@@ -32,6 +33,10 @@ export function FormRegister({ registerStatus }: FormRegisterProps) {
       await authApi.register({ avatar, name, email })
       setLoading(false)
       registerStatus(true)
+      toast('Bạn đã đăng ký tài khoản thành công!', {
+        icon: '👏',
+      });
+
     } catch (err) {
       console.log(err)
       registerStatus(false)

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { authApi } from '@/api-client'
 type GetOtpFormProps = {
@@ -32,6 +33,7 @@ export function GetOtpForm({ otpStatus, emailReceive }: GetOtpFormProps) {
       } else {
         otpStatus(false)
         setLoading(false)
+        toast.error("Email chưa được đăng ký.")
       }
     } catch (err) {
       console.log(err)
