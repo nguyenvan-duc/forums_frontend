@@ -109,6 +109,7 @@ export function SearchPopup(props: any) {
                   </button>
                 </div>
                 <input
+                  autoFocus={true}
                   placeholder='Search...'
                   className='w-full outline-none bg-transparent border-l-2 border-l-indigo-200 focus:border-l-indigo-600 text-3xl mt-3 h-16 px-4 py-2'
                 />

@@ -1,17 +1,19 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import Multiselect from 'multiselect-react-dropdown'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Disclosure } from '@headlessui/react'
 import { BlankLayout } from '@/components/layouts'
 import { NextPageWithLayout } from '@/models'
-import { Modal } from '@/components'
+import { Modal, EditorMarkdown } from '@/components'
 
 const SimpleMdeReact = dynamic(
   () => import('react-simplemde-editor').then((mod) => mod.default),
   { ssr: false }
 )
+
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
 })
@@ -29,7 +31,6 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-const randomid = () => parseInt(String(Math.random() * 1e15), 10).toString(36)
 const styleMultiSelect = {
   chips: {
     background: 'white',
@@ -57,47 +58,31 @@ const styleMultiSelect = {
   },
 }
 const NewPost: NextPageWithLayout = (props: Props) => {
+  const autosavedValue = localStorage.getItem(`smde_editor-value`) || ''
   const [modalOpen, setModalOpen] = useState(false)
   const [preview, setPreview] = useState(false)
-  const [value, setValue] = useState('')
+  const [title, setTitle] = useState('')
+  const [tagsSelected, setTagsSlected] = useState([])
+  const [value, setValue] = useState(autosavedValue)
   const Router = useRouter()
   const handelButtonModal = () => {
     return Router.push('/')
   }
+
   const onChange = useCallback((value: any) => {
     setValue(value)
   }, [])
-  const customRendererOptions: EasyMDE.Options = useMemo(() => {
-    return {
-      spellChecker:false,
-      toolbar: [
-        'bold',
-        'italic',
-        '|',
-        'heading',
-        '|',
-        'quote',
-        'code',
-        'horizontal-rule',
-        '|',
-        'unordered-list',
-        'ordered-list',
-        'table',
-        '|',
-        'link',
-        'image',
-        '|',
-        'clean-block',
-        '|',
-        'preview',
-        'guide',
-      ],
-      placeholder: 'Nhập Nội Dung...',
-    }
-  }, [])
+
+  // useHotkeys('ctrl+alt+up', () => {
+  //   setPreview(true)
+  // })
+  // useHotkeys('ctrl+alt+down', () => {
+  //   setPreview(false)
+  // })
+
   return (
     <>
-      <div className='bg-gray-primary h-full'>
+      <div id='myText' className='bg-gray-primary h-full'>
         <Disclosure as='nav'>
           {({ open }) => (
             <>
@@ -110,11 +95,11 @@ const NewPost: NextPageWithLayout = (props: Props) => {
                                                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                                                 alt="Workflow"
                                             /> */}
-                      <img
+                      {/* <img
                         className='hidden lg:block h-8 w-auto'
                         src='https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg'
                         alt='Workflow'
-                      />
+                      /> */}
                     </div>
                   </div>
                   <div className='absolute inset-y-0 right-0 flex items-center px-5 md:px-0 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
@@ -128,7 +113,13 @@ const NewPost: NextPageWithLayout = (props: Props) => {
                       {!preview ? 'Xem Trước Bài Đăng' : 'Quay Lại'}
                     </button>
                     <button
-                      onClick={() => setModalOpen(true)}
+                      onClick={() => {
+                        if (value || title || tagsSelected.length > 0) {
+                          setModalOpen(true)
+                        } else {
+                          Router.push('/')
+                        }
+                      }}
                       type='button'
                       className='text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white'
                       data-modal-toggle='defaultModal'>
@@ -144,12 +135,24 @@ const NewPost: NextPageWithLayout = (props: Props) => {
                       </svg>
                     </button>
                     <Modal
-                      title='Bạn Có Muốn Thoát Trang'
-                      handelButtonModal={handelButtonModal}
-                      buttonTitle='Có, Tôi Muốn Thoát'
                       isOpen={modalOpen}
                       setIsOpen={() => setModalOpen(false)}>
-                      this is body
+                      <div className='py-2'>
+                        Bạn đang có nội dung chưa được đăng tải, bạn có muốn
+                        thoát không?
+                      </div>
+                      <div className='w-full flex justify-end'>
+                        <button
+                          onClick={() => handelButtonModal()}
+                          className=' w-24 py-2 mt-3 bg-gray-300 hover:bg-gray-200 rounded-md text-gray-700 mr-2'>
+                          Vâng
+                        </button>
+                        <button
+                          onClick={() => setModalOpen(false)}
+                          className=' w-24 py-2 mt-3 bg-indigo-600 hover:bg-indigo-500 rounded-md text-gray-50'>
+                          Không
+                        </button>
+                      </div>
                     </Modal>
                   </div>
                 </div>
@@ -157,10 +160,13 @@ const NewPost: NextPageWithLayout = (props: Props) => {
             </>
           )}
         </Disclosure>
-        <div className='max-w-7xl m-auto flex justify-end md:pb-32 md:px-8'>
+        <div className='md:max-w-7xl w-full m-auto flex justify-end md:pb-32 md:px-8'>
           {!preview ? (
-            <div className=' md:w-3/4 w-full rounded-t-2xl md:rounded-2xl border-2 border-gray-300 bg-white h-full py-5 px-6'>
+            <div className=' md:w-3/4 w-full rounded-t-2xl md:rounded-2xl border-2 border-gray-300 bg-white h-full py-5 px-2 md:px-6'>
               <input
+                autoFocus
+                onChange={(value) => setTitle(value.target.value)}
+                value={title}
                 className='w-full bg-transparent h-20 text-2xl md:text-4xl font-bold p outline-none'
                 placeholder='Nhập Tiêu Đề Câu Hỏi...'
               />
@@ -170,6 +176,8 @@ const NewPost: NextPageWithLayout = (props: Props) => {
                     customCloseIcon={
                       <XMarkIcon className='h-4 w-4 cursor-pointer ml-2 hover:text-red-400  text-gray-800' />
                     }
+                    selectedValues={tagsSelected}
+                    onSelect={(selectedList:any)=>setTagsSlected(selectedList)}
                     loading={false}
                     selectionLimit={4}
                     style={styleMultiSelect}
@@ -180,15 +188,20 @@ const NewPost: NextPageWithLayout = (props: Props) => {
                   />
                 </div>
               </div>
-
-              <SimpleMdeReact
+              <EditorMarkdown
                 value={value}
                 onChange={onChange}
-                options={customRendererOptions}
+                Option={{
+                  autosave: {
+                    enabled: true,
+                    uniqueId: 'editor-value',
+                    delay: 1000,
+                  },
+                }}
               />
             </div>
           ) : (
-            <div className=' md:w-3/4 w-full h-screen rounded-2xl border-2 border-gray-300 bg-white py-5 px-6'>
+            <div className=' md:w-3/4 w-full min-h-screen rounded-2xl border-2 border-gray-300 bg-white py-5 px-6'>
               <MarkdownPreview source={value} />
             </div>
           )}

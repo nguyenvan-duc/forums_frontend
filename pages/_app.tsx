@@ -11,7 +11,7 @@ import '../styles/globals.css'
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout ?? BlankLayout
   const sidebarRight: boolean = Component.sidebarRight ?? false
-  const sidebarLeft: boolean = Component.sidebarRight ?? false
+  const sidebarLeft: boolean = Component.SidebarLeft ?? false
   const requestAuth: boolean = Component.requestAuth ?? false
 
   return (

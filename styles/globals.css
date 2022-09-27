@@ -75,3 +75,35 @@ body {
   transform: translateX(110%);
   transition: all var(--speed) ease;
 }
+
+.editor-preview {
+  background: #fff !important;
+}
+
+.wmde-markdown>p>img {
+  width: auto !important;
+  margin: auto !important;
+}
+.editor-toolbar{
+  text-align: center !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: none !important;
+  background-color: #cecece20 !important;
+}
+.EasyMDEContainer .CodeMirror{
+  border: none !important;
+  padding: 10px 0;
+}
+
+.comment-form .editor-toolbar{
+  text-align: left !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: none !important;
+  background-color: #cecece20 !important;
+}
+.comment-form  .EasyMDEContainer .CodeMirror{
+  border: none !important;
+  padding: 10px 10px;
+}

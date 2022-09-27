@@ -50,7 +50,7 @@ export function MainLayout({
       ) : (
         <>
           <div className=' max-w-7xl flex flex-nowrap m-auto'>
-            {SidebarLeft && (
+            {sidebarLeft && (
               <div className='md:w-1/6 hidden md:block '>
                 <SidebarLeft />
               </div>

@@ -62,12 +62,13 @@ export function Modal(props: ModalProps) {
                   'inline-block w-full p-6 my-28 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl',
                   size
                 )}>
+               
+                <div className='flex justify-between items-start rounded-t '>
                 <Dialog.Title
                   as='h3'
-                  className='text-lg font-medium leading-6 text-gray-900'>
+                  className='text-lg font-medium text-gray-900'>
                   {props.title}
                 </Dialog.Title>
-                <div className='flex justify-between items-start rounded-t '>
                   <button
                     onClick={(e) => {
                       e.preventDefault()
@@ -89,26 +90,6 @@ export function Modal(props: ModalProps) {
                 </div>
                 {props.borderTop ?? <div className='border-b-2 mt-2' />}
                 <div className='w-full'>{props.children}</div>
-                {props.button ?? (
-                  <div className='flex border-t justify-end mt-3 border-gray-200 dark:border-gray-600 p-3'>
-                    <div className='flex items-center  space-x-2   '>
-                      {props.buttonTitle ? (
-                        <button
-                          onClick={() => props.handelButtonModal()}
-                          className='px-5 py-2 bg-red-600 text-white hover:bg-indigo-400 rounded-md'>
-                          {props.buttonTitle}
-                        </button>
-                      ) : (
-                        ''
-                      )}
-                      <button
-                        onClick={() => props.setIsOpen(false)}
-                        className='px-5 py-2 bg-indigo-600 text-white hover:bg-indigo-400 rounded-md'>
-                        {props.modalCloseTittle ?? 'Đóng'}
-                      </button>
-                    </div>
-                  </div>
-                )}
               </div>
             </Transition.Child>
           </div>

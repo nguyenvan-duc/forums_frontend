@@ -13,12 +13,15 @@
     "@heroicons/react": "^2.0.10",
     "@uiw/react-markdown-preview": "^4.1.0",
     "axios": "^0.27.2",
+    "cloudinary": "^1.21.0",
     "cookies": "^0.8.0",
     "easymde": "^2.17.0",
     "http-proxy": "^1.18.1",
+    "micro": "^9.4.1",
     "multiselect-react-dropdown": "^2.0.25",
     "next": "12.2.5",
     "next-remove-imports": "^1.0.7",
+    "raw-body": "^2.5.1",
     "react": "18.2.0",
     "react-connection-notification": "^0.1.2",
     "react-countdown": "^2.3.2",
@@ -28,12 +31,14 @@
     "react-hotkeys-hook": "^3.4.7",
     "react-simplemde-editor": "^5.0.2",
     "react-transition-group": "^4.4.5",
+    "streamifier": "^0.1.1",
     "swr": "^1.3.0"
   },
   "devDependencies": {
     "@types/cookies": "^0.7.7",
     "@types/http-proxy": "^1.17.9",
     "@types/node": "18.7.13",
+    "@types/prismjs": "^1.26.0",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
     "@types/react-transition-group": "^4.4.5",
@@ -41,6 +46,7 @@
     "eslint": "8.23.0",
     "eslint-config-next": "12.2.5",
     "postcss": "^8.4.16",
+    "sass": "^1.55.0",
     "tailwindcss": "^3.1.8",
     "typescript": "4.8.2"
   }
