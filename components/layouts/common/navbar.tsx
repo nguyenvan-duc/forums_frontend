@@ -92,7 +92,16 @@ export function Navbar({}: NavbarProps) {
                       profile?.fpt_member &&
                       'rounded-full p-1  ring-2 ring-amber-400 dark:ring-gray-500'
                     }>
-                      <img className='h-8 w-8 object-cover relative overflow-hidden rounded-full' src={profile?.avatar}/>
+                    {profile?.avatar ? (
+                      <img
+                        className='h-8 w-8 object-cover relative overflow-hidden rounded-full'
+                        src={profile?.avatar}
+                      />
+                    ) : (
+                      <div className='h-8 w-8 rounded-full flex justify-center items-center bg-yellow-600 text-white'>
+                        {profile.name[0]}
+                      </div>
+                    )}
                   </div>
                 </Menu.Button>
               </div>
