@@ -1,14 +1,29 @@
 import React from 'react'
+import {useRouter} from 'next/router'
+import Cookies from 'js-cookie'
+import { GOOGLE_AUTH_URL, GITHUB_AUTH_URL } from '@/constants';
 
 type Props = {}
 
 export function SocialLogin({}: Props) {
+  const {push, asPath} = useRouter();
+  const loginWithGoogle = (e:any) =>{
+    e.preventDefault();
+    push(GOOGLE_AUTH_URL)
+    Cookies.set('path-to-back',asPath)
+  }
+  const loginWithGithub = (e:any) =>{
+    e.preventDefault();
+    push(GITHUB_AUTH_URL)
+    Cookies.set('path-to-back',asPath)
+  }
   return (
     <>
       <div className='flex'>
         <div className='w-1/2 mr-1'>
           <a
             href='#'
+            onClick={loginWithGoogle}
             className='flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100'>
             <div className='py-3'>
               <svg className='h-6 w-6' viewBox='0 0 40 40'>
@@ -35,6 +50,7 @@ export function SocialLogin({}: Props) {
         <div className='w-1/2 ml-1'>
           <a
             href='#'
+            onClick={loginWithGithub}
             className='flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100'>
             <div className='py-3'>
               <svg

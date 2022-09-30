@@ -6,7 +6,7 @@ import {
   MinusIcon,
   ArrowsPointingOutIcon,
   ShareIcon,
-  ExclamationTriangleIcon
+  ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline'
 import { ShareButton } from './share_button'
 export function Comment(props: any) {
@@ -68,7 +68,7 @@ export function Comment(props: any) {
                 <span>0</span>
               </li>
               <li className='text-center flex flex-col justify-center items-center mb-4'>
-                <ShareButton/>
+                <ShareButton />
               </li>
             </ul>
           </div>
@@ -108,12 +108,12 @@ export function Comment(props: any) {
                 fugit dicta nulla? Velit, eaque repellendus.
               </p>
               {props.content}
-              <div className=' w-full flex items-center text-xs text-orange-400 justify-end px-4'>
-              <span className='flex items-center cursor-help'>
-                <ExclamationTriangleIcon className='h-4 w-4 text-orange-400 mr-1' />{' '}
-                Câu trả lời có vấn đề
-              </span>
-            </div>
+              <div className='w-full flex items-center text-xs text-orange-400 justify-end px-4'>
+                <span className='flex items-center cursor-help'>
+                  <ExclamationTriangleIcon className='h-4 w-4 text-orange-400 mr-1' />{' '}
+                  Câu trả lời có vấn đề
+                </span>
+              </div>
             </div>
           </div>
         </div>

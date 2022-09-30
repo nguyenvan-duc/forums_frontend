@@ -92,12 +92,7 @@ export function Navbar({}: NavbarProps) {
                       profile?.fpt_member &&
                       'rounded-full p-1  ring-2 ring-amber-400 dark:ring-gray-500'
                     }>
-                    <div
-                      className='h-9 w-9 relative overflow-hidden  '
-                      dangerouslySetInnerHTML={{
-                        __html: profile?.avatar,
-                      }}
-                    />
+                      <img className='h-8 w-8 object-cover relative overflow-hidden rounded-full' src={profile?.avatar}/>
                   </div>
                 </Menu.Button>
               </div>

@@ -58,46 +58,18 @@ const DetailsPost: NextPageWithLayout = (props: Props) => {
           <span className='text-xs text-gray-400'>Nội dung :</span>
           <div className='ml-2'>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-              doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-              facere praesentium exercitationem numquam iusto facilis natus
-              fugit dicta nulla? Velit, eaque repellendus.
-            </p>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-              doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-              facere praesentium exercitationem numquam iusto facilis natus
-              fugit dicta nulla? Velit, eaque repellendus.
-            </p>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-              doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-              facere praesentium exercitationem numquam iusto facilis natus
-              fugit dicta nulla? Velit, eaque repellendus.
-            </p>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-              doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-              facere praesentium exercitationem numquam iusto facilis natus
-              fugit dicta nulla? Velit, eaque repellendus.
-            </p>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-              doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-              facere praesentium exercitationem numquam iusto facilis natus
-              fugit dicta nulla? Velit, eaque repellendus.
-            </p>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-              doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-              facere praesentium exercitationem numquam iusto facilis natus
-              fugit dicta nulla? Velit, eaque repellendus.
-            </p>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-              doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-              facere praesentium exercitationem numquam iusto facilis natus
-              fugit dicta nulla? Velit, eaque repellendus.
+              Thuật ngữ Th3 23, 2020 Hai G. 5ít nhất Đọc React là gì? Và nó hoạt
+              động như thế nào? React là gì? Tại sao sử dụng React? React hoạt
+              động như thế nào? Lời kết React là gì? React là thư viện
+              JavaScript phổ biến nhất để xây dựng giao diện người dùng (UI). Nó
+              cho tốc độ phản hồi tuyệt vời khi user nhập liệu bằng cách sử dụng
+              phương pháp mới để render trang web. Components của công cụ này
+              được phát triển bởi Facebook. Nó được ra mắt như một công cụ
+              JavaScript mã nguồn mở vào năm 2013. Hiện tại, nó đã đi trước các
+              đối thủ chính như Angular và Bootstrap, hai thư viện JavaScript
+              bán chạy nhất thời bấy giờ. Trong bài viết này, chúng tôi sẽ giúp
+              bạn hiểu React là gì và lợi ích nó mang lại cho công việc như một
+              nhà phát triển front-end
             </p>
             <div className=' w-full flex items-center text-xs text-orange-400 justify-end px-4'>
               <span className='flex items-center cursor-help'>
