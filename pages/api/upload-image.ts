@@ -29,6 +29,5 @@ export default async function handler(
     upload_preset: 'ml_default',
     folder: `image-from-posts`,
   })
-  console.log(uploadResponse)
   return res.status(200).json(uploadResponse.secure_url)
 }

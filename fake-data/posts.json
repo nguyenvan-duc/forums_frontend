@@ -1,0 +1,60 @@
+[
+     {
+          "id":1,
+          "title": "SpringBoot Integration Testing using TestContainers Starter",
+          "content":"One of the many reasons for huge popularity of Spring and SpringBoot is it's great support for Testing. We can write un While running integration tests we might need to interact with external services like relational databases, NoSQL datastores, Kafka etc. We can spin up those external services as Docker containers and run tests against them.",
+          "author":{
+               "id":1,
+               "name":"Tac gia 1",
+               "avatar":"https://i.redd.it/snoovatar/avatars/18ab49c7-8186-4bf8-99e5-ad528c8b9f0c.png"
+          },
+          "tags":[
+               {
+                    "id":1,
+                    "name":"Thảo luận"
+               },
+               {
+                    "id":2,
+                    "name":"java"
+               },
+               {
+                    "id":3,
+                    "name":"spring-boot"
+               }
+          ],
+          "comments_count":40,
+          "vote_count":100,
+          "saved":false
+     },
+     {
+          "id":2,
+          "title": "Backend Boilerplate for NodeJs-ExpressJs-MongoDB",
+          "content":"When i was learning backend web developement. I had not found any proper resource for Backend Web Development. But, i have tried my best to learn. Started googling, learnt using youtube and documentation websites.Then after, i used to work in same file app.js or index.js Later on, It was very hard for me to work on Big Projects.",
+          "author":{
+               "id":2,
+               "name":"Tac gia 2",
+               "avatar":"https://styles.redditmedia.com/t5_2qh1o/styles/communityIcon_6fzlk8ukx6s51.jpg?width=256&format=pjpg&s=c3f5201f13951c0bd50e48d72adf698dcea49d13"
+          },
+          "tags":[
+               {
+                    "id":1,
+                    "name":"Thảo luận"
+               },
+               {
+                    "id":2,
+                    "name":"javascript"
+               },
+               {
+                    "id":3,
+                    "name":"nodejs"
+               },
+               {
+                    "id":3,
+                    "name":"express"
+               }
+          ],
+          "comments_count":40,
+          "vote_count":100,
+          "saved":true
+     }
+]

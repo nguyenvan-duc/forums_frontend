@@ -1,24 +1,25 @@
 type Props = {}
 export function SidebarRight({}: Props) {
   return (
-    <div>
-      <a href='#' className='w-full block h-full '>
-        <img
-          alt='blog photo'
-          src='https://www.tailwind-kit.com/images/blog/1.jpg'
-          className='max-h-40 w-full object-cover'
-        />
-        <div className='bg-white dark:bg-gray-800 w-full p-4'>
-          <p className='text-indigo-500 text-md font-medium'></p>
-          <p className='text-gray-800 dark:text-white text-xl font-medium mb-2'>
-            New Mac is here !
-          </p>
-          <p className='text-gray-400 dark:text-gray-300 font-light text-md'>
-            The new supermac is here, 543 cv and 140 000$. This is best racing
-            computer about 7 years on...
-          </p>
-        </div>
-      </a>
+    <div className='w-full border p-3 rounded-md bg-gray-50'>
+      <div className='w-full border-b pb-2 flex justify-between items-center'>
+        <h2 className='text-lg font-semibold'>Bookmark</h2>
+        <a className='text-sm text-blue-500 hover:underline hover:cursor-pointer'>xem tất cả</a>
+      </div>
+      <ul className='w-full'>
+        <li className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
+          <a>
+            I am trying to run a standalone Django script but i keep getting
+            this error: ModuleNotFoundError: No module named
+          </a>
+        </li>
+        <li className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
+          <a>
+            I am trying to run a standalone Django script but i keep getting
+            this error: ModuleNotFoundError: No module named
+          </a>
+        </li>
+      </ul>
     </div>
   )
 }

@@ -22,6 +22,7 @@
     "multiselect-react-dropdown": "^2.0.25",
     "next": "12.2.5",
     "next-remove-imports": "^1.0.7",
+    "next-themes": "^0.2.1",
     "raw-body": "^2.5.1",
     "react": "18.2.0",
     "react-connection-notification": "^0.1.2",

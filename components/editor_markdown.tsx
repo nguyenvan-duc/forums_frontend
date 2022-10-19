@@ -17,7 +17,7 @@ export function EditorMarkdown({value, onChange, Option }: EditorMarkdownProps) 
     return {
       ...Option,
       uploadImage: true,
-      imageUploadFunction: uploadImgae,
+      imageUploadFunction: uploadImage,
       // previewRender(text) {
       //   return ReactDOMServer.renderToString(
       //       <MarkdownPreview source={text} />
@@ -57,12 +57,12 @@ export function EditorMarkdown({value, onChange, Option }: EditorMarkdownProps) 
         // '|',
         'guide',
       ],
-      placeholder: 'Nhập Nội Dung...',
+      placeholder: 'Nhập Nội Dung... ( Markdown )',
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Option?.autosave&&1000])
 
-  function uploadImgae(file: File, onSuccess: any) {
+  function uploadImage(file: File, onSuccess: any) {
     if (!file) {
       return
     }
@@ -118,6 +118,7 @@ export function EditorMarkdown({value, onChange, Option }: EditorMarkdownProps) 
   return     <SimpleMdeReact
   id='editor-value'
   value={value}
+  className='text-[18px]'
   onChange={onChange}
   options={customRendererOptions}
 />

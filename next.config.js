@@ -16,7 +16,7 @@ module.exports = removeImports({
   reactStrictMode: true,
   swcMinify: true,
   env: {
-    API_URL: "https://forums-aptech.herokuapp.com",
+    API_URL: "https://api-gateway-forums.herokuapp.com",
     // API_URL: "http://localhost:8080",
     CLOUDINARY_API_SECRET:"cEgfkcCeMDbDnI_z2UAiUbDLsyo",
     CLOUDINARY_API_KEY:"998596363616345",

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, MouseEvent } from 'react'
 import { useRouter } from 'next/router'
-
+import Head from 'next/head'
 import { LayoutProps } from '@/models'
 import {
   Footer,
@@ -10,6 +10,7 @@ import {
   SidebarRight,
   Totop,
 } from '@/components/layouts/common'
+
 import { useAuth } from '@/hooks'
 import { LoginModal } from '../login/login_modal'
 export function MainLayout({
@@ -30,9 +31,8 @@ export function MainLayout({
       }
     }
   }, [router, profile, requestAuth, fistLoading])
-
   return (
-    <>
+    <div className=' bg-gray-100'>
       <Navbar />
       <LoginModal
         openModel={isRequestAuth}
@@ -49,14 +49,14 @@ export function MainLayout({
         <Loader />
       ) : (
         <>
-          <div className=' max-w-7xl flex flex-nowrap m-auto'>
+          <div className='max-w-7xl flex flex-nowrap m-auto'>
             {sidebarLeft && (
               <div className='md:w-1/6 hidden md:block '>
                 <SidebarLeft />
               </div>
             )}
 
-            <div className='flex  container mx-auto  md:w-5/6 w-11/12 '>
+            <div className='flex container mx-auto md:px-4'>
               <div
                 className={
                   sidebarRight
@@ -80,6 +80,6 @@ export function MainLayout({
       )}
       <Totop />
       <Footer />
-    </>
+    </div>
   )
 }

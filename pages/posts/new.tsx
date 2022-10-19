@@ -9,11 +9,6 @@ import { BlankLayout } from '@/components/layouts'
 import { NextPageWithLayout } from '@/models'
 import { Modal, EditorMarkdown } from '@/components'
 
-const SimpleMdeReact = dynamic(
-  () => import('react-simplemde-editor').then((mod) => mod.default),
-  { ssr: false }
-)
-
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
 })
@@ -58,31 +53,46 @@ const styleMultiSelect = {
   },
 }
 const NewPost: NextPageWithLayout = (props: Props) => {
-  const autosavedValue = localStorage.getItem(`smde_editor-value`) || ''
+  const autosavedValue = localStorage.getItem(`editor-save`) || ''
   const [modalOpen, setModalOpen] = useState(false)
   const [preview, setPreview] = useState(false)
   const [title, setTitle] = useState('')
   const [tagsSelected, setTagsSlected] = useState([])
-  const [value, setValue] = useState(autosavedValue)
+  const [value, setValue] = useState<any>()
   const Router = useRouter()
   const handelButtonModal = () => {
     return Router.push('/')
   }
+  useEffect(() => {
+    let dataAutoSave: any = JSON?.parse(autosavedValue)
+    setTitle(dataAutoSave?.title)
+    setValue(dataAutoSave?.contentMarkdown)
+    setTagsSlected(dataAutoSave?.tags)
+  }, [autosavedValue])
 
-  const onChange = useCallback((value: any) => {
-    setValue(value)
-  }, [])
+  const onChange = useCallback(
+    (value: any) => {
+      setValue(value)
+      let editorSave = JSON?.stringify({
+        title: title,
+        tags: tagsSelected,
+        contentMarkdown: value,
+      })
+      localStorage.setItem('editor-save', editorSave)
+    },
+    [tagsSelected, title]
+  )
 
-  // useHotkeys('ctrl+alt+up', () => {
-  //   setPreview(true)
-  // })
-  // useHotkeys('ctrl+alt+down', () => {
-  //   setPreview(false)
-  // })
+  useHotkeys('ctrl+alt+up', () => {
+    setPreview(true)
+  })
+  useHotkeys('ctrl+alt+down', () => {
+    setPreview(false)
+  })
 
   return (
     <>
-      <div id='myText' className='bg-gray-primary h-full'>
+      <div id='myText' className='bg-gray-primary min-h-screen'>
         <Disclosure as='nav'>
           {({ open }) => (
             <>
@@ -160,7 +170,7 @@ const NewPost: NextPageWithLayout = (props: Props) => {
             </>
           )}
         </Disclosure>
-        <div className='md:max-w-7xl w-full m-auto flex justify-end md:pb-32 md:px-8'>
+        <div className='md:max-w-6xl w-full m-auto flex justify-start md:pb-32 md:px-0'>
           {!preview ? (
             <div className=' md:w-3/4 w-full rounded-t-2xl md:rounded-2xl border-2 border-gray-300 bg-white h-full py-5 px-2 md:px-6'>
               <input
@@ -177,7 +187,12 @@ const NewPost: NextPageWithLayout = (props: Props) => {
                       <XMarkIcon className='h-4 w-4 cursor-pointer ml-2 hover:text-red-400  text-gray-800' />
                     }
                     selectedValues={tagsSelected}
-                    onSelect={(selectedList:any)=>setTagsSlected(selectedList)}
+                    onSelect={(selectedList: any) =>
+                      setTagsSlected(selectedList)
+                    }
+                    onRemove={(removeItem:any)=>{
+                      setTagsSlected(removeItem)
+                    }}
                     loading={false}
                     selectionLimit={4}
                     style={styleMultiSelect}
@@ -192,17 +207,41 @@ const NewPost: NextPageWithLayout = (props: Props) => {
                 value={value}
                 onChange={onChange}
                 Option={{
-                  autosave: {
-                    enabled: true,
-                    uniqueId: 'editor-value',
-                    delay: 1000,
-                  },
+                  minHeight: '200px',
                 }}
               />
             </div>
           ) : (
-            <div className=' md:w-3/4 w-full min-h-screen rounded-2xl border-2 border-gray-300 bg-white py-5 px-6'>
-              <MarkdownPreview source={value} />
+            <div className=' md:w-3/4 w-full min-h-[70vh] rounded-2xl border-2 border-gray-300 bg-white py-5 px-6'>
+              <div className='w-full border-b py-3 border-gray-50'>
+                <span className='text-xs text-gray-600'>Tiêu đề :</span>
+                <h1 className='text-2xl ml-2 dark:text-gray-800'>{title}</h1>
+                <div className='flex flex-wrap justify-starts items-center mt-4'>
+                  {tagsSelected?.map((item: any) => (
+                    <div
+                      key={item?.id}
+                      className='text-xs mr-2 py-1.5 px-4 text-gray-600 bg-blue-50 rounded-2xl'>
+                      {item?.name}
+                    </div>
+                  ))}
+                </div>
+                {/* <ul className='mt-2 flex'>
+                  <li className='mx-2'>
+                    Hỏi bởi: <a className='#'>đức nv</a>
+                  </li>
+                  <li className='mx-2'>Th2, 27/2022</li>
+                  <li className='mx-2'>Lượt xem: 20</li>
+                </ul> */}
+              </div>
+
+              <div className='flex  py-3'>
+                <div className='w-11/12 dark:text-gray-800 px-2 pb-12'>
+                  <span className='text-xs text-gray-400'>Nội dung :</span>
+                  <div className='ml-2'>
+                    <MarkdownPreview source={value} />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>

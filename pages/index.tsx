@@ -10,8 +10,6 @@ const Home: NextPageWithLayout = () => {
       <Posts />
       <Posts />
       <Posts />
-      <Comment />
-      <CommentForm />
     </>
   )
 }

@@ -9,6 +9,8 @@ import {
   ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline'
 import { ShareButton } from './share_button'
+import { VoteComponent } from './vote'
+import { FunctionallyButtons } from './functionally_buttons'
 export function Comment(props: any) {
   const [clicked, setClicked] = useState('')
 
@@ -41,48 +43,26 @@ export function Comment(props: any) {
         </div>
       ) : (
         <div className='flex  py-3'>
-          <div className='w-1/12 flex justify-center '>
-            <ul>
-              <li className='text-center flex flex-col justify-center items-center mb-4'>
-                <button
-                  onClick={() => handleToggle(props.id)}
-                  title='Thu nhỏ'
-                  className='mb-2'>
-                  <MinusIcon className='h-6 w-6' />
-                </button>
-              </li>
-              <li className='text-center flex flex-col justify-center items-center mb-4'>
-                <button className='mb-2'>
-                  <ChevronUpIcon className='h-6 w-6' />
-                </button>
-                <span className='mb-2'>0</span>
-                <button>
-                  <ChevronDownIcon className='h-6 w-6' />
-                </button>
-              </li>
-
-              <li className='text-center flex flex-col justify-center items-center mb-4'>
-                <button className='mb-2'>
-                  <BookmarkIcon className='h-6 w-6' />
-                </button>
-                <span>0</span>
-              </li>
-              <li className='text-center flex flex-col justify-center items-center mb-4'>
-                <ShareButton />
-              </li>
-            </ul>
+          <div className='w-1/12 relative'>
+            <button
+              onClick={() => handleToggle(props.id)}
+              title='Thu nhỏ'
+              className='mb-2 w-full flex justify-center pb-4'>
+              <MinusIcon className='h-6 w-6' />
+            </button>
+            <VoteComponent voteCount={20} userVote={1} />
           </div>
-          <div className='w-11/12 dark:text-gray-800 px-2 border-b border-gray-100 pb-12'>
+          <div className='w-11/12 dark:text-gray-800 px-2 border-b border-gray-100 pb-1'>
             <div>
               <span>
-                Trả lời bởi: <a href='#'>ducucnv</a>
+                Trả lời bởi: <a href='#'>u/ducucnv</a>
               </span>{' '}
               - <span>T5, 27/2022 lúc 10:59</span>
             </div>
             <span className='text-xs text-gray-400'>
               Nội dung câu trả lời :
             </span>
-            <div className='ml-2'>
+            <div className='ml-2 mb-2'>
               <p>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
                 doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
@@ -108,12 +88,9 @@ export function Comment(props: any) {
                 fugit dicta nulla? Velit, eaque repellendus.
               </p>
               {props.content}
-              <div className='w-full flex items-center text-xs text-orange-400 justify-end px-4'>
-                <span className='flex items-center cursor-help'>
-                  <ExclamationTriangleIcon className='h-4 w-4 text-orange-400 mr-1' />{' '}
-                  Câu trả lời có vấn đề
-                </span>
-              </div>
+            </div>
+            <div className='flex justify-end'>
+              <FunctionallyButtons />
             </div>
           </div>
         </div>
