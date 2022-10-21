@@ -100,19 +100,18 @@ DetailsPost.requestAuth = false
 
 export default DetailsPost
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const posts: any = await postApi.getAllPost().then((res) => {
-//     return res
-//   })
-//   const paths = posts?.map((post: any) => ({
-//     params: { slug: post.slug.toString() },
-//   }))
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts: any = await postApi.getAllPost().then((res) => {
+    return res
+  })
+  const paths = posts?.map((post: any) => ({
+    params: { slug: post.slug.toString() },
+  }))
 
-//   return { paths, fallback: true }
-// }
+  return { paths, fallback: true }
+}
 
-// export const getStaticProps: GetStaticProps = async ({ params }: any) => {
-//   const postResult = await postApi.getDetails(params?.slug)
-//   let post = JSON.stringify(postResult) 
-//   return { props: { post }, revalidate: 60 }
-// }
+export const getStaticProps: GetStaticProps = async ({ params }: any) => {
+  const post = await postApi.getDetails(params?.slug)
+  return { props: { post }, revalidate: 60 }
+}
