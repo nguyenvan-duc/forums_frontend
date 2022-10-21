@@ -1,5 +1,6 @@
 import { PostNewModel, PostModel } from '@/models';
 import axiosConfig from '@/api-client/axios-config'
+import axios from 'axios';
 const POST_PATH_API = '/posts'
 export const postApi = {
   async getAllPost() {
