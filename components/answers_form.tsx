@@ -6,7 +6,7 @@ import { EditorMarkdown } from './editor_markdown'
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
 })
-export function CommentForm() {
+export function AnswersForm() {
   const { profile, fistLoading } = useAuth()
   const [value, setValue] = useState('')
   const onChange = useCallback((value: any) => {

@@ -75,7 +75,7 @@ export function Navbar({}: NavbarProps) {
         )}
         {profile?.name && (
           <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
-            <Link href={'/posts/new'}>
+            <Link href={'/bai-dang/them-moi'}>
               <a className=' hidden md:inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
                 <PlusIcon
                   className='-ml-1 mr-2 h-5 w-5 text-gray-500'
@@ -84,7 +84,7 @@ export function Navbar({}: NavbarProps) {
                 Đặt Câu Hỏi
               </a>
             </Link>
-            <Link href={'/notifications'}>
+            <Link href={'/thong-bao'}>
               <a className='bg-white dark:bg-gray-800 p-1 ml-4 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
                 <span className='sr-only'>View notifications</span>
                 <BellIcon className='h-6 w-6' aria-hidden='true' />

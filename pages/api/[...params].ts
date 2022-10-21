@@ -21,7 +21,6 @@ export default function handler(
     if (accessToken) {
       req.headers.Authorization = `Bearer ${accessToken}`
     }
-    req.headers.cookie = ''
     proxy.web(req, res, {
       target: process.env.API_URL,
       changeOrigin: true,

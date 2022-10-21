@@ -56,7 +56,7 @@ export function MainLayout({
               </div>
             )}
 
-            <div className='flex container mx-auto md:px-4'>
+            <div className='flex container mx-auto'>
               <div
                 className={
                   sidebarRight
