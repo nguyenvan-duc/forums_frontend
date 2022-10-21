@@ -1,6 +1,6 @@
 import axios from 'axios'
 const axiosConfig = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://forums-demo.vercel.app/api',
   // baseURL:'https://api-gateway-forums.herokuapp.com/api',
   headers: {
     'content-type': 'application/json',
