@@ -51,7 +51,7 @@ export function Answer(props: any) {
               className='mb-2 w-full flex justify-center pb-4'>
               <MinusIcon className='h-6 w-6' />
             </button>
-            <VoteComponent voteCount={20} userVote={1} />
+            <VoteComponent voteCount={20} userVote={"UPVOTE"} />
           </div>
           <div className='w-11/12 dark:text-gray-800 px-2 border-b border-gray-200 pb-1'>
             <div>
