@@ -61,7 +61,7 @@ const DetailsPost = ({ post,slug }: any) => {
             id={post?.id}
             loader={loader}
             subjectVote="POST"
-            voteCount={post?.voteCount}
+            voteCount={detailPost?.voteCount as number}
             userVote={detailPost?.voteType as string}
             getNotify={true}
           />
