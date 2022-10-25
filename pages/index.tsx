@@ -13,7 +13,7 @@ const Home: NextPageWithLayout = () => {
       return setPosts(res)
     })
   }, [])
-  const remderPosts = () => {
+  const renderPosts = () => {
     if (loader) {
       return (
         <>
@@ -64,6 +64,8 @@ const Home: NextPageWithLayout = () => {
     }
     return _.map(posts, (item) => (
       <Posts
+        key={item.id}
+        id={item.id}
         title={item.title}
         slug={item.slug}
         tags={item.tags}
@@ -76,7 +78,7 @@ const Home: NextPageWithLayout = () => {
       />
     ))
   }
-  return <div className='min-h-[80vh]'>{remderPosts()}</div>
+  return <div className='min-h-[80vh]'>{renderPosts()}</div>
 }
 
 Home.Layout = MainLayout

@@ -7,6 +7,7 @@ export interface PostNewModel {
      content:string
 }
 export interface PostModel{
+     id:number
      title: string
      slug:string
      tags: Array<TagModel>
@@ -16,6 +17,6 @@ export interface PostModel{
      voteType:string,
      bookmark:boolean,
      vote:boolean,
-     voteCount:number,
+     voteCount?:number,
      createdAt:string
 }

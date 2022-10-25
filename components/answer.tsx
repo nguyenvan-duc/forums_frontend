@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import dynamic from 'next/dynamic'
 import {
   MinusIcon,
   ArrowsPointingOutIcon,
@@ -7,13 +8,25 @@ import {
 import { ShareButton } from './share_button'
 import { VoteComponent } from './vote'
 import { FunctionallyButtons } from './functionally_buttons'
-export function Answer(props: any) {
-  const [clicked, setClicked] = useState('')
+import { Account } from '@/models'
+const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
+  ssr: false,
+})
+interface AnswerProps{
+  id:number
+  content:string,
+  account:Account
+  voteType:string
+  voteCount:number
+  vote:boolean
+  bookmark:boolean
+}
+export function Answer({id, account,content, voteCount, voteType}: AnswerProps) {
+  const [clicked, setClicked] = useState<any>(0)
   const [showFormComment, setShowFormComment] = useState(false)
-
   const handleToggle = (index: any) => {
     if (clicked === index) {
-      return setClicked('0')
+      return setClicked(0)
     }
     setClicked(index)
   }
@@ -24,7 +37,7 @@ export function Answer(props: any) {
 
   return (
     <>
-      {clicked == props.id ? (
+      {clicked == id ? (
         <div className='flex mb-3 py-3 bg-gray-200'>
           <div className='w-1/12 flex justify-center '>
             <div className='text-center flex flex-col justify-center items-center'>
@@ -36,7 +49,7 @@ export function Answer(props: any) {
           <div className='w-11/12 dark:text-gray-800 px-2 border-gray-100'>
             <div>
               <span>
-                Trả lời bởi: <a href='#'>ducucnv</a>
+                Trả lời bởi: <a href='#'>{account.name}</a>
               </span>{' '}
               - <span>T5, 27/2022 lúc 10:59</span>
             </div>
@@ -46,49 +59,25 @@ export function Answer(props: any) {
         <div className='flex  py-3'>
           <div className='w-1/12 relative'>
             <button
-              onClick={() => handleToggle(props.id)}
+              onClick={() => handleToggle(id)}
               title='Thu nhỏ'
               className='mb-2 w-full flex justify-center pb-4'>
               <MinusIcon className='h-6 w-6' />
             </button>
-            <VoteComponent voteCount={20} userVote={"UPVOTE"} />
+            <VoteComponent id={id} voteCount={voteCount} userVote={voteType} subjectVote='COMMENT' getNotify={false} />
           </div>
           <div className='w-11/12 dark:text-gray-800 px-2 border-b border-gray-200 pb-1'>
             <div>
               <span>
-                Trả lời bởi: <a href='#'>u/ducucnv</a>
+                Trả lời bởi: <a href='#'>{account.name}</a>
               </span>{' '}
               - <span>T5, 27/2022 lúc 10:59</span>
             </div>
             <span className='text-xs text-gray-400'>
-              Nội dung câu trả lời :
+              Nội dung câu trả lời {id}:
             </span>
             <div className='ml-2 mb-2'>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-                doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-                facere praesentium exercitationem numquam iusto facilis natus
-                fugit dicta nulla? Velit, eaque repellendus.
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-                doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-                facere praesentium exercitationem numquam iusto facilis natus
-                fugit dicta nulla? Velit, eaque repellendus.
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-                doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-                facere praesentium exercitationem numquam iusto facilis natus
-                fugit dicta nulla? Velit, eaque repellendus.
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas
-                doloribus nisi vero obcaecati, cupiditate nostrum quae saepe,
-                facere praesentium exercitationem numquam iusto facilis natus
-                fugit dicta nulla? Velit, eaque repellendus.
-              </p>
-              {props.content}
+            <MarkdownPreview source={content}/>
             </div>
             <div className='flex justify-between'>
               <button

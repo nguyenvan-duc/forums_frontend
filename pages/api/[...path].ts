@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import httpProxy from 'http-proxy'
 import Cookies from 'cookies'
-
+import cookies from 'js-cookie';
 export const config = {
   api: {
     bodyParser: false,
@@ -15,20 +15,19 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  return new Promise((resolve) => {
+  return new Promise( (resolve) => {
     const cookies = new Cookies(req, res)
     const accessToken = cookies.get('access_token')
-    if (accessToken) {
+    if (accessToken || cookies.get('access_token')) {
       req.headers.Authorization = `Bearer ${accessToken}`
     }
-    console.log("Res  ",res)
     proxy.web(req, res, {
       target: process.env.API_URL,
       changeOrigin: true,
       selfHandleResponse: false,
     })
     proxy.once('proxyRes', () => {
-      resolve(true)
+     return resolve(true)
     })
   })
 }

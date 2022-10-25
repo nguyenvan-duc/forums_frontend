@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
 
@@ -5,7 +6,9 @@ import { useRouter } from 'next/router'
 import { TagModel } from '@/models'
 import { Account } from '@/models/account'
 import HeroIcon from './hero_icon'
+import { postApi } from '@/api-client'
 interface PostProps {
+  id: number
   title?: string
   slug?: string
   tags?: Array<TagModel>
@@ -17,6 +20,7 @@ interface PostProps {
   voteCount?: number
 }
 export function Posts({
+  id,
   title,
   slug,
   tags,
@@ -28,6 +32,21 @@ export function Posts({
   isBookmark,
 }: PostProps) {
   const route = useRouter()
+  const [statusBookmark, setStatusBookmark] = useState(isBookmark)
+  const handleBookmark = async (e:any) => {
+    e.preventDefault()
+    try {
+      setStatusBookmark(!statusBookmark)
+      await postApi.bookmarkPost(id).then((res) => {
+        if(res.status == 200){
+          console.log(res.data)
+          setStatusBookmark(res.data)
+        }
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <>
       <div className='overflow-hidden border border-gray-300 md:rounded-md w-full mb-4 m-auto'>
@@ -86,11 +105,13 @@ export function Posts({
                     <span>{commentCount} Bình luận</span>
                   </a>
                 </Link>
-                <button className='p-3 hover:bg-indigo-100 rounded-full'>
+                <button
+                  onClick={handleBookmark}
+                  className='p-3 hover:bg-indigo-100 rounded-full'>
                   <HeroIcon
                     name='BookmarkIcon'
                     className='h-4 w-4'
-                    outline={isBookmark}
+                    outline={statusBookmark}
                   />
                 </button>
               </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { MainLayout } from '@/components/layouts'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -13,19 +13,34 @@ import { PostModel } from '@/models'
 import { postApi } from '@/api-client'
 import { GetStaticPaths, GetStaticProps, NextPageContext } from 'next'
 import { Loader } from '@/components/layouts/common'
+import { AnswerOfPost } from '@/components/answer_of_post'
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
 })
 export interface IPropType {
-  post: PostModel
+  post: PostModel,
+  slug: string
 }
-const DetailsPost = ({ post }: any) => {
-  const [showFormComment, setShowFormComment] = useState(false)
+const DetailsPost = ({ post,slug }: any) => {
   const router = useRouter();
+  const [showFormComment, setShowFormComment] = useState(false)
+  const [detailPost, setDetailsPost] = useState<PostModel>()
+  const [loader, setLoader] =useState(true)
+  useEffect(()=>{
+    fetchData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+  const fetchData = async ()=>{
+    await postApi.getDetails(slug).then((res:any)=>{
+      setDetailsPost(res)
+      setLoader(false)
+    })
+  }
   const handleShowFormComment = (e: any) => {
     e.preventDefault()
     setShowFormComment(true)
   }
+  
   if(router.isFallback) return <Loader/>
   return (
     <div className='md:border-x px-2 w-full h-full  bg-gray-50 border pb-3 rounded-md'>
@@ -34,17 +49,20 @@ const DetailsPost = ({ post }: any) => {
         <h1 className='text-2xl ml-2 dark:text-gray-800'>{post?.title}</h1>
         <ul className='mt-2 flex'>
           <li className='mx-2'>
-            Hỏi bởi: <a className='#'> {post?.account?.username}</a>
+            Hỏi bởi: <a className=' text-indigo-600 hover:underline cursor-pointer'> u/{post?.account?.username}</a>
           </li>
           <li className='mx-2'>Th2, 27/2022</li>
-          <li className='mx-2'>Lượt xem: 20</li>
+          <li className='mx-2'>Lượt xem: 20 {}</li>
         </ul>
       </div>
       <div className='flex  py-3'>
         <div className='w-1/12 relative'>
           <VoteComponent
+            id={post?.id}
+            loader={loader}
+            subjectVote="POST"
             voteCount={post?.voteCount}
-            userVote={post?.voteType}
+            userVote={detailPost?.voteType as string}
             getNotify={true}
           />
         </div>
@@ -88,8 +106,7 @@ const DetailsPost = ({ post }: any) => {
         Bạn có biết ai có thể chả lời cho câu hỏi này không?{' '}
       </h1>
       <h2>Có 6 câu Trả Lời: </h2>
-      <Answer />
-      <AnswersForm />
+      <AnswerOfPost id={post?.id}/>
     </div>
   )
 }
@@ -111,7 +128,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: true }
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }: any) => {
-  const post = await postApi.getDetails(params?.slug)
-  return { props: { post }, revalidate: 60 }
+export const getStaticProps: GetStaticProps = async ({ params,header }: any) => {
+  let slug = params?.slug
+  const post = await postApi.getDetails(slug).then(res=>{
+    return res;
+  })
+  return { props: { 
+    post,slug
+   }, revalidate: 60 }
 }

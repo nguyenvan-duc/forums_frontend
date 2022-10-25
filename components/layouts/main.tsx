@@ -13,6 +13,9 @@ import {
 
 import { useAuth } from '@/hooks'
 import { LoginModal } from '../login/login_modal'
+function classNames(...classes: any) {
+  return classes.filter(Boolean).join(' ')
+}
 export function MainLayout({
   children,
   sidebarLeft,
@@ -58,11 +61,12 @@ export function MainLayout({
 
             <div className='flex container mx-auto'>
               <div
-                className={
-                  sidebarRight
-                    ? 'w-full md:w-3/4 py-6 md:px-6 bg-landscape'
-                    : 'w-full'
-                }>
+              className={classNames(sidebarRight?'w-full md:w-3/4 py-6 md:px-6 bg-landscape':'w-full')}
+                // className={ sidebarRight
+                //     ? ''
+                //     : ''}
+                    
+                    >
                 {isRequestAuth && !profile ? (
                   <div className='h-screen'></div>
                 ) : (

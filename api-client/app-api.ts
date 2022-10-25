@@ -5,4 +5,7 @@ export const appApi = {
       data:file
     })
   },
+  bookmarkList(){
+    return axiosConfig.get('/my-bookmarks')
+  }
 }

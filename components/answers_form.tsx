@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState} from 'react'
 import dynamic from 'next/dynamic'
 import { useAuth } from '@/hooks'
 import { ComponentRequestAuth } from './layouts/common'
@@ -6,13 +6,16 @@ import { EditorMarkdown } from './editor_markdown'
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
 })
-export function AnswersForm() {
+interface AnswerFormProp{
+  onChange:any,
+  handleSend:any,
+  value:string
+}
+export function AnswersForm({onChange,handleSend,value}:AnswerFormProp) {
   const { profile, fistLoading } = useAuth()
-  const [value, setValue] = useState('')
-  const onChange = useCallback((value: any) => {
-    setValue(value)
-  }, [])
-
+  // const onChange = useCallback((value: any) => {
+  //   setValue(value)
+  // }, [])
   return (
     <>
       {fistLoading ? (
@@ -47,7 +50,7 @@ export function AnswersForm() {
 
               <div className='flex justify-end mt-3'>
                 <button
-                  onClick={() => console.log('hello')}
+                  onClick={() => handleSend()}
                   className='px-4 rounded-md py-2 border-2 bg-indigo-600 hover:bg-indigo-400 text-gray-200'>
                   Gửi câu trả Lời
                 </button>

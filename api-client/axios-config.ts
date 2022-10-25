@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 const axiosConfig = axios.create({
-  baseURL: 'https://forums-demo.vercel.app/api',
-  // baseURL:'https://api-gateway-forums.herokuapp.com/api',
+  // baseURL: 'http://localhost:3000/api',
+  baseURL:'https://forums-demo.vercel.app',
   headers: {
     'content-type': 'application/json',
   },
@@ -11,7 +11,7 @@ axiosConfig.interceptors.request.use(async (config) => {
   return config
 })
 axiosConfig.interceptors.response.use(
-  (response: any) => {
+  (response: AxiosResponse) => {
     if (response && response.data) {
       return response.data
     }
