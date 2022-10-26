@@ -31,15 +31,19 @@ export function VoteComponent({
   loader,
 }: VoteProps) {
   const { profile, fistLoading } = useAuth()
-  const [vote, setVoteCount] = useState(voteCount)
-  const [voteType, setVoteType] = useState(userVote)
+  const [vote, setVoteCount] = useState(0)
+  const [voteType, setVoteType] = useState('UNDEFINED')
   const [loadWhenVote, setLoadWhenVote] = useState(false)
   useEffect(() => {
     setVoteCount(voteCount)
     setVoteType(userVote)
-  }, [userVote, voteCount])
+    if (!profile?.name) {
+      setVoteType('UNDEFINED')
+    }
+  }, [userVote, voteCount, profile])
   const handleUpVote = async (e: any) => {
     e.preventDefault()
+    handleChangeVote('UPVOTE')
     setLoadWhenVote(true)
     if (subjectVote === 'POST') {
       voteForPost(id, 1)
@@ -49,18 +53,44 @@ export function VoteComponent({
   }
   const handleDownVote = async (e: any) => {
     e.preventDefault()
+    console.log(voteType)
     setLoadWhenVote(true)
     if (subjectVote === 'POST') {
       voteForPost(id, -1)
     } else if (subjectVote === 'COMMENT') {
       voteAnswers(id, -1)
     }
+    handleChangeVote('DOWN_VOTE')
   }
-
+  const handleChangeVote = async (type: string) => {
+    if (type === 'UPVOTE') {
+      if (voteType == 'UPVOTE') {
+        setVoteType('UNDEFINED')
+        setVoteCount(vote - 1)
+      } else if (voteType === 'DOWN_VOTE') {
+        setVoteType('UPVOTE')
+        setVoteCount(vote + 2)
+      } else if (voteType === 'UNDEFINED') {
+        setVoteCount(vote + 1)
+        setVoteType('UPVOTE')
+      }
+    } else if (type === 'DOWN_VOTE') {
+      if (voteType === 'DOWN_VOTE') {
+        setVoteType('UNDEFINED')
+        setVoteCount(vote + 1)
+      } else if (voteType === 'UPVOTE') {
+        setVoteType('DOWN_VOTE')
+        setVoteCount(vote - 2)
+      } else if (voteType === 'UNDEFINED') {
+        setVoteType('DOWN_VOTE')
+        setVoteCount(vote - 1)
+      }
+    }
+  }
   const voteForPost = async (id: number, type: number) => {
     await postApi.votePost(id, type).then((res: any) => {
-      setVoteCount(res?.vote_count)
       setVoteType(res?.voteType)
+      setVoteCount(res?.vote_count)
       setLoadWhenVote(false)
     })
   }
@@ -91,15 +121,15 @@ export function VoteComponent({
     }
     return (
       <>
-        <ul className='w-full sticky top-0 z-10 block'>
+        <ul className='w-full sticky top-5 z-10 block'>
           <li className='text-center flex flex-col justify-center items-center mb-4'>
             <ComponentRequestAuth>
               <button
                 disabled={loadWhenVote || !profile?.name}
                 onClick={handleUpVote}
                 className={classNames(
-                  'hover:text-red-500 p-1 font-extrabold rounded-md hover:bg-gray-200 text-gray-400',
-                  voteType == 'UPVOTE' && 'text-red-500 bg-gray-200'
+                  'hover:text-red-500 p-1 font-extrabold rounded-md text-gray-400 hover:cursor-pointer',
+                  voteType === 'UPVOTE' && 'text-red-500 bg-gray-200'
                 )}>
                 <ChevronUpIcon className='h-6 w-6' />
               </button>
@@ -114,8 +144,8 @@ export function VoteComponent({
                 disabled={loadWhenVote || !profile?.name}
                 onClick={handleDownVote}
                 className={classNames(
-                  'hover:text-red-500 p-1 font-extrabold rounded-md hover:bg-gray-200 text-gray-400',
-                  voteType == 'DOWN_VOTE' && 'text-red-500 bg-gray-200'
+                  'hover:text-red-500 p-1 hover:cursor-pointer font-extrabold rounded-md text-gray-400',
+                  voteType === 'DOWN_VOTE' && 'text-red-500 bg-gray-200'
                 )}>
                 <ChevronDownIcon className='h-6 w-6' />
               </button>

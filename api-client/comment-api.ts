@@ -4,6 +4,9 @@ export const commentApi = {
   replyPost(id:number,content:string){
     return axiosConfig.post(`/post/${id}/comment`,{content:content})
   },
+  replyComment(id:number,content:string,reply_to:{id:number}){
+    return axiosConfig.post(`/post/${id}/comment`,{content:content,reply_to:reply_to})
+  },
   bookmarkAnswer(id: number) {
     return axiosConfig.post(`/comment/${id}/bookmark`)
   },

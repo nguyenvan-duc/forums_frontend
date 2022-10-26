@@ -1,12 +1,17 @@
-import { appApi } from '@/api-client'
-import _ from 'lodash'
 import { useEffect, useState } from 'react'
+import _ from 'lodash'
+import { appApi } from '@/api-client'
+import { useAuth } from '@/hooks'
+
 type Props = {}
 export function SidebarRight({}: Props) {
+  const { profile, logout, fistLoading } = useAuth()
   const [bookmarks, setBookmark] = useState([])
   const [loader, setLoader] = useState(true)
   useEffect(() => {
-    fetchData()
+    if (profile?.name) {
+      fetchData()
+    }
   }, [])
   const fetchData = async () => {
     await appApi.bookmarkList().then((res: any) => {
@@ -62,14 +67,18 @@ export function SidebarRight({}: Props) {
     )
   }
   return (
-    <div className='w-full border p-3 rounded-md bg-gray-50'>
-      <div className='w-full border-b pb-2 flex justify-between items-center'>
-        <h2 className='text-lg font-semibold'>Bookmark</h2>
-        <a className='text-sm text-blue-500 hover:underline hover:cursor-pointer'>
-          xem tất cả
-        </a>
-      </div>
-      <ul className='w-full'>{renderBookmark()}</ul>
-    </div>
+    <>
+      {profile?.name && (
+        <div className='w-full border p-3 rounded-md bg-gray-50'>
+          <div className='w-full border-b pb-2 flex justify-between items-center'>
+            <h2 className='text-lg font-semibold'>Bookmark</h2>
+            <a className='text-sm text-blue-500 hover:underline hover:cursor-pointer'>
+              xem tất cả
+            </a>
+          </div>
+          <ul className='w-full'>{renderBookmark()}</ul>
+        </div>
+      )}
+    </>
   )
 }

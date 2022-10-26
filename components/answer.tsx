@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import {
   MinusIcon,
@@ -9,21 +9,36 @@ import { ShareButton } from './share_button'
 import { VoteComponent } from './vote'
 import { FunctionallyButtons } from './functionally_buttons'
 import { Account } from '@/models'
+import { Comment } from '@/models/comment'
+import { commentApi } from '@/api-client/comment-api'
+import _ from 'lodash'
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
 })
-interface AnswerProps{
-  id:number
-  content:string,
-  account:Account
-  voteType:string
-  voteCount:number
-  vote:boolean
-  bookmark:boolean
+interface AnswerProps {
+  id: number
+  content: string
+  account: Account
+  voteType: string
+  voteCount: number
+  vote: boolean
+  reply: Array<Comment>
+  bookmark: boolean
+  post_id: number
 }
-export function Answer({id, account,content, voteCount, voteType}: AnswerProps) {
+export function Answer({
+  id,
+  account,
+  content,
+  voteCount,
+  voteType,
+  reply,
+  post_id,
+}: AnswerProps) {
   const [clicked, setClicked] = useState<any>(0)
   const [showFormComment, setShowFormComment] = useState(false)
+  const [value, setValue] = useState('')
+  const [replyList, setReplyList] = useState(reply)
   const handleToggle = (index: any) => {
     if (clicked === index) {
       return setClicked(0)
@@ -33,6 +48,13 @@ export function Answer({id, account,content, voteCount, voteType}: AnswerProps) 
   const handleShowFormComment = (e: any) => {
     e.preventDefault()
     setShowFormComment(true)
+  }
+  const replyComment = async () => {
+    if (value == '') return
+    await commentApi.replyComment(post_id, value, { id }).then((res: any) => {
+      setReplyList([res, ...replyList])
+      setValue('')
+    })
   }
 
   return (
@@ -64,7 +86,13 @@ export function Answer({id, account,content, voteCount, voteType}: AnswerProps) 
               className='mb-2 w-full flex justify-center pb-4'>
               <MinusIcon className='h-6 w-6' />
             </button>
-            <VoteComponent id={id} voteCount={voteCount} userVote={voteType} subjectVote='COMMENT' getNotify={false} />
+            <VoteComponent
+              id={id}
+              voteCount={voteCount}
+              userVote={voteType}
+              subjectVote='COMMENT'
+              getNotify={false}
+            />
           </div>
           <div className='w-11/12 dark:text-gray-800 px-2 border-b border-gray-200 pb-1'>
             <div>
@@ -77,7 +105,7 @@ export function Answer({id, account,content, voteCount, voteType}: AnswerProps) 
               Nội dung câu trả lời {id}:
             </span>
             <div className='ml-2 mb-2'>
-            <MarkdownPreview source={content}/>
+              <MarkdownPreview source={content} />
             </div>
             <div className='flex justify-between'>
               <button
@@ -88,21 +116,38 @@ export function Answer({id, account,content, voteCount, voteType}: AnswerProps) 
               </button>
               <FunctionallyButtons />
             </div>
-              {showFormComment && (
-                <div>
-                  <textarea
-                    className='mt-2 w-full rounded-md min-h-[100px] outline-none p-2 text-gray-600'
-                    placeholder='Viết bình luận'></textarea>
-                  <div className='flex justify-end mt-2+'>
-                    <button onClick={()=>setShowFormComment(false)} className='py-1 px-4 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300'>
-                      Hủy
-                    </button>
-                    <button className='py-1 px-4 text-gray-700 bg-blue-200 rounded-md ml-3 hover:bg-blue-300'>
-                      Thêm bình luận
-                    </button>
-                  </div>
+            <ul className='my-3'>
+              {_.map(replyList, (item) => (
+                <li
+                  key={item?.id}
+                  className='text-sm p-2 h-full bg-gray-100 border mb-2'>
+                  trả lời bởi: {item.account.username}
+                  <div className='mt-2 ml-2'>{item?.content}</div>
+                </li>
+              ))}
+            </ul>
+            {showFormComment && (
+              <div>
+                <textarea
+                  onChange={(value) => setValue(value.target.value)}
+                  className='mt-2 w-full rounded-md min-h-[100px] outline-none p-2 text-gray-600'
+                  placeholder='Viết bình luận'>
+                  {value}
+                </textarea>
+                <div className='flex justify-end mt-2'>
+                  <button
+                    onClick={() => setShowFormComment(false)}
+                    className='py-1 px-4 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300'>
+                    Hủy
+                  </button>
+                  <button
+                    onClick={() => replyComment()}
+                    className='py-1 px-4 text-gray-700 bg-blue-200 rounded-md ml-3 hover:bg-blue-300'>
+                    Thêm bình luận
+                  </button>
                 </div>
-              )}
+              </div>
+            )}
           </div>
         </div>
       )}

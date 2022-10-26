@@ -7,5 +7,6 @@ export interface Comment {
      voteType:string
      voteCount:number
      vote:boolean
+     reply:any
      bookmark:boolean
 }
