@@ -9,4 +9,5 @@ export interface Comment {
      vote:boolean
      reply:any
      bookmark:boolean
+     children:boolean
 }
