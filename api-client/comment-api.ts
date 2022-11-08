@@ -15,5 +15,11 @@ export const commentApi = {
   },
   voteComment(id:number,type:number){
     return axiosConfig.post(`/comment/${id}/vote`,{type:type})
+  },
+  async myComments(){
+    return axiosConfig.get('/my/comments')
+  },
+  async userComments(username:string){
+    return axiosConfig.get(`/user/${username}/comments`)
   }
 }

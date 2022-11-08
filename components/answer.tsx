@@ -5,13 +5,14 @@ import {
   ArrowsPointingOutIcon,
   ChatBubbleOvalLeftIcon,
 } from '@heroicons/react/24/outline'
-import { ShareButton } from './share_button'
 import { VoteComponent } from './vote'
 import { FunctionallyButtons } from './functionally_buttons'
 import { Account } from '@/models'
 import { Comment } from '@/models/comment'
 import { commentApi } from '@/api-client/comment-api'
 import _ from 'lodash'
+import Link from 'next/link'
+import format_date from '@/utils/format_date'
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
 })
@@ -25,6 +26,7 @@ interface AnswerProps {
   reply: Array<Comment>
   bookmark: boolean
   post_id: number
+  createdAt: string
 }
 export function Answer({
   id,
@@ -34,10 +36,13 @@ export function Answer({
   voteType,
   reply,
   post_id,
+  bookmark,
+  createdAt,
 }: AnswerProps) {
   const [clicked, setClicked] = useState<any>(0)
   const [showFormComment, setShowFormComment] = useState(false)
   const [value, setValue] = useState('')
+  const [loading, setLoading] = useState(false)
   const [replyList, setReplyList] = useState(reply)
   const handleToggle = (index: any) => {
     if (clicked === index) {
@@ -51,9 +56,11 @@ export function Answer({
   }
   const replyComment = async () => {
     if (value == '') return
+    setLoading(true)
     await commentApi.replyComment(post_id, value, { id }).then((res: any) => {
-      setReplyList([res, ...replyList])
+      setReplyList([...replyList, res])
       setValue('')
+      setLoading(false)
     })
   }
 
@@ -73,7 +80,7 @@ export function Answer({
               <span>
                 Trả lời bởi: <a href='#'>{account.name}</a>
               </span>{' '}
-              - <span>T5, 27/2022 lúc 10:59</span>
+              - <span>{format_date.formatDate(createdAt)}</span>
             </div>
           </div>
         </div>
@@ -95,16 +102,24 @@ export function Answer({
             />
           </div>
           <div className='w-11/12 dark:text-gray-800 px-2 border-b border-gray-200 pb-1'>
-            <div>
-              <span>
-                Trả lời bởi: <a href='#'>{account.name}</a>
-              </span>{' '}
-              - <span>T5, 27/2022 lúc 10:59</span>
+            <div className='flex items-center'>
+              <Link href={`/nguoi-dung/${account.username}`}>
+                <a className='flex item-center mr-2'>
+                  <img
+                    src={account.imageUrl}
+                    className='h-6 w-6 rounded-full mr-2'
+                  />
+                  {account.name}
+                </a>
+              </Link>
+              <span className='text-sm text-gray-400'>
+                {format_date.formatDate(createdAt)}
+              </span>
             </div>
             <span className='text-xs text-gray-400'>
-              Nội dung câu trả lời {id}:
+              Nội dung câu trả lời :
             </span>
-            <div className='ml-2 mb-2'>
+            <div className='ml-2 mb-2 mt-2'>
               <MarkdownPreview source={content} />
             </div>
             <div className='flex justify-between'>
@@ -114,15 +129,34 @@ export function Answer({
                 <ChatBubbleOvalLeftIcon className='h-4 w-4 mr-2' />
                 <span>thêm bình luận</span>
               </button>
-              <FunctionallyButtons />
+              <FunctionallyButtons
+                id={id}
+                subject='COMMENT'
+                isBookmark={bookmark}
+              />
             </div>
             <ul className='my-3'>
               {_.map(replyList, (item) => (
                 <li
                   key={item?.id}
                   className='text-sm p-2 h-full bg-gray-100 border mb-2'>
-                  trả lời bởi: {item.account.username}
-                  <div className='mt-2 ml-2'>{item?.content}</div>
+                  <div className='flex items-center'>
+                    <Link href={`/nguoi-dung/${account.username}`}>
+                      <a className='flex item-center mr-2 text-sm'>
+                        <img
+                          src={item.account.imageUrl}
+                          className='h-6 w-6 rounded-full mr-2'
+                        />
+                        {item.account.name}
+                      </a>
+                    </Link>
+                    <span className='text-sm text-gray-400'>
+                      {format_date.formatDate(item.createdAt)}
+                    </span>
+                  </div>
+                  <div className='mt-2 ml-2'>
+                    <MarkdownPreview source={item?.content} />
+                  </div>
                 </li>
               ))}
             </ul>
@@ -136,14 +170,16 @@ export function Answer({
                 </textarea>
                 <div className='flex justify-end mt-2'>
                   <button
+                    disabled={loading}
                     onClick={() => setShowFormComment(false)}
                     className='py-1 px-4 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300'>
                     Hủy
                   </button>
                   <button
+                    disabled={loading}
                     onClick={() => replyComment()}
                     className='py-1 px-4 text-gray-700 bg-blue-200 rounded-md ml-3 hover:bg-blue-300'>
-                    Thêm bình luận
+                    {loading ? 'Đang gửi' : 'Thêm bình luận'}
                   </button>
                 </div>
               </div>

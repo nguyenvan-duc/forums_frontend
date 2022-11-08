@@ -13,7 +13,7 @@ export const postApi = {
   },
   async getDetails(slug:string){
     let token = Cookies.get('access_token')
-    return await axiosConfig.get<PostModel>(`/post/details?slug=${slug}`).then(res=>{
+    return await axiosConfig.get<PostModel>(`/post/${slug}/details`).then(res=>{
       return res;
     })
   },
@@ -22,5 +22,11 @@ export const postApi = {
   },
   async votePost(id:number,type:number){
     return axiosConfig.post(`/post/${id}/vote`,{type:type})
+  },
+  async myPosts(){
+    return axiosConfig.get('/my/posts')
+  },
+  async userPosts(username:string){
+    return axiosConfig.get(`/user/${username}/posts`)
   }
 }

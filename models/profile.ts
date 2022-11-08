@@ -1,31 +1,15 @@
-export class ProfileModel {
-  private name: string
-  private email: string
-  private role: string
-  constructor(name: string, email: string, role: string) {
-    this.name = name
-    this.email = email
-    this.role = role
-  }
-
-  get getName(): string {
-    return this.name
-  }
-  set setName(name: string) {
-    this.name = name
-  }
-
-  get getEamil(): string {
-    return this.email
-  }
-  set setEmail(email: string) {
-    this.email = email
-  }
-
-  get getRole(): string {
-    return this.role
-  }
-  set setRole(role: string) {
-    this.role = role
-  }
+export interface Profile {
+  avatar: string
+  name: string
+  username: string
+  email: number
+  skill: string
+  bio: string
+  role: string
+  reputation: number
+  badge_count: number
+  comment_count: number
+  tag_flowing_count: string
+  post_count: string
+  createdAt: string
 }

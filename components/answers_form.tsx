@@ -10,8 +10,9 @@ interface AnswerFormProp{
   onChange:any,
   handleSend:any,
   value:string
+  loading:boolean
 }
-export function AnswersForm({onChange,handleSend,value}:AnswerFormProp) {
+export function AnswersForm({onChange,handleSend,value,loading}:AnswerFormProp) {
   const { profile, fistLoading } = useAuth()
   // const onChange = useCallback((value: any) => {
   //   setValue(value)
@@ -50,9 +51,10 @@ export function AnswersForm({onChange,handleSend,value}:AnswerFormProp) {
 
               <div className='flex justify-end mt-3'>
                 <button
+                disabled={loading}
                   onClick={() => handleSend()}
                   className='px-4 rounded-md py-2 border-2 bg-indigo-600 hover:bg-indigo-400 text-gray-200'>
-                  Gửi câu trả Lời
+                 {loading?('Đang gửi'):('Gửi câu trả Lời')} 
                 </button>
               </div>
             </>

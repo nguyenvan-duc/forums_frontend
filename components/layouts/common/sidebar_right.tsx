@@ -2,23 +2,25 @@ import { useEffect, useState } from 'react'
 import _ from 'lodash'
 import { appApi } from '@/api-client'
 import { useAuth } from '@/hooks'
+import { useStore } from '@/store'
 
 type Props = {}
 export function SidebarRight({}: Props) {
   const { profile, logout, fistLoading } = useAuth()
   const [bookmarks, setBookmark] = useState([])
-  const [loader, setLoader] = useState(true)
+  const [loader, setLoader] = useState(false)
+  const [state, dispatch] = useStore()
   useEffect(() => {
-    if (profile?.name) {
-      fetchData()
-    }
+    fetchData()
   }, [])
   const fetchData = async () => {
-    await appApi.bookmarkList().then((res: any) => {
-      setBookmark(res)
-      setLoader(false)
-      console.log(res)
-    })
+    if (profile?.name) {
+      setLoader(true)
+      // await appApi.bookmarkList().then((res: any) => {
+      //   setBookmark(res)
+      //   setLoader(false)
+      // })
+    }
   }
 
   const renderBookmark = () => {

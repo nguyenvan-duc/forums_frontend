@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ShareIcon } from '@heroicons/react/24/outline'
 import { NextPageWithLayout } from '@/models'
 import { MainLayout } from '@/components/layouts'
 import { useAuth } from '@/hooks'
+import { appApi } from '@/api-client'
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
@@ -11,6 +12,14 @@ type Props = {}
 
 const Notifications: NextPageWithLayout = (props: Props) => {
   const { login } = useAuth()
+  useEffect(()=>{
+    fetchData()
+  },[])
+  const fetchData = async () => {
+    await appApi.getNotify().then((res: any) => {
+      console.log(res)
+    })
+  }
   return (
     <>
       <div className=' min-h-screen  max-w-xl mt-4 m-auto'>

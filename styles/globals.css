@@ -83,6 +83,7 @@ body {
 .wmde-markdown>p>img {
   width: auto !important;
   margin: auto !important;
+  border-radius: 5px;
 }
 .editor-toolbar{
   text-align: center !important;

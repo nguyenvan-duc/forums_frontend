@@ -125,7 +125,7 @@ export function Navbar({}: NavbarProps) {
                 <Menu.Items className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
                   <Menu.Item>
                     {({ active }) => (
-                      <Link href={'/accounts/me'}>
+                      <Link href={'/nguoi-dung/me'}>
                         <a
                           className={classNames(
                             active ? 'bg-gray-100' : '',
@@ -145,7 +145,7 @@ export function Navbar({}: NavbarProps) {
                   </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
-                      <Link href={'/accounts/settings'}>
+                      <Link href={'/tai-khoan/cai-dat'}>
                         <a
                           className={classNames(
                             active ? 'bg-gray-100' : '',
@@ -239,18 +239,19 @@ export function Navbar({}: NavbarProps) {
                   <div className='hidden sm:block sm:ml-6'>
                     <div>
                       <div
-                        onClick={() => setSearchIsOpen(true)}
-                        className='mt-1 relative rounded-md shadow-sm'>
+                        
+                        className='mt-1 relative rounded-md border'>
                         <input
                           type='text'
                           name='price'
                           id='price'
+                          onClick={() => setSearchIsOpen(true)}
                           disabled={true}
                           className='focus:ring-indigo-500 cursor-pointer  focus:border-indigo-500 block w-full pl-3 pr-44 py-2 font-medium sm:text-sm border-gray-300 rounded-md'
                           placeholder={'Tìm kiếm... (Ctrl + alt + k)'}
                         />
                         <div className='absolute inset-y-0 right-0 flex items-center'>
-                          <button className='p-3'>
+                          <button className='p-3' onClick={() => setSearchIsOpen(true)}>
                             <MagnifyingGlassIcon
                               className='h-5 w-5'
                               aria-hidden='true'

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
-
+import format_date from '@/utils/format_date'
 import { useRouter } from 'next/router'
 import { TagModel } from '@/models'
 import { Account } from '@/models/account'
@@ -33,13 +33,12 @@ export function Posts({
 }: PostProps) {
   const route = useRouter()
   const [statusBookmark, setStatusBookmark] = useState(isBookmark)
-  const handleBookmark = async (e:any) => {
+  const handleBookmark = async (e: any) => {
     e.preventDefault()
     try {
       setStatusBookmark(!statusBookmark)
       await postApi.bookmarkPost(id).then((res) => {
-        if(res.status == 200){
-          console.log(res.data)
+        if (res.status == 200) {
           setStatusBookmark(res.data)
         }
       })
@@ -75,11 +74,17 @@ export function Posts({
             <div className='flex justify-between items-end'>
               <div className='flex items-center mt-4'>
                 <a href='#' className='block relative'>
-                  <img
-                    alt={author?.name}
-                    src={author?.imageUrl}
-                    className='mx-auto object-cover rounded-full h-6 w-6 '
-                  />
+                  {author?.imageUrl ? (
+                    <img
+                      className='h-6 w-6 object-cover relative overflow-hidden rounded-full'
+                      src={author?.imageUrl}
+                      alt={author?.name}
+                    />
+                  ) : (
+                    <div className='h-6 w-6 rounded-full flex justify-center items-center bg-yellow-600 text-white'>
+                      {author?.name[0]}
+                    </div>
+                  )}
                 </a>
                 <div className='flex flex-col justify-between ml-4 text-xs'>
                   <Link href={`/nguoi-dung/${author?.username}`}>
@@ -88,7 +93,7 @@ export function Posts({
                     </a>
                   </Link>
                   <p className='text-gray-400 dark:text-gray-300'>
-                    {createdAt}
+                    {format_date.formatDate(createdAt)}
                   </p>
                 </div>
               </div>
@@ -115,15 +120,6 @@ export function Posts({
                   />
                 </button>
               </div>
-            </div>
-            <div className='mt-2 p-2 bg-blue-50 rounded-md'>
-              <p className='text-sm mb-1'>câu trả lời hữu ích nhất:</p>
-              This question shows research effort; it is useful and clear 0 I
-              have a requirement to calculate active users in a given a month
-              and year by the user type. I have date range for each user with
-              start date and end date. A user with an open ended date is an
-              active user and has to be counted from the beginning of time till
-              current date (year month).
             </div>
           </div>
         </div>

@@ -10,4 +10,5 @@ export interface Comment {
      reply:any
      bookmark:boolean
      children:boolean
+     createdAt:string
 }

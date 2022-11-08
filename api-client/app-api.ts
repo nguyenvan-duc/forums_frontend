@@ -7,5 +7,8 @@ export const appApi = {
   },
   bookmarkList(){
     return axiosConfig.get('/my-bookmarks')
+  },
+  getNotify(){
+    return axiosConfig.get('/notifications')
   }
 }

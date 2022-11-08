@@ -11,6 +11,7 @@ import { BlankLayout } from '@/components/layouts'
 import { NextPageWithLayout, PostModel, PostNewModel, TagModel } from '@/models'
 import { Modal, EditorMarkdown } from '@/components'
 import { AxiosResponse } from 'axios'
+import { Loader } from '@/components/layouts/common'
 
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
@@ -56,6 +57,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [preview, setPreview] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [loadWhenSuccess,setLoadWhenSuccess] = useState(false)
   //data
   const [title, setTitle] = useState('')
   const [content, setContent] = useState<any>()
@@ -121,11 +123,15 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
     console.log(result)
     if (result) {
       setLoading(false)
+      setLoadWhenSuccess(true)
+      setTitle('')
       localStorage.setItem('editor-save','')
       router.push(`/bai-dang/${result?.slug}`)
+    
     }
   }
 
+  if(loadWhenSuccess) return <Loader/>
   return (
     <>
       <div id='myText' className='bg-gray-primary min-h-screen'>
