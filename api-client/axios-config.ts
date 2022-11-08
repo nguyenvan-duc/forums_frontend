@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 const axiosConfig = axios.create({
-  baseURL: 'https://api-gateway-forums.herokuapp.com/api',
-  // baseURL:'https://forums-demo.vercel.app/api',
+  // baseURL: 'https://api-gateway-forums.herokuapp.com/api',
+  baseURL:'https://it-forums.vercel.app/api',
   headers: {
     'content-type': 'application/json',
   },
