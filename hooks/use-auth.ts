@@ -30,5 +30,6 @@ export function useAuth(option?: Partial<PublicConfiguration>) {
     error,
     login,
     logout,
+    mutate
   }
 }

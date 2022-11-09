@@ -7,6 +7,8 @@ import { TagModel } from '@/models'
 import { Account } from '@/models/account'
 import HeroIcon from './hero_icon'
 import { postApi } from '@/api-client'
+import { useAuth,useBookmarks } from '@/hooks'
+
 interface PostProps {
   id: number
   title?: string
@@ -32,16 +34,17 @@ export function Posts({
   isBookmark,
 }: PostProps) {
   const route = useRouter()
+  const {bookmarkPost} = useBookmarks()
   const [statusBookmark, setStatusBookmark] = useState(isBookmark)
   const handleBookmark = async (e: any) => {
     e.preventDefault()
     try {
       setStatusBookmark(!statusBookmark)
-      await postApi.bookmarkPost(id).then((res) => {
-        if (res.status == 200) {
-          setStatusBookmark(res.data)
-        }
-      })
+      let res = await bookmarkPost(id)
+      if(res.status == 200){
+        setStatusBookmark(res.data)
+      }
+      console.log(res)
     } catch (err) {
       console.log(err)
     }

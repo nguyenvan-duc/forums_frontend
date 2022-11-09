@@ -15,7 +15,7 @@ export function Welcome() {
   }, [])
   return (
     <>
-      {display && (
+      {display &&  profile?.name && (
         <div className='border w-full rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 mb-2'>
           <div className='w-full flex justify-end px-5 py-5'>
             <button

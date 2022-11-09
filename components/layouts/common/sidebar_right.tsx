@@ -1,30 +1,20 @@
 import { useEffect, useState } from 'react'
 import _ from 'lodash'
 import { appApi } from '@/api-client'
-import { useAuth } from '@/hooks'
+import { useAuth,useBookmarks } from '@/hooks'
 import { useStore } from '@/store'
 
 type Props = {}
 export function SidebarRight({}: Props) {
   const { profile, logout, fistLoading } = useAuth()
-  const [bookmarks, setBookmark] = useState([])
+  const {bookmarks,fistLoading:loadBookmarks} = useBookmarks()
+  // const [bookmarks, setBookmark] = useState([])
   const [loader, setLoader] = useState(false)
   const [state, dispatch] = useStore()
-  useEffect(() => {
-    fetchData()
-  }, [])
-  const fetchData = async () => {
-    if (profile?.name) {
-      setLoader(true)
-      // await appApi.bookmarkList().then((res: any) => {
-      //   setBookmark(res)
-      //   setLoader(false)
-      // })
-    }
-  }
+
 
   const renderBookmark = () => {
-    if (loader) {
+    if (loadBookmarks) {
       return (
         <>
           <li className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
@@ -36,6 +26,15 @@ export function SidebarRight({}: Props) {
           <li className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
             <div className='animate-pulse bg-gray-300 w-full h-14 rounded-md' />
           </li>
+        </>
+      )
+    }
+    if(bookmarks?.length == 0){
+      return (
+        <>
+        <div className='text-center py-3 text-gray-600'>
+          Không có gì!
+        </div>
         </>
       )
     }

@@ -12,7 +12,6 @@ export function ComponentRequestAuth({children}: any) {
         handleOpen={(value: boolean) => setOpenLoginModal(value)}
       />
       <div
-        className='w-full relative'
         onClick={(e) => {
           e.preventDefault();
           !profile?.name&&setOpenLoginModal(true)

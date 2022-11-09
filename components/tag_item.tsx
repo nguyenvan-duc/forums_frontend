@@ -6,7 +6,9 @@ interface TagItemProps {
   name: string
   desciption: string
   tag_follow_count: number
-  follow: boolean
+  follow: boolean,
+  posts_use:number,
+  bg_color:string,
 }
 function classNames(...classNamees: any) {
   return classNamees.filter(Boolean).join(' ')
@@ -38,9 +40,9 @@ export function TagItem(item: TagItemProps) {
         </div>
         <div className='flex justify-between'>
           <div className='text-sm text-gray-500 mr-2'>
-            4000{item?.tag_follow_count} lượt theo dõi
+            {item?.tag_follow_count} lượt theo dõi
           </div>
-          <div className='text-sm text-gray-500'>6000 bài đăng</div>
+          <div className='text-sm text-gray-500'>{item?.posts_use} bài đăng</div>
         </div>
 
         <button

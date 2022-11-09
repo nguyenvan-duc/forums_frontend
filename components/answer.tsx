@@ -12,7 +12,9 @@ import { Comment } from '@/models/comment'
 import { commentApi } from '@/api-client/comment-api'
 import _ from 'lodash'
 import Link from 'next/link'
+import { useAuth } from '@/hooks'
 import format_date from '@/utils/format_date'
+import { ComponentRequestAuth } from './layouts/common'
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
 })
@@ -44,6 +46,7 @@ export function Answer({
   const [value, setValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [replyList, setReplyList] = useState(reply)
+  const { profile, fistLoading } = useAuth()
   const handleToggle = (index: any) => {
     if (clicked === index) {
       return setClicked(0)
@@ -123,12 +126,16 @@ export function Answer({
               <MarkdownPreview source={content} />
             </div>
             <div className='flex justify-between'>
+              <ComponentRequestAuth>
               <button
+                disabled={!profile?.name}
                 onClick={handleShowFormComment}
                 className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
                 <ChatBubbleOvalLeftIcon className='h-4 w-4 mr-2' />
                 <span>thêm bình luận</span>
               </button>
+              </ComponentRequestAuth>
+             
               <FunctionallyButtons
                 id={id}
                 subject='COMMENT'

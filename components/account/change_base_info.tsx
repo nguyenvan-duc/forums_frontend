@@ -1,10 +1,11 @@
 import { accountApi } from '@/api-client/account-api'
 import { useAuth } from '@/hooks'
-import React from 'react'
+import React,{useState} from 'react'
 import { useForm } from 'react-hook-form'
 
 export function ChangeBaseInfo() {
-  const { profile } = useAuth()
+  const { profile, mutate} = useAuth()
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -21,8 +22,11 @@ export function ChangeBaseInfo() {
   })
   const onSubmit = async(data: any) => {
      console.log(data)
+     setLoading(true)
      await accountApi.profileUpdate(data).then((res:any)=>{
           console.log(res)
+          mutate(res)
+          setLoading(false);
      })
   }
   
@@ -48,6 +52,7 @@ export function ChangeBaseInfo() {
      
               />
               <input
+              type='text'
               {...register('imageUrl')}
               hidden
               />
@@ -115,8 +120,8 @@ export function ChangeBaseInfo() {
               className='w-full rounded-md border p-3 bg-gray-50'></textarea>
           </div>
           <div className='flex justify-end'>
-            <button type='submit' className='py-2 px-10 text-white bg-indigo-600 rounded-md hover:bg-indigo-500'>
-              Lưu lại
+            <button type='submit' disabled={loading} className='py-2 px-10 text-white bg-indigo-600 rounded-md hover:bg-indigo-500'>
+              {loading?('Đang lưu'):('Lưu lại')}
             </button>
           </div>
         </form>

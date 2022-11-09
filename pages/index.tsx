@@ -5,16 +5,26 @@ import { NextPageWithLayout, PostModel } from '@/models'
 import { Posts, Welcome } from '@/components'
 import { postApi } from '@/api-client'
 import { useAuth } from '@/hooks'
+import { SORT_POST_NEW,SORT_POST_HOT } from '@/constants'
+function classNames(...classes: any) {
+  return classes.filter(Boolean).join(' ')
+}
 const Home: NextPageWithLayout = () => {
   const [posts, setPosts] = useState<Array<PostModel>>([])
   const [loader, setLoader] = useState(true)
+  const [sortType, setSortType] = useState(SORT_POST_NEW);
   const { profile } = useAuth()
   useEffect(() => {
-    postApi.getAllPost().then((res: any) => {
+    fetchDataPosts()
+  }, [sortType])
+  const fetchDataPosts =  () =>{
+    setLoader(true)
+    setPosts([]);
+    postApi.getAllPost(sortType).then((res: any) => {
       setLoader(false)
       return setPosts(res)
     })
-  }, [])
+  }
   const renderPosts = () => {
     if (loader) {
       return (
@@ -62,13 +72,15 @@ const Home: NextPageWithLayout = () => {
     <div className='min-h-[80vh]'>
       <Welcome />
       <div className='flex mb-2'>
-        <button className='px-2 py-2 mr-2 hover:bg-gray-50 font-medium rounded-md'>
+        <button
+        onClick={()=>setSortType('none')}
+        className={classNames('px-2 py-2 mr-2 hover:bg-gray-50  rounded-md', sortType == 'none' &&('font-medium'))}>
           Liên Quan
         </button>
-        <button className='px-2 py-2 hover:bg-gray-50 rounded-md'>
+        <button onClick={()=> setSortType(SORT_POST_NEW)} className={classNames('px-2 py-2 hover:bg-gray-50 rounded-md',sortType == SORT_POST_NEW &&('font-medium'))}>
           Mới nhất
         </button>
-        <button className='px-2 py-2 hover:bg-gray-50 rounded-md'>
+        <button onClick={()=> setSortType(SORT_POST_HOT)} className={classNames('px-2 py-2 hover:bg-gray-50 rounded-md',sortType == SORT_POST_HOT &&('font-medium'))}>
           Phổ biến
         </button>
       </div>

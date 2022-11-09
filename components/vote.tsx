@@ -128,8 +128,8 @@ export function VoteComponent({
                 disabled={loadWhenVote || !profile?.name}
                 onClick={handleUpVote}
                 className={classNames(
-                  'hover:text-red-500 p-1 font-extrabold rounded-md text-gray-400 hover:cursor-pointer',
-                  voteType === 'UPVOTE' && 'text-red-500 bg-gray-200'
+                  'hover:text-red-500 p-1 font-extrabold rounded-md text-gray-400',
+                  voteType === 'UPVOTE' && 'text-red-500 bg-gray-200',loadWhenVote && ('cursor-wait')
                 )}>
                 <ChevronUpIcon className='h-6 w-6' />
               </button>
@@ -144,8 +144,8 @@ export function VoteComponent({
                 disabled={loadWhenVote || !profile?.name}
                 onClick={handleDownVote}
                 className={classNames(
-                  'hover:text-red-500 p-1 hover:cursor-pointer font-extrabold rounded-md text-gray-400',
-                  voteType === 'DOWN_VOTE' && 'text-red-500 bg-gray-200'
+                  'hover:text-red-500 p-1  font-extrabold rounded-md text-gray-400',
+                  voteType === 'DOWN_VOTE' && 'text-red-500 bg-gray-200', loadWhenVote && ('cursor-wait')
                 )}>
                 <ChevronDownIcon className='h-6 w-6' />
               </button>

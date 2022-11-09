@@ -43,8 +43,10 @@ const Tags = (props: Props) => {
         <TagItem
           id={item?.id}
           name={item?.name}
-          desciption={''}
+          desciption={item?.desc}
           follow={item?.follow}
+          posts_use={item?.posts_use}
+          bg_color={item?.color_bg}
           tag_follow_count={item?.tag_follow_count}
         />
       </>
