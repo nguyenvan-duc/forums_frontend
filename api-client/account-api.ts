@@ -16,7 +16,8 @@ export const accountApi = {
                name:data?.name,
                bio:data?.bio,
                username:data?.username,
-               skill:data?.skill
+               skill:data?.skill,
+               github_username:data?.github_username
           })
           return axiosConfig.post('/me/update-profile',dataSend)
      }

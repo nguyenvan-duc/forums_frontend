@@ -2,6 +2,7 @@ import { accountApi } from '@/api-client/account-api'
 import { useAuth } from '@/hooks'
 import React,{useState} from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
 
 export function ChangeBaseInfo() {
   const { profile, mutate} = useAuth()
@@ -15,6 +16,7 @@ export function ChangeBaseInfo() {
           imageUrl:profile?.avatar,
           name:profile?.name,
           email:profile?.email,
+          github_username:profile?.github_username,
           username:profile?.username,
           bio:profile?.bio,
           skill:profile?.skill
@@ -27,6 +29,9 @@ export function ChangeBaseInfo() {
           console.log(res)
           mutate(res)
           setLoading(false);
+     }).catch(()=>{
+      setLoading(false)
+      toast.error('User name đã được sử dụng')
      })
   }
   
@@ -94,6 +99,18 @@ export function ChangeBaseInfo() {
               type='text'
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               {...register('username')}
+            />
+          </div>
+          <div className='mb-6'>
+            <label
+              htmlFor='email'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+              Github username
+            </label>
+            <input
+              type='text'
+              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+              {...register('github_username')}
             />
           </div>
           <div className='mb-6'>

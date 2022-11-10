@@ -43,10 +43,10 @@ export function UseInfo({
 }: UseInfoPageProps) {
   const [githubInfo, setGithubInfo] = useState<any>()
   useEffect(() => {
-    fetchGithubInfoData()
+      fetchGithubInfoData()
   }, [])
   const fetchGithubInfoData = async () => {
-    await accountApi.githubInfo('dducnv0712').then((res: any) => {
+    await accountApi.githubInfo(info?.github_username as string).then((res: any) => {
       setGithubInfo(res?.data)
     })
   }
@@ -111,16 +111,15 @@ export function UseInfo({
           <div className='flex justify-end px-4 pt-4'>
             {isMe ? (
               <>
-              <Link href={'/tai-khoan/cai-dat'}>
-              <a
-                  id='dropdownButton'
-                  data-dropdown-toggle='dropdown'
-                  className='py-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md'
-                  type='button'>
-                  Chỉnh sửa
-                </a>
-              </Link>
-               
+                <Link href={'/tai-khoan/cai-dat'}>
+                  <a
+                    id='dropdownButton'
+                    data-dropdown-toggle='dropdown'
+                    className='py-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md'
+                    type='button'>
+                    Chỉnh sửa
+                  </a>
+                </Link>
               </>
             ) : (
               ''
@@ -220,23 +219,25 @@ export function UseInfo({
                 )}
               </div>
             </div>
-            <div className='rounded-lg border bg-white mb-3'>
-              <div className='py-3 px-3 border-b border-gray-300'>
-                <h3 className='font-medium text-gray-700 text-md'>
-                  Thông tin Github
-                </h3>
-              </div>
-              <div className='px-3 border-b border-gray-300'>
-                <div className='w-full py-2 px-2 text-gray-700 font-medium flex items-center'>
-                  <BriefcaseIcon className='w-5 h-5 mr-2' />
-                  {githubInfo?.public_repos} Dự án
+            {info?.github_username && (
+              <div className='rounded-lg border bg-white mb-3'>
+                <div className='py-3 px-3 border-b border-gray-300'>
+                  <h3 className='font-medium text-gray-700 text-md'>
+                    Thông tin Github
+                  </h3>
                 </div>
-                <div className='w-full py-2 px-2 text-gray-700 font-medium flex items-center'>
-                  <UsersIcon className='w-5 h-5 mr-2' />
-                  {githubInfo?.followers} Người theo dõi
+                <div className='px-3 border-b border-gray-300'>
+                  <div className='w-full py-2 px-2 text-gray-700 font-medium flex items-center'>
+                    <BriefcaseIcon className='w-5 h-5 mr-2' />
+                    {githubInfo?.public_repos} Dự án
+                  </div>
+                  <div className='w-full py-2 px-2 text-gray-700 font-medium flex items-center'>
+                    <UsersIcon className='w-5 h-5 mr-2' />
+                    {githubInfo?.followers} Người theo dõi
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
           <div className='w-full md:w-3/4 md:pl-3'>
             <div className='bg-white w-full rounded-md border'>

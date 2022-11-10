@@ -8,7 +8,7 @@ import useSWR from 'swr'
 type Props = {}
 
 const MeProfile: NextPageWithLayout = (props: Props) => {
-  const { data: myProfile } = useSWR<any>('/my/profile', {
+  const { data: myProfile} = useSWR<any>('/my/profile', {
     dedupingInterval: 15 * 60 * 1000,
     revalidateOnFocus: false,
   })
