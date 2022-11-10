@@ -42,7 +42,7 @@ export function FunctionallyButtons({
           setStatusBookmark(res?.data)
         }
       } else if (subject == 'COMMENT') {
-        let res = await bookmarkPost(id)
+        let res = await bookmarkComment(id)
         if(res?.status == 200){
           setStatusBookmark(res?.data)
         }

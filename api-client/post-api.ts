@@ -5,6 +5,9 @@ import Cookies from 'js-cookie';
 const POST_PATH_API = '/posts'
 
 export const postApi = {
+  async getAllPostForStaticProps(){
+    return await axiosConfig.get<Array<PostModel>>('/posts/list')
+  },
   async getAllPost(sort:string) {
     return await axiosConfig.get<Array<PostModel>>(`/posts?sort=${sort}`)
   },

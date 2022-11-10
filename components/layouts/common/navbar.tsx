@@ -16,7 +16,8 @@ import { useTheme } from 'next-themes'
 import { useAuth } from '@/hooks'
 import { SearchPopup } from '@/components/layouts/common'
 import { LoginModal } from '@/components/login/login_modal'
-
+import { appApi } from '@/api-client'
+import _ from 'lodash'
 type NavbarProps = {}
 function classNames(...classes: any) {
   return classes.filter(Boolean).join('')
@@ -28,11 +29,23 @@ export function Navbar({}: NavbarProps) {
   const [searchIsOpen, setSearchIsOpen] = useState(false)
   const [openLoginModal, setOpenLoginModal] = useState(false)
   const [visible, setVisible] = useState(false)
+  const [notifications, setNotification] = useState([])
+  useEffect(() => {
+    fetchData()
+  }, [asPath])
+  const fetchData = async () => {
+    await appApi.getNotify().then((res: any) => {
+      setNotification(res)
+      setLoading(false)
+    })
+  }
+  let notifyNotSent: any = _.filter(notifications, { status: 'NOT_SEEN' })
+
   const getChangerPopupSearch = (status: any) => {
     setSearchIsOpen(status)
   }
-  const handleClickChangeTheme = (e:any) => {
-    e.preventDefault();
+  const handleClickChangeTheme = (e: any) => {
+    e.preventDefault()
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
   useHotkeys('ctrl+alt+k', () => setSearchIsOpen(true))
@@ -85,8 +98,10 @@ export function Navbar({}: NavbarProps) {
               </a>
             </Link>
             <Link href={'/thong-bao'}>
-              <a className='bg-white dark:bg-gray-800 p-1 ml-4 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
-                <span className='sr-only'>View notifications</span>
+              <a className='bg-white dark:bg-gray-800 relative p-1 ml-4 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-white outline-none shadow-none'>
+                {notifyNotSent.length > 0 && (
+                  <div className='w-2 h-2 bg-blue-500 absolute  right-2 rounded-full' />
+                )}
                 <BellIcon className='h-6 w-6' aria-hidden='true' />
               </a>
             </Link>
@@ -189,15 +204,15 @@ export function Navbar({}: NavbarProps) {
       setTimeout(() => {
         setLoading(false)
       }, 2000)
-      events.on('routeChangeStart', handleStart)
-      events.on('routeChangeComplete', handleComplete)
-      events.on('routeChangeError', handleComplete)
+    events.on('routeChangeStart', handleStart)
+    events.on('routeChangeComplete', handleComplete)
+    events.on('routeChangeError', handleComplete)
 
-      return () => {
-        events.off('routeChangeStart', handleStart)
-        events.off('routeChangeComplete', handleComplete)
-        events.off('routeChangeError', handleComplete)
-      }
+    return () => {
+      events.off('routeChangeStart', handleStart)
+      events.off('routeChangeComplete', handleComplete)
+      events.off('routeChangeError', handleComplete)
+    }
   }, [asPath, events, loadingWhenNextPage])
   return (
     <>
@@ -238,9 +253,7 @@ export function Navbar({}: NavbarProps) {
                   </div>
                   <div className='hidden sm:block sm:ml-6'>
                     <div>
-                      <div
-                        
-                        className='mt-1 relative rounded-md border'>
+                      <div className='mt-1 relative rounded-md border'>
                         <input
                           type='text'
                           name='price'
@@ -251,7 +264,9 @@ export function Navbar({}: NavbarProps) {
                           placeholder={'Tìm kiếm... (Ctrl + alt + k)'}
                         />
                         <div className='absolute inset-y-0 right-0 flex items-center'>
-                          <button className='p-3' onClick={() => setSearchIsOpen(true)}>
+                          <button
+                            className='p-3'
+                            onClick={() => setSearchIsOpen(true)}>
                             <MagnifyingGlassIcon
                               className='h-5 w-5'
                               aria-hidden='true'

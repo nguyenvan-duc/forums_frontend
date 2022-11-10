@@ -12,7 +12,7 @@ function classNames(...classes: any) {
 const Home: NextPageWithLayout = () => {
   const [posts, setPosts] = useState<Array<PostModel>>([])
   const [loader, setLoader] = useState(true)
-  const [sortType, setSortType] = useState(SORT_POST_NEW);
+  const [sortType, setSortType] = useState('none');
   const { profile } = useAuth()
   useEffect(() => {
     fetchDataPosts()
@@ -74,13 +74,13 @@ const Home: NextPageWithLayout = () => {
       <div className='flex mb-2'>
         <button
         onClick={()=>setSortType('none')}
-        className={classNames('px-2 py-2 mr-2 hover:bg-gray-50  rounded-md', sortType == 'none' &&('font-medium'))}>
+        className={classNames('px-2 py-2 mr-2 hover:bg-gray-50  rounded-md', sortType == 'none' &&('font-medium bg-gray-200'))}>
           Liên Quan
         </button>
-        <button onClick={()=> setSortType(SORT_POST_NEW)} className={classNames('px-2 py-2 hover:bg-gray-50 rounded-md',sortType == SORT_POST_NEW &&('font-medium'))}>
+        <button onClick={()=> setSortType(SORT_POST_NEW)} className={classNames('px-2 py-2 hover:bg-gray-50 rounded-md',sortType == SORT_POST_NEW &&('font-medium bg-gray-200'))}>
           Mới nhất
         </button>
-        <button onClick={()=> setSortType(SORT_POST_HOT)} className={classNames('px-2 py-2 hover:bg-gray-50 rounded-md',sortType == SORT_POST_HOT &&('font-medium'))}>
+        <button onClick={()=> setSortType(SORT_POST_HOT)} className={classNames('px-2 py-2 hover:bg-gray-50 rounded-md',sortType == SORT_POST_HOT &&('font-medium bg-gray-200'))}>
           Phổ biến
         </button>
       </div>

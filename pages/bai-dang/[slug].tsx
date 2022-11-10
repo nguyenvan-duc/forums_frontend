@@ -61,7 +61,7 @@ const DetailsPost = ({ post, slug }: any) => {
         </h1>
         <div className='flex flex-wrap mb-2  justify-starts items-center mt-2 mb-3'>
           {_.map(post.tags, (item) => (
-            <Link href='#' key={item.id}>
+            <Link href={`/tag/${item?.slug}`} key={item.id}>
               <a className='text-sm mr-2 py-1 px-1.5 text-gray-600 bg-blue-50 border border-blue-200 hover:bg-blue-100 rounded-md'>
                 {item.name}
               </a>
@@ -108,7 +108,7 @@ DetailsPost.requestAuth = false
 export default DetailsPost
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts: any = await postApi.getAllPost().then((res) => {
+  const posts: any = await postApi.getAllPostForStaticProps().then((res) => {
     return res
   })
   const paths = posts?.map((post: any) => ({
@@ -119,8 +119,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({
-  params,
-  header,
+  params
 }: any) => {
   let slug = params?.slug
   const post = await postApi.getDetails(slug).then((res) => {

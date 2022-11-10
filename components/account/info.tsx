@@ -8,6 +8,7 @@ import {
   ChatBubbleBottomCenterIcon,
   TagIcon,
 } from '@heroicons/react/24/outline'
+import dynamic from 'next/dynamic'
 import { Tab, Menu, Transition } from '@headlessui/react'
 import { accountApi } from '@/api-client/account-api'
 import { Profile } from '@/models'
@@ -15,7 +16,9 @@ import _ from 'lodash'
 import format_date from '@/utils/format_date'
 import { Posts } from '../posts'
 import Link from 'next/link'
-
+const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
+  ssr: false,
+})
 type UseInfoPageProps = {
   info?: Profile
   contacts?: any[]
@@ -252,7 +255,7 @@ export function UseInfo({
                         <h3 className='text-lg font-semibold'>
                           {item?.post?.title}
                         </h3>
-                        <div>{item?.content}</div>
+                        <MarkdownPreview source={item?.content} />
                       </div>
                     </a>
                   </Link>

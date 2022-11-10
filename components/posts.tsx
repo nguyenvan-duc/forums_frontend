@@ -62,18 +62,13 @@ export function Posts({
             </Link>
             <div className='flex flex-wrap mb-2  justify-starts items-center mt-2'>
               {_.map(tags, (item) => (
-                <Link href='#' key={item.id}>
+                <Link href={`/tag/${item?.slug}`} key={item.id}>
                   <a className='text-xs mr-2 py-1 px-1.5 text-gray-500 bg-blue-50 hover:bg-blue-100 rounded-md'>
                     {item.name}
                   </a>
                 </Link>
               ))}
             </div>
-            <Link href={'/posts/ask/ask'}>
-              <a className='text-gray-600 truncate w-full mt-2 dark:text-gray-300 font-light text-sm'>
-                {/* {content} */}
-              </a>
-            </Link>
             <div className='flex justify-between items-end'>
               <div className='flex items-center mt-4'>
                 <a href='#' className='block relative'>

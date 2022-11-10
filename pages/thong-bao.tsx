@@ -1,10 +1,12 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ShareIcon } from '@heroicons/react/24/outline'
 import { NextPageWithLayout } from '@/models'
 import { MainLayout } from '@/components/layouts'
 import { useAuth } from '@/hooks'
 import { appApi } from '@/api-client'
+import _ from 'lodash'
+import Link from 'next/link'
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
@@ -12,185 +14,90 @@ type Props = {}
 
 const Notifications: NextPageWithLayout = (props: Props) => {
   const { login } = useAuth()
-  useEffect(()=>{
+  const [notifications, setNotification] = useState([])
+  const [notificationFilter, setNotificationFilter] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [filter, setFilter] = useState('ALL')
+  useEffect(() => {
     fetchData()
-  },[])
+  }, [])
   const fetchData = async () => {
     await appApi.getNotify().then((res: any) => {
-      console.log(res)
+      setNotification(res)
+      setNotificationFilter(res)
+      setLoading(false)
     })
+  }
+  const sendNotification = async (id: number) => {
+    await appApi.sendNotify(id)
+  }
+  let filtered_array: any = _.filter(notifications, { status: 'NOT_SEEN' })
+  const renderNotification = () => {
+    if (loading) {
+      return (
+        <>
+          <div className='animate-pulse bg-gray-300 w-full h-20 mr-2 mb-2 rounded-md' />
+          <div className='animate-pulse bg-gray-300 w-full h-20 mr-2 mb-2 rounded-md' />
+          <div className='animate-pulse bg-gray-300 w-full h-20 mr-2 mb-2 rounded-md' />
+          <div className='animate-pulse bg-gray-300 w-full h-20 mr-2 mb-2 rounded-md' />
+        </>
+      )
+    }
+    if (notifications.length == 0) {
+      return <div className='text-center mt-5'>Bạn chưa có thông báo nào.</div>
+    }
+    return _.map(notificationFilter, (item: any) => (
+      <>
+        <Link key={item?.id} href={`${item?.redirect_url}`}>
+          <a
+            onClick={() => {
+              if(item?.status === "NOT_SEEN"){
+                sendNotification(item?.id)
+              }
+            }}
+            className='p-6 bg-white flex  items-center justify-between w-full rounded-lg mb-1 border border-gray-200 dark:bg-gray-800 hover:bg-gray-50 dark:border-gray-700'>
+            <div className='flex items-center'>
+              <img
+                src={item?.interactive_user?.imageUrl}
+                alt={item?.interactive_user?.name}
+                className='h-7 w-7 rounded-full mr-2'
+              />
+              <span className=' font-medium mr-2'>
+                {item?.interactive_user?.name}
+              </span>{' '}
+              {item.content}
+            </div>
+            {item?.status == 'NOT_SEEN' && (
+              <div className='h-3 w-3 bg-blue-500 rounded-full' />
+            )}
+          </a>
+        </Link>
+      </>
+    ))
   }
   return (
     <>
-      <div className=' min-h-screen  max-w-xl mt-4 m-auto'>
-        <div className='p-6 bg-white flex justify-between items-center w-full rounded-lg mb-1 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
-          <div>
-            <h1 className='font-semibold text-lg'>This is Notify</h1>
-            <p>This is description</p>
-          </div>
-
-          <Menu as='div' className='ml-3 relative'>
-            <div>
-              <Menu.Button className='p-2 rounded-full text-gray-500 hover:bg-indigo-100  border'>
-                <svg
-                  className='w-6 h-6'
-                  fill='currentColor'
-                  viewBox='0 0 20 20'
-                  xmlns='http://www.w3.org/2000/svg'>
-                  <path d='M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z'></path>
-                </svg>
-              </Menu.Button>
-            </div>
-            <Transition
-              as={Fragment}
-              enter='transition ease-out duration-100'
-              enterFrom='transform opacity-0 scale-95'
-              enterTo='transform opacity-100 scale-100'
-              leave='transition ease-in duration-75'
-              leaveFrom='transform opacity-100 scale-100'
-              leaveTo='transform opacity-0 scale-95'>
-              <Menu.Items className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                <Menu.Item>
-                  {({ active }) => (
-                    <a
-                      className={classNames(
-                        active ? 'bg-gray-100' : '',
-                        'block px-4 py-2 text-sm text-gray-700'
-                      )}>
-                      Facebook
-                    </a>
-                  )}
-                </Menu.Item>
-              </Menu.Items>
-            </Transition>
-          </Menu>
+      <div className=' min-h-[80vh] max-w-xl mt-4 m-auto border bg-gray-50 mb-3 p-3 rounded-md'>
+        <h2 className='text-2xl font-bold mb-3'>Thông báo</h2>
+        <div className='flex mb-3'>
+          <button
+            onClick={() => {
+              setNotificationFilter(notifications)
+              setFilter('ALL')
+            }}
+            className={classNames(' px-3 py-1 mr-2  rounded-md text-sm',filter === 'ALL'&&('bg-gray-200 font-semibold'))}>
+            Tất cả
+          </button>
+          <button
+            onClick={() => {
+              setNotificationFilter(filtered_array)
+              setFilter('NOT_SENT')
+            }}
+            className={classNames(' px-3 py-1 mr-2  rounded-md text-sm',filter === 'NOT_SENT'&&('bg-gray-200 font-semibold'))}>
+            Chưa đọc
+          </button>
         </div>
-        <div className='p-6 bg-white flex justify-between items-center w-full rounded-lg mb-1 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
-          <div>
-            <h1 className='font-semibold text-lg'>This is Notify</h1>
-            <p>This is description</p>
-          </div>
-
-          <Menu as='div' className='ml-3 relative'>
-            <div>
-              <Menu.Button className='p-2 rounded-full text-gray-500 hover:bg-indigo-100  border'>
-                <svg
-                  className='w-6 h-6'
-                  fill='currentColor'
-                  viewBox='0 0 20 20'
-                  xmlns='http://www.w3.org/2000/svg'>
-                  <path d='M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z'></path>
-                </svg>
-              </Menu.Button>
-            </div>
-            <Transition
-              as={Fragment}
-              enter='transition ease-out duration-100'
-              enterFrom='transform opacity-0 scale-95'
-              enterTo='transform opacity-100 scale-100'
-              leave='transition ease-in duration-75'
-              leaveFrom='transform opacity-100 scale-100'
-              leaveTo='transform opacity-0 scale-95'>
-              <Menu.Items className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                <Menu.Item>
-                  {({ active }) => (
-                    <a
-                      className={classNames(
-                        active ? 'bg-gray-100' : '',
-                        'block px-4 py-2 text-sm text-gray-700'
-                      )}>
-                      Facebook
-                    </a>
-                  )}
-                </Menu.Item>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-        </div>
-        <div className='p-6 bg-white flex justify-between items-center w-full rounded-lg mb-1 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
-          <div>
-            <h1 className='font-semibold text-lg'>This is Notify</h1>
-            <p>This is description</p>
-          </div>
-
-          <Menu as='div' className='ml-3 relative'>
-            <div>
-              <Menu.Button className='p-2 rounded-full text-gray-500 hover:bg-indigo-100  border'>
-                <svg
-                  className='w-6 h-6'
-                  fill='currentColor'
-                  viewBox='0 0 20 20'
-                  xmlns='http://www.w3.org/2000/svg'>
-                  <path d='M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z'></path>
-                </svg>
-              </Menu.Button>
-            </div>
-            <Transition
-              as={Fragment}
-              enter='transition ease-out duration-100'
-              enterFrom='transform opacity-0 scale-95'
-              enterTo='transform opacity-100 scale-100'
-              leave='transition ease-in duration-75'
-              leaveFrom='transform opacity-100 scale-100'
-              leaveTo='transform opacity-0 scale-95'>
-              <Menu.Items className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                <Menu.Item>
-                  {({ active }) => (
-                    <a
-                      className={classNames(
-                        active ? 'bg-gray-100' : '',
-                        'block px-4 py-2 text-sm text-gray-700'
-                      )}>
-                      Facebook
-                    </a>
-                  )}
-                </Menu.Item>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-        </div>
-        <div className='p-6 bg-white flex justify-between items-center w-full rounded-lg mb-1 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
-          <div>
-            <h1 className='font-semibold text-lg'>This is Notify</h1>
-            <p>This is description</p>
-          </div>
-
-          <Menu as='div' className='ml-3 relative'>
-            <div>
-              <Menu.Button className='p-2 rounded-full text-gray-500 hover:bg-indigo-100  border'>
-                <svg
-                  className='w-6 h-6'
-                  fill='currentColor'
-                  viewBox='0 0 20 20'
-                  xmlns='http://www.w3.org/2000/svg'>
-                  <path d='M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z'></path>
-                </svg>
-              </Menu.Button>
-            </div>
-            <Transition
-              as={Fragment}
-              enter='transition ease-out duration-100'
-              enterFrom='transform opacity-0 scale-95'
-              enterTo='transform opacity-100 scale-100'
-              leave='transition ease-in duration-75'
-              leaveFrom='transform opacity-100 scale-100'
-              leaveTo='transform opacity-0 scale-95'>
-              <Menu.Items className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                <Menu.Item>
-                  {({ active }) => (
-                    <a
-                      className={classNames(
-                        active ? 'bg-gray-100' : '',
-                        'block px-4 py-2 text-sm text-gray-700'
-                      )}>
-                      Facebook
-                    </a>
-                  )}
-                </Menu.Item>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-        </div>
+        {renderNotification()}
       </div>
     </>
   )

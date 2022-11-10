@@ -61,7 +61,7 @@ export function Answer({
     if (value == '') return
     setLoading(true)
     await commentApi.replyComment(post_id, value, { id }).then((res: any) => {
-      setReplyList([...replyList, res])
+      setReplyList([res,...replyList])
       setValue('')
       setLoading(false)
     })
@@ -88,7 +88,7 @@ export function Answer({
           </div>
         </div>
       ) : (
-        <div className='flex  py-3'>
+        <div id={`comment-${id}`} className='flex  py-3'>
           <div className='w-1/12 relative'>
             <button
               onClick={() => handleToggle(id)}
@@ -145,10 +145,11 @@ export function Answer({
             <ul className='my-3'>
               {_.map(replyList, (item) => (
                 <li
+                  id={`comment-${item?.id}`}
                   key={item?.id}
                   className='text-sm p-2 h-full bg-gray-100 border mb-2'>
                   <div className='flex items-center'>
-                    <Link href={`/nguoi-dung/${account.username}`}>
+                    <Link href={`/nguoi-dung/${item?.account?.username}`}>
                       <a className='flex item-center mr-2 text-sm'>
                         <img
                           src={item.account.imageUrl}

@@ -1,6 +1,12 @@
 export interface TagModel {
-     id:number,
+     id: number
+     icon:string
+     slug:string
+     color_bg:string
      name: string
-     tag_follow_count: number,
-     follow:number
+     desciption: string
+     tag_follow_count: number
+     follow: boolean,
+     posts_use:number,
+     bg_color:string,
 }

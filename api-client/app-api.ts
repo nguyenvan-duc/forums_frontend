@@ -10,5 +10,8 @@ export const appApi = {
   },
   getNotify(){
     return axiosConfig.get('/notifications')
+  },
+  sendNotify(id:number){
+    return axiosConfig.get(`${id}/send-notification`)
   }
 }

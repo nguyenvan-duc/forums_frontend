@@ -5,10 +5,12 @@ import _ from 'lodash'
 import { Answer } from './answer'
 import { AnswersForm } from './answers_form'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 interface AOPProps {
   id: number
 }
 export function AnswerOfPost({ id }: AOPProps) {
+  const route = useRouter()
   const [answers, setAnswers] = useState<any>([])
   const [value, setValue] = useState('')
   const [loading, setLoading] = useState(false)
@@ -22,6 +24,7 @@ export function AnswerOfPost({ id }: AOPProps) {
     await commentApi.findCommentByPost(id).then((res: any) => {
       setAnswers(res)
       setLoading(false)
+      route?.push(route?.asPath)
     })
   }
   const onChange = useCallback((value: any) => {
