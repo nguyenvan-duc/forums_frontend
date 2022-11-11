@@ -5,6 +5,7 @@ import { tagApi } from '@/api-client'
 import _ from 'lodash'
 import SEO from "@bradgarropy/next-seo"
 import { TagItem } from '@/components'
+
 type Props = {}
 const Tags = (props: Props) => {
   const [tags, setTags] = useState([])

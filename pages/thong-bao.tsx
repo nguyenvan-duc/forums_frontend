@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import SEO from "@bradgarropy/next-seo"
+import SEO from '@bradgarropy/next-seo'
 import { NextPageWithLayout } from '@/models'
 import { MainLayout } from '@/components/layouts'
 import { useAuth } from '@/hooks'
@@ -50,7 +50,7 @@ const Notifications: NextPageWithLayout = (props: Props) => {
         <Link key={item?.id} href={`${item?.redirect_url}`}>
           <a
             onClick={() => {
-              if(item?.status === "NOT_SEEN"){
+              if (item?.status === 'NOT_SEEN') {
                 sendNotification(item?.id)
               }
             }}
@@ -61,10 +61,12 @@ const Notifications: NextPageWithLayout = (props: Props) => {
                 alt={item?.interactive_user?.name}
                 className='h-7 w-7 rounded-full mr-2'
               />
-              <span className=' font-medium mr-2'>
-                {item?.interactive_user?.name}
-              </span>{' '}
-              {item.content}
+              <div>
+                <span className=' font-medium mr-2'>
+                  {item?.interactive_user?.name}
+                </span>{' '}
+                {item.content}
+              </div>
             </div>
             {item?.status == 'NOT_SEEN' && (
               <div className='h-3 w-3 bg-blue-500 rounded-full' />
@@ -76,10 +78,7 @@ const Notifications: NextPageWithLayout = (props: Props) => {
   }
   return (
     <>
-    <SEO
-    title='Danh sách thông báo'
-    description='Danh sách thông báo'
-    />
+      <SEO title='Danh sách thông báo' description='Danh sách thông báo' />
       <div className=' min-h-[80vh] max-w-xl mt-4 m-auto border bg-gray-50 mb-3 p-3 rounded-md'>
         <h2 className='text-2xl font-bold mb-3'>Thông báo</h2>
         <div className='flex mb-3'>
@@ -88,7 +87,10 @@ const Notifications: NextPageWithLayout = (props: Props) => {
               setNotificationFilter(notifications)
               setFilter('ALL')
             }}
-            className={classNames(' px-3 py-1 mr-2  rounded-md text-sm',filter === 'ALL'&&('bg-gray-200 font-semibold'))}>
+            className={classNames(
+              ' px-3 py-1 mr-2  rounded-md text-sm',
+              filter === 'ALL' && 'bg-gray-200 font-semibold'
+            )}>
             Tất cả
           </button>
           <button
@@ -96,7 +98,10 @@ const Notifications: NextPageWithLayout = (props: Props) => {
               setNotificationFilter(filtered_array)
               setFilter('NOT_SENT')
             }}
-            className={classNames(' px-3 py-1 mr-2  rounded-md text-sm',filter === 'NOT_SENT'&&('bg-gray-200 font-semibold'))}>
+            className={classNames(
+              ' px-3 py-1 mr-2  rounded-md text-sm',
+              filter === 'NOT_SENT' && 'bg-gray-200 font-semibold'
+            )}>
             Chưa đọc
           </button>
         </div>
