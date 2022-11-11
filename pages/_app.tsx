@@ -6,6 +6,7 @@ import axiosConfig from '@/api-client/axios-config'
 import { BlankLayout } from '@/components/layouts'
 import { AppPropsWithLayout } from '@/models'
 import { AppProvider } from '@/store'
+import { Analytics } from '@vercel/analytics/react'
 import '@uiw/react-markdown-preview/markdown.css'
 import 'easymde/dist/easymde.min.css'
 import '@/styles/globals.css'
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         shouldRetryOnError: false,
       }}>
       <ThemeProvider enableSystem={true} attribute='class'>
+        <Analytics />
         <AppProvider>
           <Layout
             sidebarRight={sidebarRight}
