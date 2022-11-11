@@ -43,12 +43,16 @@ export function UseInfo({
 }: UseInfoPageProps) {
   const [githubInfo, setGithubInfo] = useState<any>()
   useEffect(() => {
+    if (info?.github_username) {
       fetchGithubInfoData()
-  }, [])
+    }
+  }, [info?.github_username])
   const fetchGithubInfoData = async () => {
-    await accountApi.githubInfo(info?.github_username as string).then((res: any) => {
-      setGithubInfo(res?.data)
-    })
+    await accountApi
+      .githubInfo(info?.github_username as string)
+      .then((res: any) => {
+        setGithubInfo(res?.data)
+      })
   }
   const renderContent = () => {
     if (loading) {
