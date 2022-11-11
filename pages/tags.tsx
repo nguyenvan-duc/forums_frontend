@@ -3,6 +3,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { MainLayout } from '@/components/layouts'
 import { tagApi } from '@/api-client'
 import _ from 'lodash'
+import SEO from "@bradgarropy/next-seo"
 import { TagItem } from '@/components'
 type Props = {}
 const Tags = (props: Props) => {
@@ -56,6 +57,11 @@ const Tags = (props: Props) => {
     ))
   }
   return (
+    <>
+    <SEO
+    title='Danh sách tags'
+    description='Danh sách tags'
+    />
     <div>
       <div className=' p-3 min-h-[90vh]'>
         <div className='mt-1 w-3/12 relative rounded-md shadow-sm mb-6'>
@@ -77,6 +83,8 @@ const Tags = (props: Props) => {
         </div>
       </div>
     </div>
+    </>
+    
   )
 }
 Tags.Layout = MainLayout

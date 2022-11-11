@@ -2,6 +2,7 @@ import React from 'react'
 import { UserIcon, CogIcon } from '@heroicons/react/24/outline'
 import { Tab } from '@headlessui/react'
 import { MainLayout } from '@/components/layouts'
+import SEO from "@bradgarropy/next-seo"
 import { NextPageWithLayout } from '@/models'
 import { ChangeAdvancedInfo, ChangeBaseInfo } from '@/components/account'
 type Props = {}
@@ -11,6 +12,9 @@ function classNames(...classNamees: any) {
 const Settings: NextPageWithLayout = (props: Props) => {
   return (
     <>
+    <SEO
+    title='Cài đặt tài khoản'
+    />
       <div className='flex  container mx-auto  md:w-5/6 w-11/12 '>
         <Tab.Group>
           <Tab.List className='w-64 px-2 py-6 hidden md:block'>

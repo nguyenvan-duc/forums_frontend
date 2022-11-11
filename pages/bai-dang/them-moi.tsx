@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import useSWR from 'swr'
+import SEO from '@bradgarropy/next-seo'
 import { useRouter } from 'next/router'
 import Multiselect from 'multiselect-react-dropdown'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -57,7 +58,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [preview, setPreview] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [loadWhenSuccess,setLoadWhenSuccess] = useState(false)
+  const [loadWhenSuccess, setLoadWhenSuccess] = useState(false)
   //data
   const [title, setTitle] = useState('')
   const [content, setContent] = useState<any>()
@@ -71,7 +72,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
     return router.push('/')
   }
   useEffect(() => {
-    let dataAutoSave: any = autosavedValue&&JSON?.parse(autosavedValue)
+    let dataAutoSave: any = autosavedValue && JSON?.parse(autosavedValue)
     setTitle(dataAutoSave?.title)
     setContent(dataAutoSave?.contentMarkdown)
     setTagsSelected(dataAutoSave?.tags)
@@ -119,21 +120,21 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
       tags: tagsSelected,
       content: content,
     }
-    const result:any = await postApi.createNewPost(dataCreateNewPost)
+    const result: any = await postApi.createNewPost(dataCreateNewPost)
     console.log(result)
     if (result) {
       setLoading(false)
       setLoadWhenSuccess(true)
       setTitle('')
-      localStorage.setItem('editor-save','')
+      localStorage.setItem('editor-save', '')
       router.push(`/bai-dang/${result?.slug}`)
-    
     }
   }
 
-  if(loadWhenSuccess) return <Loader/>
+  if (loadWhenSuccess) return <Loader />
   return (
     <>
+      <SEO title='Thêm mới bài viết' description='Thêm mới bài viết' />
       <div id='myText' className='bg-gray-primary min-h-screen'>
         <Disclosure as='nav'>
           {({ open }) => (
@@ -223,7 +224,6 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
                       {titleError && <li>{titleError}</li>}
                       {contentError && <li>{contentError}</li>}
                     </ul>
-
                   </div>
                 )}
                 <div className='py-5'>
@@ -298,7 +298,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
                   disabled={loading}
                   onClick={() => handleNewPost()}
                   className='px-4 py-2 rounded-md ml-3 bg-indigo-500 mt-2 text-gray-200'>
-                  {loading?"Đang tải lên" :"Đăng tải"}
+                  {loading ? 'Đang tải lên' : 'Đăng tải'}
                 </button>
               </div>
             </div>

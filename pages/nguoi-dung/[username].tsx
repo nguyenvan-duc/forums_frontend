@@ -5,6 +5,7 @@ import { UseInfo } from '@/components/account'
 import { MainLayout } from '@/components/layouts'
 import { NextPageWithLayout } from '@/models'
 import useSWR from 'swr'
+import SEO from "@bradgarropy/next-seo"
 
 type Props = {}
 
@@ -30,7 +31,17 @@ const AccountDetail: NextPageWithLayout = (props: Props) => {
   )
   let loading = !userProfile?.info || !userPosts || !userComments
   return (
-    <div className='max-w-5xl m-auto'>
+    <>
+    <SEO
+    title={userProfile?.info?.name}
+    description={userProfile?.info?.bio}
+    facebook={{
+      image:userProfile?.info?.avatar ,
+      url: `/nguoi-dung/${userProfile?.info?.username}`,
+      type: "website",
+    }}
+    />
+     <div className='max-w-5xl m-auto'>
       <UseInfo
         loading={loading}
         info={userProfile?.info}
@@ -40,6 +51,8 @@ const AccountDetail: NextPageWithLayout = (props: Props) => {
         comments={userComments}
       />
     </div>
+    </>
+   
   )
 }
 AccountDetail.Layout = MainLayout

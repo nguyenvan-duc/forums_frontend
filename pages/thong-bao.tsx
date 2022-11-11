@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { ShareIcon } from '@heroicons/react/24/outline'
+import SEO from "@bradgarropy/next-seo"
 import { NextPageWithLayout } from '@/models'
 import { MainLayout } from '@/components/layouts'
 import { useAuth } from '@/hooks'
@@ -77,6 +76,10 @@ const Notifications: NextPageWithLayout = (props: Props) => {
   }
   return (
     <>
+    <SEO
+    title='Danh sách thông báo'
+    description='Danh sách thông báo'
+    />
       <div className=' min-h-[80vh] max-w-xl mt-4 m-auto border bg-gray-50 mb-3 p-3 rounded-md'>
         <h2 className='text-2xl font-bold mb-3'>Thông báo</h2>
         <div className='flex mb-3'>
