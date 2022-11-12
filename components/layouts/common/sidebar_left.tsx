@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
@@ -28,23 +28,30 @@ const menu = [
 type Props = {}
 export function SidebarLeft({}: Props) {
   const { asPath } = useRouter()
-  const {profile} = useAuth()
-  const { data: tags,mutate,error } = useSWR<Array<TagModel>>(`${profile?.name?"/my/tags-following":"/tags"}`, {
-    dedupingInterval: 60 * 60 * 1000,
-    revalidateOnFocus: false,
-  })
-  useEffect(()=>{
+  const { profile } = useAuth()
+  const {
+    data: tags,
+    mutate,
+    error,
+  } = useSWR<Array<TagModel>>(
+    `${profile?.name ? '/my/tags-following' : '/tags'}`,
+    {
+      dedupingInterval: 60 * 60 * 1000,
+      revalidateOnFocus: false,
+    }
+  )
+  useEffect(() => {
     mutate()
-  },[profile?.name])
-  const renderTags = () =>{
-    if(tags === undefined && error === undefined){
+  }, [profile?.name])
+  const renderTags = () => {
+    if (tags === undefined && error === undefined) {
       return (
         <>
-        <li className='mb-2'>
-          <div className='animate-pulse bg-gray-300 w-full h-7 mr-2 rounded-full' />
+          <li className='mb-2'>
+            <div className='animate-pulse bg-gray-300 w-full h-7 mr-2 rounded-full' />
           </li>
           <li>
-          <div className='animate-pulse bg-gray-300 w-full h-7 mr-2 rounded-full' />
+            <div className='animate-pulse bg-gray-300 w-full h-7 mr-2 rounded-full' />
           </li>
         </>
       )
@@ -53,7 +60,13 @@ export function SidebarLeft({}: Props) {
       <li key={item?.id}>
         <Link href={`/tag/${item?.slug}`}>
           <a className='flex items-center p-2 text-sm font-normal text-gray-900 transition duration-75 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-white group '>
-          <span className={`text-${item?.color_bg?item?.color_bg:"gray"}-800`}>#</span>{item?.name}
+            <span
+              className={`text-${
+                item?.color_bg ? item?.color_bg : 'gray'
+              }-800`}>
+              #
+            </span>
+            {item?.name}
           </a>
         </Link>
       </li>
@@ -79,13 +92,16 @@ export function SidebarLeft({}: Props) {
             </li>
           ))}
         </ul>
-     
-        <ul className='pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700'>
-          <li>
-          <h2 className='text-lg font-bold'>{profile?.name?"Tag đã theo dõi":"Tags phổ biến"}</h2>
-          </li>
-          {renderTags()}
-        </ul>
+        <div>
+          <div className='pt-4 mt-4 space-y-2   border-t border-gray-200 dark:border-gray-700'>
+            <div>
+              <h2 className='text-lg font-bold'>
+                {profile?.name ? 'Tag đã theo dõi' : 'Tags phổ biến'}
+              </h2>
+            </div>
+            <ul className='max-h-72 overflow-y-auto'>{renderTags()}</ul>
+          </div>
+        </div>
       </div>
     </aside>
   )
