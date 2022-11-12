@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 const axiosConfig = axios.create({
-  baseURL: 'http://localhost:3000/api',
-  // baseURL:'https://it-forums.vercel.app/api',
+  // baseURL: 'http://localhost:3000/api',
+  baseURL:'https://it-forums.vercel.app/api',
   headers: {
     'content-type': 'application/json',
   },
