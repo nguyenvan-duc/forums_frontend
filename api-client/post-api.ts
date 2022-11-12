@@ -8,8 +8,8 @@ export const postApi = {
   async getAllPostForStaticProps(){
     return await axiosConfig.get<Array<PostModel>>('/posts/list')
   },
-  async getAllPost(sort:string) {
-    return await axiosConfig.get<Array<PostModel>>(`/posts?sort=${sort}`)
+  async getAllPost(sort:string,page:number) {
+    return await axiosConfig.get<Array<PostModel>>(`/posts?sort=${sort}&page=${page}&size=10`)
   },
   async createNewPost(data:PostNewModel){
      return await axiosConfig.post<PostModel>("/post/new",data)
