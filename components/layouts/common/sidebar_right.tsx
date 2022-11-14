@@ -46,9 +46,9 @@ export function SidebarRight({}: Props) {
       <>
         {_.map(bookmarks, (item: any) => (
             <li key={item?.id} className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
-              <Link href={`/bai-dang/${item?.post?.slug}`}>
+              <Link href={`/bai-dang/${item?.url_redirect}`}>
                 <a>
-                  {item?.comment ? (
+                  {item?.subject == 'COMMENT' ? (
                     <>
                       <span className='px-2 py-2 bg-yellow-200 text-yellow-600 text-sm'>
                         trả lời
@@ -59,7 +59,7 @@ export function SidebarRight({}: Props) {
                       <span className='px-2 py-[1px] rounded-md mr-2 bg-yellow-200 text-yellow-600 text-xs'>
                         bài viết
                       </span>
-                      {item?.post?.title}
+                      {item?.content}
                     </>
                   ) : (
                     ''
