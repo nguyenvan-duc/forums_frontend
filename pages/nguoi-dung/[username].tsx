@@ -12,9 +12,12 @@ type Props = {}
 const AccountDetail: NextPageWithLayout = (props: Props) => {
   const { query, push,replace } = useRouter()
   const { profile } = useAuth()
-  if (profile?.username == query.username){
-    replace('/nguoi-dung/me')
-  }
+  useEffect(()=>{
+    if (profile?.username == query.username){
+      push('/nguoi-dung/me')
+    }
+  },[profile?.username])
+ 
   const { data: userProfile } = useSWR<any>(`user/${query?.username}/info`, {
     dedupingInterval: 15 * 60 * 1000,
     revalidateOnFocus: false,
