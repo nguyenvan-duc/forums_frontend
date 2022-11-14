@@ -10,10 +10,11 @@ import SEO from "@bradgarropy/next-seo"
 type Props = {}
 
 const AccountDetail: NextPageWithLayout = (props: Props) => {
-  const { query, push } = useRouter()
+  const { query, push,replace } = useRouter()
   const { profile } = useAuth()
-  if (profile?.username == query.username) push('/nguoi-dung/me')
-
+  if (profile?.username == query.username){
+    replace('/nguoi-dung/me')
+  }
   const { data: userProfile } = useSWR<any>(`user/${query?.username}/info`, {
     dedupingInterval: 15 * 60 * 1000,
     revalidateOnFocus: false,
