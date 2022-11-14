@@ -94,7 +94,8 @@ const DetailsPost = ({ post, slug }: any) => {
             <div className='mb-3'>
               <span className='text-xs text-gray-400'>Nội dung :</span>
               <div className='ml-2 post-details relative'>
-                <MarkdownPreview source={post?.content} />
+                <article className='prose lg:prose-xl'>{post?.content}</article>
+                {/* <MarkdownPreview source= /> */}
               </div>
             </div>
             <div className='flex justify-end'>

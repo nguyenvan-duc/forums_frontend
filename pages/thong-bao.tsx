@@ -46,7 +46,7 @@ const Notifications: NextPageWithLayout = (props: Props) => {
       return <div className='text-center mt-5'>Bạn chưa có thông báo nào.</div>
     }
     return _.map(notificationFilter, (item: any) => (
-      <>
+  
         <Link key={item?.id} href={`${item?.redirect_url}`}>
           <a
             onClick={() => {
@@ -73,7 +73,6 @@ const Notifications: NextPageWithLayout = (props: Props) => {
             )}
           </a>
         </Link>
-      </>
     ))
   }
   return (

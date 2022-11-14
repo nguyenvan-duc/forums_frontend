@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
 import format_date from '@/utils/format_date'
@@ -7,7 +7,8 @@ import { TagModel } from '@/models'
 import { Account } from '@/models/account'
 import HeroIcon from './hero_icon'
 import { postApi } from '@/api-client'
-import { useAuth,useBookmarks } from '@/hooks'
+import { useAuth, useBookmarks } from '@/hooks'
+import { ComponentRequestAuth } from './layouts/common'
 
 interface PostProps {
   id: number
@@ -34,14 +35,15 @@ export function Posts({
   isBookmark,
 }: PostProps) {
   const route = useRouter()
-  const {bookmarkPost} = useBookmarks()
+  const { bookmarkPost } = useBookmarks()
   const [statusBookmark, setStatusBookmark] = useState(isBookmark)
+  const {profile} = useAuth()
   const handleBookmark = async (e: any) => {
     e.preventDefault()
     try {
       setStatusBookmark(!statusBookmark)
       let res = await bookmarkPost(id)
-      if(res.status == 200){
+      if (res.status == 200) {
         setStatusBookmark(res.data)
       }
       console.log(res)
@@ -49,6 +51,11 @@ export function Posts({
       console.log(err)
     }
   }
+  useEffect(()=>{
+    if(!profile?.name){
+      setStatusBookmark(false)
+    }
+  },[profile?.name])
   return (
     <>
       <div className='overflow-hidden border border-gray-300 md:rounded-md w-full mb-4 m-auto'>
@@ -108,15 +115,18 @@ export function Posts({
                     <span>{commentCount} Bình luận</span>
                   </a>
                 </Link>
-                <button
-                  onClick={handleBookmark}
-                  className='p-3 hover:bg-indigo-100 rounded-full'>
-                  <HeroIcon
-                    name='BookmarkIcon'
-                    className='h-4 w-4'
-                    outline={statusBookmark}
-                  />
-                </button>
+                <ComponentRequestAuth>
+                  <button
+                    disabled={!profile?.name}
+                    onClick={handleBookmark}
+                    className='p-3 hover:bg-indigo-100 rounded-full'>
+                    <HeroIcon
+                      name='BookmarkIcon'
+                      className='h-4 w-4'
+                      outline={statusBookmark}
+                    />
+                  </button>
+                </ComponentRequestAuth>
               </div>
             </div>
           </div>

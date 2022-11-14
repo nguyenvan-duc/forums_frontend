@@ -12,7 +12,7 @@ export function Welcome() {
     } else {
       setDisplay(false)
     }
-  }, [])
+  }, [profile?.createdAt])
   return (
     <>
       {display &&  profile?.name && (

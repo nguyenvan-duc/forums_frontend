@@ -31,7 +31,9 @@ export function Navbar({}: NavbarProps) {
   const [visible, setVisible] = useState(false)
   const [notifications, setNotification] = useState([])
   useEffect(() => {
-    fetchData()
+    if (profile?.name) {
+      fetchData()
+    }
   }, [asPath])
   const fetchData = async () => {
     await appApi.getNotify().then((res: any) => {
@@ -113,7 +115,7 @@ export function Navbar({}: NavbarProps) {
                   <div
                     className={
                       profile?.fpt_member &&
-                      'rounded-full p-1  ring-2 ring-amber-400 dark:ring-gray-500'
+                      'rounded-full p-1  ring-2 ring-amber-400'
                     }>
                     {profile?.avatar ? (
                       <img

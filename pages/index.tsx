@@ -20,6 +20,14 @@ const Home: NextPageWithLayout = () => {
   useEffect(() => {
     fetchInitDataPosts()
   }, [sortType])
+  useEffect(()=>{
+    if(!profile?.name){
+      setSortType(SORT_POST_NEW)
+      fetchInitDataPosts()
+    }else{
+      setSortType('none')
+    }
+  },[profile?.name])
   const fetchInitDataPosts = async () => {
     setLoader(true)
     setNoMore(true)
@@ -47,8 +55,8 @@ const Home: NextPageWithLayout = () => {
         <>
           {Array.from(Array(3), (e, i) => {
             return (
-              <>
-                <div className='overflow-hidden border border-gray-300 md:rounded-md w-full mb-4 m-auto'>
+           
+                <div key={i} className='overflow-hidden border border-gray-300 md:rounded-md w-full mb-4 m-auto'>
                   <div className='w-full block h-full'>
                     {/* <img alt="blog photo" src="https://i.pinimg.com/564x/69/18/6a/69186a31ada4b1bf94edae291f54ec85.jpg" className="max-h-40 w-full object-cover" /> */}
                     <div className='bg-white hover:bg-gray-50 hover:dark:bg-gray-600 dark:bg-gray-800 w-full p-4'>
@@ -62,7 +70,6 @@ const Home: NextPageWithLayout = () => {
                     </div>
                   </div>
                 </div>
-              </>
             )
           })}
         </>
@@ -118,14 +125,17 @@ const Home: NextPageWithLayout = () => {
     <div className='min-h-[80vh]'>
       <Welcome />
       <div className='flex mb-2'>
-        <button
-          onClick={() => setSortType('none')}
-          className={classNames(
-            'px-2 py-2 mr-2 hover:bg-gray-50  rounded-md',
-            sortType == 'none' && 'font-medium bg-gray-200'
-          )}>
-          Liên Quan
-        </button>
+        {profile?.name && (
+          <button
+            onClick={() => setSortType('none')}
+            className={classNames(
+              'px-2 py-2 mr-2 hover:bg-gray-50  rounded-md',
+              sortType == 'none' && 'font-medium bg-gray-200'
+            )}>
+            Liên Quan
+          </button>
+        )}
+
         <button
           onClick={() => setSortType(SORT_POST_NEW)}
           className={classNames(

@@ -9,15 +9,27 @@ import { TagItem } from '@/components'
 type Props = {}
 const Tags = (props: Props) => {
   const [tags, setTags] = useState([])
+  const [tagsFilter,setTagFilter] = useState([])
   const [loader, setLoader] = useState(true)
   useEffect(() => {
     fetchData()
+    setTagFilter(tags)
   }, [])
   const fetchData = async () => {
     await tagApi.getAll().then((res: any) => {
       setTags(res)
       setLoader(false)
     })
+  }
+  function searchByTextInput(text:any) {
+    let data:any =  _.filter(tags, _.flow(
+      _.partial(_.omit, _, 'name'),
+      _.partial(
+        _.some, _,
+        _.flow(_.toLower, _.partial(_.includes, _, _.toLower(text), 0))
+      )
+    ));
+    setTagFilter(data)
   }
   const renderTags = () => {
     if (loader) {
@@ -40,10 +52,10 @@ const Tags = (props: Props) => {
         </>
       )
     }
-    return _.map(tags, (item: any) => (
-      <>
+    return _.map(tagsFilter, (item: any) => (
         <TagItem
           id={item?.id}
+          key={item?.id}
           name={item?.name}
           slug={item?.slug}
           icon={item?.icon}
@@ -54,7 +66,6 @@ const Tags = (props: Props) => {
           bg_color={item?.color_bg}
           tag_follow_count={item?.tag_follow_count}
         />
-      </>
     ))
   }
   return (
@@ -67,6 +78,7 @@ const Tags = (props: Props) => {
       <div className=' p-3 min-h-[90vh]'>
         <div className='mt-1 w-3/12 relative rounded-md shadow-sm mb-6'>
           <input
+           onChange={(value:any)=>searchByTextInput(value.target.value)}
             type='text'
             name='price'
             id='price'

@@ -58,5 +58,5 @@ const AccountDetail: NextPageWithLayout = (props: Props) => {
 AccountDetail.Layout = MainLayout
 AccountDetail.sidebarRight = false
 AccountDetail.SidebarLeft = false
-AccountDetail.requestAuth = true
+AccountDetail.requestAuth = false
 export default AccountDetail

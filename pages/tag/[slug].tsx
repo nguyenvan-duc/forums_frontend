@@ -1,6 +1,9 @@
 import { tagApi } from '@/api-client'
 import { Posts } from '@/components'
 import { MainLayout } from '@/components/layouts'
+import { ComponentRequestAuth } from '@/components/layouts/common'
+import { useAuth } from '@/hooks'
+import { useTagsFollow } from '@/hooks/use-tag'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -20,7 +23,9 @@ const Tag = (props: Props) => {
     dedupingInterval: 5 * 60 * 1000,
     revalidateOnFocus: false,
   })
-  const [postsByTag, setPostsByTag] = useState<any>({})
+ 
+  const { profile, fistLoading } = useAuth()
+  const {followTag} = useTagsFollow()
   const [follow, setFollow] = useState(false)
   const [followCount, setFollowCount] = useState(0)
   const [loader, setLoader] = useState(false)
@@ -28,6 +33,12 @@ const Tag = (props: Props) => {
     setFollow(tagDetails?.tag_details?.follow)
     setFollowCount(tagDetails?.tag_details?.tag_follow_count)
   }, [tagDetails?.tag_details?.follow])
+  useEffect(()=>{
+    if(!profile?.name){
+      setFollow(false)
+      mutate()
+    }
+  },[profile?.name])
   const handleFollow = async (id: number) => {
     setFollow(!follow)
     setLoader(true)
@@ -36,7 +47,7 @@ const Tag = (props: Props) => {
     } else {
       setFollowCount(followCount + 1)
     }
-    await tagApi.followTag(id).then((res: any) => {
+    await followTag(id).then((res: any) => {
       setLoader(false)
       setFollow(res?.follow)
       setFollowCount(res?.tag_follow_count)
@@ -44,8 +55,8 @@ const Tag = (props: Props) => {
     })
   }
   let loading = tagDetails === undefined && error === undefined
-  const renderPosts = () =>{
-    if(loading){
+  const renderPosts = () => {
+    if (loading) {
       return (
         <>
           {Array.from(Array(3), (e, i) => {
@@ -71,12 +82,8 @@ const Tag = (props: Props) => {
         </>
       )
     }
-    if(tagDetails?.posts?.length == 0){
-      return(
-        <div className='text-center mt-4'>
-          Không có gì ¯\_(ツ)_/¯
-        </div>
-      )
+    if (tagDetails?.posts?.length == 0) {
+      return <div className='text-center mt-4'>Không có gì ¯\_(ツ)_/¯</div>
     }
     return _.map(tagDetails?.posts, (item) => (
       <Posts
@@ -101,14 +108,13 @@ const Tag = (props: Props) => {
           <>
             <div className='w-full mb-5 border-t-8 border-indigo-500 bg-white p-4 rounded-md flex items-center justify-between'>
               <div className='flex items-center'>
-              <div className='animate-pulse bg-gray-300 w-24 h-24 rounded-md' />
-             <div className='ml-2'>
-             <div className='animate-pulse bg-gray-300 w-56 h-6 mb-2 rounded-md' />
-               <div className='animate-pulse bg-gray-300 w-80  h-4 rounded-md' />
-             </div>
+                <div className='animate-pulse bg-gray-300 w-24 h-24 rounded-md' />
+                <div className='ml-2'>
+                  <div className='animate-pulse bg-gray-300 w-56 h-6 mb-2 rounded-md' />
+                  <div className='animate-pulse bg-gray-300 w-80  h-4 rounded-md' />
+                </div>
               </div>
               <div className='animate-pulse bg-gray-300 h-10 w-28 rounded-md' />
-
             </div>
           </>
         ) : (
@@ -130,21 +136,23 @@ const Tag = (props: Props) => {
                   <p> {tagDetails?.tag_details?.desc}</p>
                 </div>
               </div>
-              <button
-                onClick={() => handleFollow(tagDetails?.tag_details?.id)}
-                disabled={loader}
-                className={classNames(
-                  ' py-2 px-4 mt-2 rounded-md border font-medium text-white ',
-                  follow ? 'bg-indigo-400' : 'bg-indigo-600'
-                )}>
-                {follow ? 'Đã theo dõi' : 'Theo dõi'}
-              </button>
+              <ComponentRequestAuth>
+                <button
+                  onClick={() => handleFollow(tagDetails?.tag_details?.id)}
+                  disabled={loader || !profile?.name}
+                  className={classNames(
+                    ' py-2 px-4 mt-2 rounded-md border font-medium text-white ',
+                    follow ? 'bg-indigo-400' : 'bg-indigo-600'
+                  )}>
+                  {follow ? 'Đã theo dõi' : 'Theo dõi'}
+                </button>
+              </ComponentRequestAuth>
             </div>
           </>
         )}
         <div>
           <h3 className=' font-semibold mb-2'>Danh sách bài viết</h3>
-         {renderPosts()}
+          {renderPosts()}
         </div>
       </div>
     </>
