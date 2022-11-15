@@ -13,11 +13,11 @@ const Tags = (props: Props) => {
   const [loader, setLoader] = useState(true)
   useEffect(() => {
     fetchData()
-    setTagFilter(tags)
   }, [])
   const fetchData = async () => {
     await tagApi.getAll().then((res: any) => {
       setTags(res)
+      setTagFilter(res)
       setLoader(false)
     })
   }
