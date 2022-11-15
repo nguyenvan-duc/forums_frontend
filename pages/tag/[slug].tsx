@@ -133,7 +133,7 @@ const Tag = (props: Props) => {
                   <h2 className='text-2xl font-bold'>
                     {tagDetails?.tag_details?.name}
                   </h2>
-                  <p> {tagDetails?.tag_details?.desc}</p>
+                  <p className='max-w-md'> {tagDetails?.tag_details?.desc}</p>
                 </div>
               </div>
               <ComponentRequestAuth>

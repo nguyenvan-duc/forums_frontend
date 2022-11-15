@@ -68,7 +68,7 @@ export function TagItem(item: TagItemProps) {
               {item?.name}
             </a>
           </Link>
-          <div className='mt-2 min-h-[50px]'>{item?.desciption}</div>
+          <div className='mt-2 max-h-[50px] min-h-[50px] truncate overflow-hidden'>{item?.desciption}</div>
         </div>
         <div className='flex justify-between'>
           <div className='text-sm text-gray-500 mr-2'>
