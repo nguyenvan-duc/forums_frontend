@@ -32,7 +32,7 @@ const Tag = (props: Props) => {
   useEffect(() => {
     setFollow(tagDetails?.tag_details?.follow)
     setFollowCount(tagDetails?.tag_details?.tag_follow_count)
-  }, [tagDetails?.tag_details?.follow])
+  }, [tagDetails?.tag_details?.follow,slug])
   useEffect(()=>{
     if(!profile?.name){
       setFollow(false)
