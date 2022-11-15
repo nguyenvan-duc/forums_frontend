@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 const axiosConfig = axios.create({
   // baseURL: 'http://localhost:3000/api',
-  baseURL:'https://appcuaduc.as.r.appspot.com/api',
+  baseURL:'https://itcomm.onrender.com/api',
   headers: {
     'content-type': 'application/json',
   },
