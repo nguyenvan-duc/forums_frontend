@@ -12,6 +12,7 @@ import { GetStaticPaths, GetStaticProps, NextPageContext } from 'next'
 import { Loader } from '@/components/layouts/common'
 import { AnswerOfPost } from '@/components/answer_of_post'
 import format_date from '@/utils/format_date'
+import Zoom from 'react-medium-image-zoom'
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
 })
@@ -95,7 +96,9 @@ const DetailsPost = ({ post, slug }: any) => {
               <span className='text-xs text-gray-400'>Nội dung :</span>
               <div className='ml-2 post-details relative'>
                 {/* <article className='prose lg:prose-xl'></article> */}
+                <Zoom>
                 <MarkdownPreview source={post?.content} />
+                </Zoom>
               </div>
             </div>
             <div className='flex justify-end'>

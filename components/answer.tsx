@@ -5,6 +5,7 @@ import {
   ArrowsPointingOutIcon,
   ChatBubbleOvalLeftIcon,
 } from '@heroicons/react/24/outline'
+import Zoom from 'react-medium-image-zoom'
 import { VoteComponent } from './vote'
 import { FunctionallyButtons } from './functionally_buttons'
 import { Account } from '@/models'
@@ -61,7 +62,7 @@ export function Answer({
     if (value == '') return
     setLoading(true)
     await commentApi.replyComment(post_id, value, { id }).then((res: any) => {
-      setReplyList([res,...replyList])
+      setReplyList([res, ...replyList])
       setValue('')
       setLoading(false)
     })
@@ -123,19 +124,21 @@ export function Answer({
               Nội dung câu trả lời :
             </span>
             <div className='ml-2 mb-2 mt-2'>
-              <MarkdownPreview source={content} />
+              <Zoom>
+                <MarkdownPreview source={content} />
+              </Zoom>
             </div>
             <div className='flex justify-between'>
               <ComponentRequestAuth>
-              <button
-                disabled={!profile?.name}
-                onClick={handleShowFormComment}
-                className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
-                <ChatBubbleOvalLeftIcon className='h-4 w-4 mr-2' />
-                <span>thêm bình luận</span>
-              </button>
+                <button
+                  disabled={!profile?.name}
+                  onClick={handleShowFormComment}
+                  className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
+                  <ChatBubbleOvalLeftIcon className='h-4 w-4 mr-2' />
+                  <span>thêm bình luận</span>
+                </button>
               </ComponentRequestAuth>
-             
+
               <FunctionallyButtons
                 id={id}
                 subject='COMMENT'

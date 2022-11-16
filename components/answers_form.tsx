@@ -39,12 +39,12 @@ export function AnswersForm({onChange,handleSend,value,loading}:AnswerFormProp) 
               ) : (
                 ''
               )}
-              <div className='comment-form border rounded-lg'>
+              <div className='comment-form border rounded-xl  overflow-hidden'>
                 <EditorMarkdown
                   value={value}
                   onChange={onChange}
                   Option={{
-                    maxHeight: '150px',
+                    maxHeight: '120px',
                   }}
                 />
               </div>

@@ -11,6 +11,7 @@ import { AppProvider } from '@/store'
 import { Analytics } from '@vercel/analytics/react'
 import '@uiw/react-markdown-preview/markdown.css'
 import 'easymde/dist/easymde.min.css'
+import 'react-medium-image-zoom/dist/styles.css'
 import '@/styles/globals.css'
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout ?? BlankLayout

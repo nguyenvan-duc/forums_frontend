@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { appApi } from '@/api-client'
 import { useAuth, useBookmarks } from '@/hooks'
 import { useStore } from '@/store'
-import {StarIcon} from '@heroicons/react/24/outline'
+import { StarIcon } from '@heroicons/react/24/outline'
 import useSWR from 'swr'
 import Link from 'next/link'
 
@@ -45,28 +45,31 @@ export function SidebarRight({}: Props) {
     return (
       <>
         {_.map(bookmarks, (item: any) => (
-            <li key={item?.id} className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
-              <Link href={`/bai-dang/${item?.url_redirect}`}>
-                <a>
-                  {item?.subject == 'COMMENT' ? (
-                    <>
-                      <span className='px-2 py-2 bg-yellow-200 text-yellow-600 text-sm'>
-                        trả lời
-                      </span>
-                    </>
-                  ) : item.post ? (
-                    <>
-                      <span className='px-2 py-[1px] rounded-md mr-2 bg-yellow-200 text-yellow-600 text-xs'>
-                        bài viết
-                      </span>
-                      {item?.content}
-                    </>
-                  ) : (
-                    ''
-                  )}
-                </a>
-              </Link>
-            </li>
+          <li
+            key={item?.id}
+            className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
+            <Link href={item?.url_redirect}>
+              <a>
+                {item?.subject == 'COMMENT' ? (
+                  <>
+                    <span className='px-2 py-[1px] rounded-md mr-2 bg-blue-200 text-blue-600 text-xs'>
+                      trả lời
+                    </span>
+                    <div className='cut-text'>{item?.content}</div>
+                  </>
+                ) : item?.subject == 'POST' ? (
+                  <>
+                    <span className='px-2 py-[1px] rounded-md mr-2 bg-yellow-200 text-yellow-600 text-xs'>
+                      bài viết
+                    </span>
+                    <div className='cut-text'>{item?.content}</div>
+                  </>
+                ) : (
+                  ''
+                )}
+              </a>
+            </Link>
+          </li>
         ))}
       </>
     )
@@ -88,28 +91,31 @@ export function SidebarRight({}: Props) {
         </>
       )
     }
-    return _.map(userFamous, (item, index:any) => (
-        <li key={item?.id} className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
-          <div className='flex items-center'>
-            <img src={item?.imageUrl} className=' w-8 h-8 rounded-full mr-3' />
-            <div>
-              <div className='flex items-center text-xs text-gray-500'>
-                <span className='mr-1'>{index + 1}</span>
-                <span className='mr-1'>·</span>
-                <span>Nổi bật </span>
-                {index == 0&&(<StarIcon className='h-3 w-3 ml-1'/>)}
-                
-              </div>
-              <Link href={`/nguoi-dung/${item?.username}`}>
-                <a>
-                  <h3 className='  font-semibold hover:underline '>{item?.name}</h3>
-                </a>
-              </Link>
-
-              <div className=' text-orange-600'>{item?.reputation} Điểm</div>
+    return _.map(userFamous, (item, index: any) => (
+      <li
+        key={item?.id}
+        className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
+        <div className='flex items-center'>
+          <img src={item?.imageUrl} className=' w-8 h-8 rounded-full mr-3' />
+          <div>
+            <div className='flex items-center text-xs text-gray-500'>
+              <span className='mr-1'>{index + 1}</span>
+              <span className='mr-1'>·</span>
+              <span>Nổi bật </span>
+              {index == 0 && <StarIcon className='h-3 w-3 ml-1' />}
             </div>
+            <Link href={`/nguoi-dung/${item?.username}`}>
+              <a>
+                <h3 className='  font-semibold hover:underline '>
+                  {item?.name}
+                </h3>
+              </a>
+            </Link>
+
+            <div className=' text-orange-600'>{item?.reputation} Điểm</div>
           </div>
-        </li>
+        </div>
+      </li>
     ))
   }
   return (

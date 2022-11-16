@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css');
+
 :root {
   --bg: #242526;
   --bg-accent: #484a4d;
@@ -85,38 +86,56 @@ body {
   margin: auto !important;
   border-radius: 5px;
 }
-.editor-toolbar{
+
+.editor-toolbar {
   text-align: center !important;
   padding-top: 10px;
   padding-bottom: 10px;
   border: none !important;
   background-color: #cecece20 !important;
 }
-.EasyMDEContainer .CodeMirror{
+
+.EasyMDEContainer .CodeMirror {
   border: none !important;
   padding: 10px 0;
 }
-.comment-form .EasyMDEContainer{
+
+.comment-form .EasyMDEContainer {
   background-color: #ffff;
 }
-.comment-form .editor-toolbar{
+
+.comment-form .editor-toolbar {
   text-align: left !important;
   padding-top: 10px;
   padding-bottom: 10px;
   border: none !important;
   background-color: #cecece20 !important;
 }
-.comment-form  .EasyMDEContainer .CodeMirror{
+
+.comment-form .EasyMDEContainer .CodeMirror {
   border: none !important;
   padding: 10px 10px;
+  border-radius: 30px;
 }
-.title-input{
+
+.title-input {
   resize: none;
   white-space: pre-wrap;
 }
-.wmde-markdown{
+
+.wmde-markdown {
   font-size: 18px;
 }
-.wmde-markdown{
+
+.wmde-markdown {
   background-color: transparent !important;
+}
+
+.cut-text {
+  line-height: 1.6rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 3.2rem;
 }
