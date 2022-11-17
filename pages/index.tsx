@@ -25,7 +25,7 @@ const Home: NextPageWithLayout = () => {
       setSortType(SORT_POST_NEW)
       fetchInitDataPosts()
     }else{
-      setSortType('none')
+      setSortType('relevant')
     }
   },[profile?.name])
   const fetchInitDataPosts = async () => {
@@ -127,7 +127,7 @@ const Home: NextPageWithLayout = () => {
       <div className='flex mb-2'>
         {profile?.name && (
           <button
-            onClick={() => setSortType('none')}
+            onClick={() => setSortType('relevant')}
             className={classNames(
               'px-2 py-2 mr-2 hover:bg-gray-50  rounded-md',
               sortType == 'none' && 'font-medium bg-gray-200'
