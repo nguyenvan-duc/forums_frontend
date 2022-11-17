@@ -93,10 +93,10 @@ export function SidebarRight({}: Props) {
     }
     return _.map(userFamous, (item, index: any) => (
       <li
-        key={item?.id}
+        key={item?.username}
         className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
         <div className='flex items-center'>
-          <img src={item?.imageUrl} className=' w-8 h-8 rounded-full mr-3' />
+          <img src={item?.avatar} className=' w-8 h-8 rounded-full mr-3' />
           <div>
             <div className='flex items-center text-xs text-gray-500'>
               <span className='mr-1'>{index + 1}</span>

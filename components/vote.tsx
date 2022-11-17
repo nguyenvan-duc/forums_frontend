@@ -53,7 +53,6 @@ export function VoteComponent({
   }
   const handleDownVote = async (e: any) => {
     e.preventDefault()
-    console.log(voteType)
     setLoadWhenVote(true)
     if (subjectVote === 'POST') {
       voteForPost(id, -1)
