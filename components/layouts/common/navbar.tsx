@@ -241,13 +241,8 @@ export function Navbar({}: NavbarProps) {
                     <Link href={'/'}>
                       <a>
                         <img
-                          className='block lg:hidden h-8 w-auto'
-                          src='https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg'
-                          alt='Workflow'
-                        />
-                        <img
                           className='hidden lg:block h-8 w-auto'
-                          src='https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg'
+                          src={'https://res.cloudinary.com/dduc7th-dec/image/upload/v1668650814/logo_ver2__cropped_hsgsez.png'}
                           alt='Workflow'
                         />
                       </a>
