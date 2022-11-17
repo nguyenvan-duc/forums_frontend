@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 const axiosConfig = axios.create({
   // baseURL: 'http://localhost:3000/api',
-  baseURL:'https://itcomm.onrender.com/api',
+  baseURL:'https://www.itforum.site',
   headers: {
     'content-type': 'application/json',
   },
