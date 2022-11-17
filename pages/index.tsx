@@ -130,7 +130,7 @@ const Home: NextPageWithLayout = () => {
             onClick={() => setSortType('relevant')}
             className={classNames(
               'px-2 py-2 mr-2 hover:bg-gray-50  rounded-md',
-              sortType == 'none' && 'font-medium bg-gray-200'
+              sortType == 'relevant' && 'font-medium bg-gray-200'
             )}>
             Liên Quan
           </button>
