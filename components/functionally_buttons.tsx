@@ -25,7 +25,7 @@ export function FunctionallyButtons({
 
   useEffect(() => {
     setStatusBookmark(isBookmark)
-  }, [])
+  }, [isBookmark])
   useEffect(()=>{
     if(!profile?.name){
       setStatusBookmark(false)
