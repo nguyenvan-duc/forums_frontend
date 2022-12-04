@@ -18,5 +18,6 @@ export interface PostModel{
      bookmark:boolean,
      vote:boolean,
      voteCount?:number,
-     createdAt:string
+     createdAt:string,
+     myPost?:boolean
 }
