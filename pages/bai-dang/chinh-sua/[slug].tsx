@@ -111,7 +111,7 @@ const EditPost: NextPageWithLayout = (props: PageProps) => {
       setContent(value)
       setError(false)
     },
-    [tagsSelected, title]
+    []
   )
   useHotkeys('ctrl+alt+up', () => {
     setPreview(true)
