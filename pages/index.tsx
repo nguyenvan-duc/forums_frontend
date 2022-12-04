@@ -15,19 +15,20 @@ const Home: NextPageWithLayout = () => {
   const [noMore, setNoMore] = useState(true)
   const [page, setPage] = useState(2)
   const [loader, setLoader] = useState(true)
-  const [sortType, setSortType] = useState('none')
+  const [sortType, setSortType] = useState('relevant')
   const { profile } = useAuth()
-  useEffect(() => {
-    fetchInitDataPosts()
-  }, [sortType])
+
   useEffect(()=>{
     if(!profile?.name){
       setSortType(SORT_POST_NEW)
       fetchInitDataPosts()
     }else{
-      setSortType('relevant')
+      setSortType(sortType)
+      fetchInitDataPosts()
     }
-  },[profile?.name])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[profile?.name,sortType])
+
   const fetchInitDataPosts = async () => {
     setLoader(true)
     setNoMore(true)
@@ -77,6 +78,7 @@ const Home: NextPageWithLayout = () => {
     }
     return (
       <>
+      
         <InfiniteScroll
           next={fetchWhenScroll}
           dataLength={posts.length}
@@ -139,7 +141,7 @@ const Home: NextPageWithLayout = () => {
         <button
           onClick={() => setSortType(SORT_POST_NEW)}
           className={classNames(
-            'px-2 py-2 hover:bg-gray-50 rounded-md',
+            'px-2 py-2 hover:bg-gray-50 rounded-md mr-2',
             sortType == SORT_POST_NEW && 'font-medium bg-gray-200'
           )}>
           Mới nhất

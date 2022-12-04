@@ -6,6 +6,11 @@ import format_date from '@/utils/format_date'
 
 import _ from 'lodash'
 import Link from 'next/link'
+import {
+  POST_SEARCH_SORT,
+  TAG_SEARCH_SORT,
+  USER_SEARCH_SORT,
+} from '@/constants'
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
@@ -13,6 +18,7 @@ export function SearchPopup(props: any) {
   const [keyword, setKeyword] = useState('')
   const [result, setResult] = useState([])
   const [loading, setLoading] = useState(false)
+  const [sort, setSort] = useState(POST_SEARCH_SORT)
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (keyword.length > 0) {
@@ -46,15 +52,11 @@ export function SearchPopup(props: any) {
       )
     }
     if (result.length <= 0 && keyword.length == 0) {
-      return (
-        <li className='text-center py-5'>
-          Không có kết quả
-        </li>
-      )
+      return <li className='text-center py-5'>Không có kết quả</li>
     }
     return _.map(result, (item: any) => (
       <li
-      onClick={()=>props.getChangerPopupSearch(false)}
+        onClick={() => props.getChangerPopupSearch(false)}
         key={item?.slug}
         className='relative p-3 rounded-md hover:bg-coolGray-100 hover:bg-gray-100'>
         <h3 className='text-sm font-medium leading-5'>{item.title}</h3>
@@ -135,7 +137,34 @@ export function SearchPopup(props: any) {
                 />
                 <div className='border-b-2 mt-2' />
                 <div className='w-full mt-4 sm:px-0 '>
+                  <div className='flex space-x-1 rounded-xl bg-gray-400/20 p-1 mb-2'>
+                    <button
+                      onClick={() => setSort(POST_SEARCH_SORT)}
+                      className={classNames(
+                        'ring-white  w-full rounded-lg py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100',
+                        sort == POST_SEARCH_SORT && 'bg-white hover:bg-white border font-medium'
+                      )}>
+                      Bài đăng
+                    </button>
+                    <button
+                      onClick={() => setSort(USER_SEARCH_SORT)}
+                      className={classNames(
+                        'ring-white  w-full rounded-lg py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100',
+                        sort == USER_SEARCH_SORT && 'bg-white hover:bg-white border font-medium'
+                      )}>
+                      Người dùng
+                    </button>
+                    <button
+                      onClick={() => setSort(TAG_SEARCH_SORT)}
+                      className={classNames(
+                        'ring-white  w-full rounded-lg py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100',
+                        sort == TAG_SEARCH_SORT && 'bg-white hover:bg-white border font-medium'
+                      )}>
+                      Thẻ
+                    </button>
+                  </div>
                   <div className='mb-3'>Kết quả tìm kiếm:</div>
+
                   <ul>{renderData()}</ul>
                 </div>
                 {/* <div className='flex justify-end mt-3'>

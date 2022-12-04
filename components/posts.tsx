@@ -36,7 +36,10 @@ export function Posts({
 }: PostProps) {
   const route = useRouter()
   const { bookmarkPost } = useBookmarks()
-  const [statusBookmark, setStatusBookmark] = useState(isBookmark)
+  const [statusBookmark, setStatusBookmark] = useState<any>(false)
+  useEffect(()=>{
+    setStatusBookmark(isBookmark)
+  },[isBookmark])
   const {profile} = useAuth()
   const handleBookmark = async (e: any) => {
     e.preventDefault()
@@ -70,7 +73,7 @@ export function Posts({
             <div className='flex flex-wrap mb-2  justify-starts items-center mt-2'>
               {_.map(tags, (item) => (
                 <Link href={`/tag/${item?.slug}`} key={item.id}>
-                  <a className='text-xs mr-2 py-1 px-1.5 text-gray-500 bg-blue-50 hover:bg-blue-100 rounded-md'>
+                  <a className='text-xs mr-2 py-1 px-1.5 text-gray-500 border bg-blue-50 hover:bg-blue-100 rounded-md'>
                     {item.name}
                   </a>
                 </Link>

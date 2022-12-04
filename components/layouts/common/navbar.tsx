@@ -29,6 +29,7 @@ export function Navbar({}: NavbarProps) {
   const [searchIsOpen, setSearchIsOpen] = useState(false)
   const [openLoginModal, setOpenLoginModal] = useState(false)
   const [visible, setVisible] = useState(false)
+  const [hasNotify,setHasNotify] = useState(false)
   const [notifications, setNotification] = useState([])
   useEffect(() => {
     if (profile?.name) {
@@ -42,7 +43,11 @@ export function Navbar({}: NavbarProps) {
     })
   }
   let notifyNotSent: any = _.filter(notifications, { status: 'NOT_SEEN' })
-
+  useEffect(()=>{
+    if(notifyNotSent.length >0){
+      setHasNotify(true)
+    }
+  },[])
   const getChangerPopupSearch = (status: any) => {
     setSearchIsOpen(status)
   }
@@ -96,12 +101,14 @@ export function Navbar({}: NavbarProps) {
                   className='-ml-1 mr-2 h-5 w-5 text-gray-500'
                   aria-hidden='true'
                 />
-                Đặt Câu Hỏi
+                Tạo bài đăng
               </a>
             </Link>
             <Link href={'/thong-bao'}>
-              <a className='bg-white dark:bg-gray-800 relative p-1 ml-4 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-white outline-none shadow-none'>
-                {notifyNotSent.length > 0 && (
+              <a 
+              onClick={()=>setHasNotify(false)}
+              className='bg-white dark:bg-gray-800 relative p-1 ml-4 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-white outline-none shadow-none'>
+                {hasNotify && (
                   <div className='w-2 h-2 bg-blue-500 absolute  right-2 rounded-full' />
                 )}
                 <BellIcon className='h-6 w-6' aria-hidden='true' />
@@ -242,7 +249,9 @@ export function Navbar({}: NavbarProps) {
                       <a>
                         <img
                           className='hidden lg:block h-8 w-auto'
-                          src={'https://res.cloudinary.com/dduc7th-dec/image/upload/v1668650814/logo_ver2__cropped_hsgsez.png'}
+                          src={
+                            'https://res.cloudinary.com/dduc7th-dec/image/upload/v1668650814/logo_ver2__cropped_hsgsez.png'
+                          }
                           alt='Workflow'
                         />
                       </a>
@@ -251,15 +260,17 @@ export function Navbar({}: NavbarProps) {
                   <div className='hidden sm:block sm:ml-6'>
                     <div>
                       <div className='mt-1 relative rounded-md border'>
-                        <input
-                          type='text'
-                          name='price'
-                          id='price'
-                          onClick={() => setSearchIsOpen(true)}
-                          disabled={true}
-                          className='focus:ring-indigo-500 cursor-pointer  focus:border-indigo-500 block w-full pl-3 pr-44 py-2 font-medium sm:text-sm border-gray-300 rounded-md'
-                          placeholder={'Tìm kiếm... (Ctrl + alt + k)'}
-                        />
+                        <div onClick={() => setSearchIsOpen(true)}>
+                          <input
+                            type='text'
+                            name='price'
+                            id='price'
+                            disabled={true}
+                            className='focus:ring-indigo-500 cursor-pointer  focus:border-indigo-500 block w-full pl-3 pr-44 py-2 font-medium sm:text-sm border-gray-300 rounded-md'
+                            placeholder={'Tìm kiếm... (Ctrl + alt + k)'}
+                          />
+                        </div>
+
                         <div className='absolute inset-y-0 right-0 flex items-center'>
                           <button
                             className='p-3'

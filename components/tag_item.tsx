@@ -11,7 +11,7 @@ interface TagItemProps {
   slug: string
   color_bg: string
   name: string
-  desciption: string
+  description: string
   tag_follow_count: number
   follow: boolean
   posts_use: number
@@ -52,7 +52,7 @@ export function TagItem(item: TagItemProps) {
     <>
       <div
         key={item?.id}
-        className='border bg-gray-50 border-t-[12px] rounded-md p-3'>
+        className={`border bg-gray-50 border-t-[12px]  rounded-md p-3`}>
         <div className='mb-3'>
           <Link href={`/tag/${item?.slug}`}>
             <a
@@ -68,7 +68,7 @@ export function TagItem(item: TagItemProps) {
               {item?.name}
             </a>
           </Link>
-          <div className='mt-2 max-h-[50px] min-h-[50px] truncate overflow-hidden'>{item?.desciption}</div>
+          <div className='mt-2 max-h-[50px] min-h-[50px] truncate overflow-hidden'>{item?.description}</div>
         </div>
         <div className='flex justify-between'>
           <div className='text-sm text-gray-500 mr-2'>
@@ -85,7 +85,6 @@ export function TagItem(item: TagItemProps) {
                 handleFollow(item?.id)
               }
             }}
-            disabled={loader || !profile?.name}
             className={classNames(
               'w-full py-2 px-2 mt-2 rounded-md border font-medium text-white z-10',
               follow ? 'bg-indigo-400' : 'bg-indigo-600'

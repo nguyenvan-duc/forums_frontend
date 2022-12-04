@@ -39,6 +39,12 @@ const DetailsPost = ({ post, slug }: any) => {
     return <Loader />
   }
   if (!post) return null
+  const handleDeleteMyPost =  async()=>{
+    confirm("bạn muốn xóa bài viết này.");
+    await postApi.deletePost(post?.id).then(res=>{
+      router.push('/')
+    }) 
+  }
   return (
     <>
       <SEO
@@ -51,7 +57,7 @@ const DetailsPost = ({ post, slug }: any) => {
       />
       <div className='md:border-x px-2 w-full h-full  bg-gray-50 border pb-3 rounded-md'>
         <div className='w-full border-b py-3 border-gray-40 px-2'>
-          <div className='flex items-center'>
+          <div className='flex items-center justify-between'>
             <div className='flex items-center'>
               <Link href={`/nguoi-dung/${post?.account?.username}`}>
                 <a className='flex items-center text-sm font-[500] hover:underline mr-2'>
@@ -65,6 +71,16 @@ const DetailsPost = ({ post, slug }: any) => {
               <span className='text-sm text-gray-500'>
                 {format_date.formatDate(post.createdAt)}
               </span>
+            </div>
+            <div className='flex'>
+              <button
+                onClick={() => router.push(`/bai-dang/chinh-sua/${post?.slug}`)}
+                className='px-4 bg-yellow-500/20 hover:bg-yellow-200 py-1 rounder-l rounded-l-lg'>
+                Sửa
+              </button>
+              <button onClick={()=>handleDeleteMyPost()} className='px-4 bg-red-500/20 py-1 hover:bg-red-200  rounder-r rounded-r-lg'>
+                Xóa
+              </button>
             </div>
           </div>
           <h1 className='text-4xl dark:text-gray-800 font-[500] mb-3 mt-2'>
@@ -97,7 +113,7 @@ const DetailsPost = ({ post, slug }: any) => {
               <div className='ml-2 post-details relative'>
                 {/* <article className='prose lg:prose-xl'></article> */}
                 <Zoom>
-                <MarkdownPreview source={post?.content} />
+                  <MarkdownPreview source={post?.content} />
                 </Zoom>
               </div>
             </div>

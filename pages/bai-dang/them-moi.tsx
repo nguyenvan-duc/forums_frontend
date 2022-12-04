@@ -121,7 +121,6 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
       content: content,
     }
     const result: any = await postApi.createNewPost(dataCreateNewPost)
-    console.log(result)
     if (result) {
       setLoading(false)
       setLoadWhenSuccess(true)

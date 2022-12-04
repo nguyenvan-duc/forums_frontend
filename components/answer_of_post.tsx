@@ -4,7 +4,6 @@ import { Comment } from '@/models/comment'
 import _ from 'lodash'
 import { Answer } from './answer'
 import { AnswersForm } from './answers_form'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 interface AOPProps {
   id: number
@@ -18,7 +17,7 @@ export function AnswerOfPost({ id }: AOPProps) {
   useEffect(() => {
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [id])
   const fetchData = async () => {
     setLoading(true)
     await commentApi.findCommentByPost(id).then((res: any) => {

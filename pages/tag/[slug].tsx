@@ -23,22 +23,22 @@ const Tag = (props: Props) => {
     dedupingInterval: 5 * 60 * 1000,
     revalidateOnFocus: false,
   })
- 
+
   const { profile, fistLoading } = useAuth()
-  const {followTag} = useTagsFollow()
+  const { followTag } = useTagsFollow()
   const [follow, setFollow] = useState(false)
   const [followCount, setFollowCount] = useState(0)
   const [loader, setLoader] = useState(false)
   useEffect(() => {
     setFollow(tagDetails?.tag_details?.follow)
     setFollowCount(tagDetails?.tag_details?.tag_follow_count)
-  }, [tagDetails?.tag_details?.follow,slug])
-  useEffect(()=>{
-    if(!profile?.name){
+  }, [tagDetails?.tag_details?.follow, slug])
+  useEffect(() => {
+    if (!profile?.name) {
       setFollow(false)
       mutate()
     }
-  },[profile?.name])
+  }, [profile?.name])
   const handleFollow = async (id: number) => {
     setFollow(!follow)
     setLoader(true)
@@ -138,8 +138,12 @@ const Tag = (props: Props) => {
               </div>
               <ComponentRequestAuth>
                 <button
-                  onClick={() => handleFollow(tagDetails?.tag_details?.id)}
-                  disabled={loader || !profile?.name}
+                  onClick={() => {
+                    if (profile?.name) {
+                      handleFollow(tagDetails?.tag_details?.id)
+                    }
+                  }}
+                  disabled={loader}
                   className={classNames(
                     ' py-2 px-4 mt-2 rounded-md border font-medium text-white ',
                     follow ? 'bg-indigo-400' : 'bg-indigo-600'

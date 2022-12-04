@@ -21,6 +21,7 @@ export function FunctionallyButtons({
 }: PropsComponent) {
   const [statusBookmark, setStatusBookmark] = useState(isBookmark)
   const { profile, fistLoading } = useAuth()
+  const [load,setLoad] = useState(false)
   const {bookmarkPost,bookmarkComment} = useBookmarks()
 
   useEffect(() => {
@@ -33,6 +34,10 @@ export function FunctionallyButtons({
   },[profile?.name])
   const handleBookmark = async (e: any) => {
     e.preventDefault()
+    if(!profile.name){
+      return
+    }
+    setLoad(true)
     setStatusBookmark(!statusBookmark)
     try {
       setStatusBookmark(!statusBookmark)
@@ -40,11 +45,13 @@ export function FunctionallyButtons({
         let res = await bookmarkPost(id)
         if(res?.status == 200){
           setStatusBookmark(res?.data)
+          setLoad(false)
         }
       } else if (subject == 'COMMENT') {
         let res = await bookmarkComment(id)
         if(res?.status == 200){
           setStatusBookmark(res?.data)
+          setLoad(false)
         }
       }
     } catch (err) {
@@ -56,7 +63,7 @@ export function FunctionallyButtons({
       <div className='flex flex-wrap'>
         <ComponentRequestAuth>
           <button
-            disabled={!profile?.name}
+            disabled={load}
             onClick={handleBookmark}
             className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
             <HeroIcon

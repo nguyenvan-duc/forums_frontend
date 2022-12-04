@@ -60,7 +60,7 @@ const Tags = (props: Props) => {
           slug={item?.slug}
           icon={item?.icon}
           color_bg={item?.color_bg}
-          desciption={item?.desc}
+          description={item?.desc}
           follow={item?.follow}
           posts_use={item?.posts_use}
           bg_color={item?.color_bg}
