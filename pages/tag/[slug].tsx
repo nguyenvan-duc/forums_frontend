@@ -110,8 +110,8 @@ const Tag = (props: Props) => {
               <div className='flex items-center'>
                 <div className='animate-pulse bg-gray-300 w-24 h-24 rounded-md' />
                 <div className='ml-2'>
-                  <div className='animate-pulse bg-gray-300 w-56 h-6 mb-2 rounded-md' />
-                  <div className='animate-pulse bg-gray-300 w-80  h-4 rounded-md' />
+                  <div className='animate-pulse bg-gray-300 w-32 lg:w-56 h-6 mb-2 rounded-md' />
+                  <div className='animate-pulse bg-gray-300 w-40 lg:w-80  h-4 rounded-md' />
                 </div>
               </div>
               <div className='animate-pulse bg-gray-300 h-10 w-28 rounded-md' />

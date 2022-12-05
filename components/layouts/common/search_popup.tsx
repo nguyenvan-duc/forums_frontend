@@ -16,7 +16,7 @@ function classNames(...classes: any) {
 }
 export function SearchPopup(props: any) {
   const [keyword, setKeyword] = useState('')
-  const [result, setResult] = useState([])
+  const [result, setResult] = useState<any>([])
   const [loading, setLoading] = useState(false)
   const [sort, setSort] = useState(POST_SEARCH_SORT)
   useEffect(() => {
@@ -25,12 +25,13 @@ export function SearchPopup(props: any) {
         fetchData()
       }
       setResult([])
+      setLoading(false)
     }, 1000)
     return () => clearTimeout(delayDebounceFn)
-  }, [keyword])
+  }, [keyword, sort])
   const fetchData = async () => {
     setLoading(true)
-    await appApi.searchPosts(keyword, 5).then((res: any) => {
+    await appApi.search(keyword, sort, 5).then((res: any) => {
       setLoading(false)
       setResult(res)
     })
@@ -51,34 +52,92 @@ export function SearchPopup(props: any) {
         </>
       )
     }
-    if (result.length <= 0 && keyword.length == 0) {
+    if (result.length == 0 || keyword.length == 0) {
       return <li className='text-center py-5'>Không có kết quả</li>
     }
-    return _.map(result, (item: any) => (
-      <li
-        onClick={() => props.getChangerPopupSearch(false)}
-        key={item?.slug}
-        className='relative p-3 rounded-md hover:bg-coolGray-100 hover:bg-gray-100'>
-        <h3 className='text-sm font-medium leading-5'>{item.title}</h3>
-        <ul className='flex mt-1 space-x-1 text-xs font-normal leading-4 text-coolGray-500'>
-          <li>{format_date.formatDate(item?.createdAt)}</li>
-          <li>&middot;</li>
-          <li>{item?.comment_count} Bình luận</li>
-          <li>&middot;</li>
-          <li>{item?.vote_count} Đánh giá</li>
-          <li>&middot;</li>
-          <li>{item?.bookmark_count} Bookmark</li>
-        </ul>
-        <Link href={`/bai-dang/${item?.slug}`}>
-          <a
-            className={classNames(
-              'absolute inset-0 rounded-md',
-              'focus:z-10 focus:outline-none focus:ring-2 ring-blue-400'
-            )}
-          />
-        </Link>
-      </li>
-    ))
+    switch (sort) {
+      case POST_SEARCH_SORT:
+        return _.map(result, (item: any) => (
+          <li
+            onClick={() => props.getChangerPopupSearch(false)}
+            key={item?.slug}
+            className='relative p-3 rounded-md hover:bg-coolGray-100 hover:bg-gray-100'>
+            <h3 className='text-sm font-medium leading-5'>{item.title}</h3>
+            <ul className='flex mt-1 space-x-1 text-xs font-normal leading-4 text-coolGray-500'>
+              <li>{format_date.formatDate(item?.createdAt)}</li>
+              <li>&middot;</li>
+              <li>{item?.commentCount} Bình luận</li>
+              <li>&middot;</li>
+              <li>{item?.voteCount} Đánh giá</li>
+              <li>&middot;</li>
+              <li>{item?.bookmarkCount} Bookmark</li>
+            </ul>
+            <Link href={`/bai-dang/${item?.slug}`}>
+              <a
+                className={classNames(
+                  'absolute inset-0 rounded-md',
+                  'focus:z-10 focus:outline-none focus:ring-2 ring-blue-400'
+                )}
+              />
+            </Link>
+          </li>
+        ))
+      case USER_SEARCH_SORT:
+        return _.map(result, (item: any) => (
+          <li
+            onClick={() => props.getChangerPopupSearch(false)}
+            key={item?.username}
+            className='relative p-3 rounded-md hover:bg-coolGray-100 hover:bg-gray-100'>
+              <div className='flex'>
+                <div className='mr-2'>
+                  <img src={item?.avatar} alt={item?.name} className=' w-10 h-10 rounded-full object-cover'/>
+                </div>
+                <div>
+                <h3 className='text-sm font-medium leading-5'>{item.name}</h3>
+            <ul className='flex mt-1 space-x-1 text-xs font-normal leading-4 text-coolGray-500'>
+              <li>Reputation: {item?.reputation}</li>
+              <li>&middot;</li>
+              <li>Bài đăng: {item?.post_count}</li>
+              <li>&middot;</li>
+              <li>Ý kiến đóng góp: {item?.comment_count}</li>
+            </ul>
+                </div>
+              </div>
+           
+            <Link href={`/nguoi-dung/${item?.username}`}>
+              <a
+                className={classNames(
+                  'absolute inset-0 rounded-md',
+                  'focus:z-10 focus:outline-none focus:ring-2 ring-blue-400'
+                )}
+              />
+            </Link>
+          </li>
+        ))
+      case TAG_SEARCH_SORT:
+        return _.map(result, (item: any) => (
+          <li
+            onClick={() => props.getChangerPopupSearch(false)}
+            key={item?.slug}
+            className='relative p-3 rounded-md hover:bg-coolGray-100 hover:bg-gray-100'>
+            <h3 className='text-sm font-medium leading-5'>#{item.name}</h3>
+            <ul className='flex mt-1 space-x-1 text-xs font-normal leading-4 text-coolGray-500'>
+              <li>Lượt theo dõi: {item?.tag_follow_count}</li>
+              <li>&middot;</li>
+              <li>Số lượng bài đăng: {item?.posts_use}</li>
+            
+            </ul>
+            <Link href={`/tag/${item?.slug}`}>
+              <a
+                className={classNames(
+                  'absolute inset-0 rounded-md',
+                  'focus:z-10 focus:outline-none focus:ring-2 ring-blue-400'
+                )}
+              />
+            </Link>
+          </li>
+        ))
+    }
   }
   return (
     <>
@@ -137,41 +196,55 @@ export function SearchPopup(props: any) {
                 />
                 <div className='border-b-2 mt-2' />
                 <div className='w-full mt-4 sm:px-0 '>
-                  <div className='flex space-x-1 rounded-xl bg-gray-400/20 p-1 mb-2'>
+                  <div className='flex space-x-1 rounded-xl bg-gray-400/20 p-1 mb-3'>
                     <button
-                      onClick={() => setSort(POST_SEARCH_SORT)}
+                      onClick={() => {
+                        setLoading(true)
+                        setResult([])
+                        setSort(POST_SEARCH_SORT)
+                      }}
                       className={classNames(
                         'ring-white  w-full rounded-lg py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100',
-                        sort == POST_SEARCH_SORT && 'bg-white hover:bg-white border font-medium'
+                        sort == POST_SEARCH_SORT &&
+                          'bg-white hover:bg-white border font-medium'
                       )}>
                       Bài đăng
                     </button>
                     <button
-                      onClick={() => setSort(USER_SEARCH_SORT)}
+                      onClick={() => {
+                        setLoading(true)
+                        setResult([])
+                        setSort(USER_SEARCH_SORT)
+                      }}
                       className={classNames(
                         'ring-white  w-full rounded-lg py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100',
-                        sort == USER_SEARCH_SORT && 'bg-white hover:bg-white border font-medium'
+                        sort == USER_SEARCH_SORT &&
+                          'bg-white hover:bg-white border font-medium'
                       )}>
                       Người dùng
                     </button>
                     <button
-                      onClick={() => setSort(TAG_SEARCH_SORT)}
+                      onClick={() => {
+                        setLoading(true)
+                        setResult([])
+                        setSort(TAG_SEARCH_SORT)
+                      }}
                       className={classNames(
                         'ring-white  w-full rounded-lg py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100',
-                        sort == TAG_SEARCH_SORT && 'bg-white hover:bg-white border font-medium'
+                        sort == TAG_SEARCH_SORT &&
+                          'bg-white hover:bg-white border font-medium'
                       )}>
                       Thẻ
                     </button>
                   </div>
-                  <div className='mb-3'>Kết quả tìm kiếm:</div>
+                  <div className='mb-3 flex justify-between'>
+                    <div>Kết quả tìm kiếm:</div>
+                    <div><Link href={`/tim-kiem?q=${keyword}&type=${sort}&limit=${10}`}><a onClick={() => props.getChangerPopupSearch(false)} className=' text-indigo-600 hover:underline'>Xem thêm kết quả</a></Link></div>
+                  </div>
 
                   <ul>{renderData()}</ul>
                 </div>
-                {/* <div className='flex justify-end mt-3'>
-                  <a className=' text-blue-500 hover:underline hover:cursor-pointer'>
-                    Xem thêm
-                  </a>
-                </div> */}
+              
               </div>
             </Transition.Child>
           </div>

@@ -20,6 +20,6 @@ export const SORT_POST_HOT    = 'hot'
 export const SORT_POST_NEW    = 'created_desc'
 
 //search sort
-export const USER_SEARCH_SORT = 'user'
+export const USER_SEARCH_SORT = 'account'
 export const POST_SEARCH_SORT = 'post'
 export const TAG_SEARCH_SORT  = 'tag'

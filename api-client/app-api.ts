@@ -14,7 +14,7 @@ export const appApi = {
   sendNotify(id:number){
     return axiosConfig.get(`${id}/send-notification`)
   },
-  searchPosts(keyword:string, limit:number){
-    return axiosConfig.get(`/post/search?q=${keyword}&limit=${limit}`)
+  search(keyword:string,type:string, limit:number){
+    return axiosConfig.get(`/search?q=${keyword}&type=${type}&limit=${limit}`)
   }
 }

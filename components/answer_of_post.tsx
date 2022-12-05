@@ -47,11 +47,11 @@ export function AnswerOfPost({ id }: AOPProps) {
           <div className='pl-8 mb-3'>
             <div className='flex items-center mb-3'>
               <div className='animate-pulse bg-gray-300 w-6 h-6 mr-2 rounded-full' />
-              <div className='animate-pulse bg-gray-300 w-64 h-4 rounded-md' />
+              <div className='animate-pulse bg-gray-300 w-24 lg:w-64 h-4 rounded-md' />
             </div>
             <div className='pl-8'>
-              <div className='animate-pulse bg-gray-300 w-64 h-7 mb-2 rounded-md' />
-              <div className='animate-pulse bg-gray-300 w-80 h-7 mb-2 rounded-md' />
+              <div className='animate-pulse bg-gray-300 w-30 lg:w-64 h-7 mb-2 rounded-md' />
+              <div className='animate-pulse bg-gray-300 w-48 lg:w-80 h-7 mb-2 rounded-md' />
               <div className='animate-pulse bg-gray-300 w-3/5 h-7 mb-2 rounded-md' />
             </div>
           </div>
