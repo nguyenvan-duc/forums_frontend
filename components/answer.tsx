@@ -4,6 +4,7 @@ import {
   MinusIcon,
   ArrowsPointingOutIcon,
   ChatBubbleOvalLeftIcon,
+  ArrowUturnRightIcon,
 } from '@heroicons/react/24/outline'
 import Zoom from 'react-medium-image-zoom'
 import { VoteComponent } from './vote'
@@ -44,9 +45,10 @@ export function Answer({
 }: AnswerProps) {
   const [clicked, setClicked] = useState<any>(0)
   const [showFormComment, setShowFormComment] = useState(false)
+  const [idCommentReply, setIdCommentReply] = useState<any>()
   const [value, setValue] = useState('')
   const [loading, setLoading] = useState(false)
-  const [replyList, setReplyList] = useState(reply)
+  const [replyList, setReplyList] = useState<any>([])
   const { profile, fistLoading } = useAuth()
   const handleToggle = (index: any) => {
     if (clicked === index) {
@@ -54,20 +56,32 @@ export function Answer({
     }
     setClicked(index)
   }
-  const handleShowFormComment = (e: any) => {
-    e.preventDefault()
+  useEffect(()=>{
+    AppendReplyComments(reply)
+  },[])
+  const handleShowFormComment = () => {
     setShowFormComment(true)
   }
   const replyComment = async () => {
     if (value == '') return
     setLoading(true)
-    await commentApi.replyComment(post_id, value, { id }).then((res: any) => {
-      setReplyList([res, ...replyList])
-      setValue('')
-      setLoading(false)
-    })
+    await commentApi
+      .replyComment(post_id, value, { id: idCommentReply?.id })
+      .then((res: any) => {
+        setReplyList([res, ...replyList])
+        setValue('')
+        setLoading(false)
+      })
   }
-
+  const AppendReplyComments = (reply: any) => {
+    if (reply.length == 0) {
+      return
+   }
+    for (let i = 0; i < reply.length; i++) {
+        setReplyList([...replyList,reply[i]])
+        AppendReplyComments(reply[i].reply)
+      }
+    }
   return (
     <>
       {clicked == id ? (
@@ -132,7 +146,13 @@ export function Answer({
               <ComponentRequestAuth>
                 <button
                   disabled={!profile?.name}
-                  onClick={handleShowFormComment}
+                  onClick={() => {
+                    handleShowFormComment()
+                    setIdCommentReply({
+                      id: id,
+                      account: account,
+                    })
+                  }}
                   className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
                   <ChatBubbleOvalLeftIcon className='h-4 w-4 mr-2' />
                   <span>thêm bình luận</span>
@@ -155,24 +175,39 @@ export function Answer({
                     <Link href={`/nguoi-dung/${item?.account?.username}`}>
                       <a className='flex item-center mr-2 text-sm'>
                         <img
-                          src={item.account.imageUrl}
+                          src={item?.account?.imageUrl}
                           className='h-6 w-6 rounded-full mr-2'
                         />
-                        {item.account.name}
+                        {item?.account?.name}
                       </a>
                     </Link>
                     <span className='text-sm text-gray-400'>
-                      {format_date.formatDate(item.createdAt)}
+                      {format_date?.formatDate(item.createdAt)}
                     </span>
                   </div>
                   <div className='mt-2 ml-2'>
                     <MarkdownPreview source={item?.content} />
+                    <div className='flex justify-end'>
+                      <ComponentRequestAuth>
+                        <button
+                          disabled={!profile?.name}
+                          onClick={() => {
+                            setShowFormComment(true)
+                            setIdCommentReply(item)
+                          }}
+                          className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
+                          <ArrowUturnRightIcon className='h-4 w-4 mr-2' />
+                          <span>Trả lời bình luận</span>
+                        </button>
+                      </ComponentRequestAuth>
+                    </div>
                   </div>
                 </li>
               ))}
             </ul>
             {showFormComment && (
               <div>
+                <div>Trả lời: {idCommentReply?.account?.name}</div>
                 <textarea
                   onChange={(value) => setValue(value.target.value)}
                   className='mt-2 w-full rounded-md min-h-[100px] outline-none p-2 text-gray-600'

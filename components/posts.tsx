@@ -61,7 +61,7 @@ export function Posts({
   },[profile?.name])
   return (
     <>
-      <div className='overflow-hidden border border-gray-300 md:rounded-md w-full mb-4 m-auto'>
+      <div className='overflow-hidden w-full border-b border-gray-200 m-auto'>
         <div className='w-full block h-full'>
           {/* <img alt="blog photo" src="https://i.pinimg.com/564x/69/18/6a/69186a31ada4b1bf94edae291f54ec85.jpg" className="max-h-40 w-full object-cover" /> */}
           <div className='bg-white hover:bg-gray-50 hover:dark:bg-gray-600 dark:bg-gray-800 w-full p-4'>

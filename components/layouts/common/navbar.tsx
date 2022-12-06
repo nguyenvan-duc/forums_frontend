@@ -29,13 +29,13 @@ export function Navbar({}: NavbarProps) {
   const [searchIsOpen, setSearchIsOpen] = useState(false)
   const [openLoginModal, setOpenLoginModal] = useState(false)
   const [visible, setVisible] = useState(false)
-  const [hasNotify,setHasNotify] = useState(false)
+  const [hasNotify, setHasNotify] = useState(false)
   const [notifications, setNotification] = useState([])
   useEffect(() => {
     if (profile?.name) {
       fetchData()
     }
-  }, [asPath])
+  }, [profile?.name, asPath == '/'])
   const fetchData = async () => {
     await appApi.getNotify().then((res: any) => {
       setNotification(res)
@@ -43,11 +43,11 @@ export function Navbar({}: NavbarProps) {
     })
   }
   let notifyNotSent: any = _.filter(notifications, { status: 'NOT_SEEN' })
-  useEffect(()=>{
-    if(notifyNotSent.length >0){
+  useEffect(() => {
+    if (notifyNotSent.length > 0) {
       setHasNotify(true)
     }
-  },[])
+  }, [notifications])
   const getChangerPopupSearch = (status: any) => {
     setSearchIsOpen(status)
   }
@@ -105,9 +105,9 @@ export function Navbar({}: NavbarProps) {
               </a>
             </Link>
             <Link href={'/thong-bao'}>
-              <a 
-              onClick={()=>setHasNotify(false)}
-              className='bg-white dark:bg-gray-800 relative p-1 ml-4 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-white outline-none shadow-none'>
+              <a
+                onClick={() => setHasNotify(false)}
+                className='bg-white dark:bg-gray-800 relative p-1 ml-4 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-white outline-none shadow-none'>
                 {hasNotify && (
                   <div className='w-2 h-2 bg-blue-500 absolute  right-2 rounded-full' />
                 )}
@@ -227,10 +227,10 @@ export function Navbar({}: NavbarProps) {
     <>
       <Disclosure
         as='nav'
-        className=' bg-white w-full border-b-2 m-auto dark:bg-gray-800'>
+        className=' fixed top-0 z-50 w-full text-xs lg:text-sm font-semibold lg:font-medium text-white border-b bg-gray-50'>
         {({ open }) => (
           <>
-            <div className='max-w-7xl mx-auto'>
+            <div className='mx-auto max-w-[100rem] px-2'>
               <div className='relative flex items-center justify-between h-16'>
                 <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
                   {/* Mobile menu button*/}
@@ -242,13 +242,19 @@ export function Navbar({}: NavbarProps) {
                       <Bars3Icon className='block h-6 w-6' aria-hidden='true' />
                     )}
                   </Disclosure.Button>
+                  <button className='p-3' onClick={() => setSearchIsOpen(true)}>
+                    <MagnifyingGlassIcon
+                      className='h-5 w-5 text-gray-800 ml-1'
+                      aria-hidden='true'
+                    />
+                  </button>
                 </div>
                 <div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
                   <div className='flex-shrink-0 flex items-center'>
                     <Link href={'/'}>
                       <a>
                         <img
-                          className='hidden lg:block h-8 w-auto'
+                          className=' h-8 w-auto'
                           src={
                             'https://res.cloudinary.com/dduc7th-dec/image/upload/v1668650814/logo_ver2__cropped_hsgsez.png'
                           }
@@ -271,7 +277,7 @@ export function Navbar({}: NavbarProps) {
                           />
                         </div>
 
-                        <div className='absolute inset-y-0 right-0 flex items-center'>
+                        <div className='absolute inset-y-0 right-0 flex items-center text-gray-800'>
                           <button
                             className='p-3'
                             onClick={() => setSearchIsOpen(true)}>
@@ -305,12 +311,12 @@ export function Navbar({}: NavbarProps) {
                     {theme === 'dark' ? '🌜' : '🌞'}
                   </span>
                 </Switch> */}
-                {AccountInfo()}
+                <div className='flex'>{AccountInfo()}</div>
               </div>
             </div>
 
             <Disclosure.Panel className='sm:hidden'>
-              <div className='px-2 pt-2 pb-3 space-y-1'>
+              <div className='px-2 pt-2 pb-3 flex flex-col border-t'>
                 {menu.map((item) => (
                   <Disclosure.Button
                     key={item.title}
@@ -318,9 +324,9 @@ export function Navbar({}: NavbarProps) {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? 'border-l-4 border-indigo-600 text-gray-700 bg-gray-100'
+                        ? 'border-l-4 border-indigo-600 text-gray-700 bg-gray-200'
                         : 'text-gray-600 hover:bg-gray-700 hover:text-white',
-                      'block px-3 py-2  text-base font-medium'
+                      'block px-3 py-2  text-base font-medium w-full mb-2'
                     )}
                     aria-current={item.current ? 'page' : undefined}>
                     {item.title}

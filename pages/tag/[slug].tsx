@@ -103,59 +103,65 @@ const Tag = (props: Props) => {
   }
   return (
     <>
-      <div className='min-h-[80vh]'>
-        {loading ? (
-          <>
-            <div className='w-full mb-5 border-t-8 border-indigo-500 bg-white p-4 rounded-md flex items-center justify-between'>
-              <div className='flex items-center'>
-                <div className='animate-pulse bg-gray-300 w-24 h-24 rounded-md' />
-                <div className='ml-2'>
-                  <div className='animate-pulse bg-gray-300 w-32 lg:w-56 h-6 mb-2 rounded-md' />
-                  <div className='animate-pulse bg-gray-300 w-40 lg:w-80  h-4 rounded-md' />
+      <div className=''>
+        <div className='px-4'>
+          {loading ? (
+            <>
+              <div className='w-full border mb-5 border-t-8 border-indigo-500 bg-white p-4 rounded-md flex items-center justify-between'>
+                <div className='flex items-center'>
+                  <div className='animate-pulse bg-gray-300 w-24 h-24 rounded-md' />
+                  <div className='ml-2'>
+                    <div className='animate-pulse bg-gray-300 w-32 lg:w-56 h-6 mb-2 rounded-md' />
+                    <div className='animate-pulse bg-gray-300 w-40 lg:w-80  h-4 rounded-md' />
+                  </div>
                 </div>
+                <div className='animate-pulse bg-gray-300 h-10 w-28 rounded-md' />
               </div>
-              <div className='animate-pulse bg-gray-300 h-10 w-28 rounded-md' />
-            </div>
-          </>
-        ) : (
-          <>
-            <div className='w-full mb-5 border-t-8 border-indigo-500 bg-white p-4 rounded-md flex items-center justify-between'>
-              <div className='flex items-center'>
-                {tagDetails?.tag_details?.icon ? (
-                  <img
-                    src={tagDetails?.tag_details?.icon}
-                    className='w-24 h-24 object-contain mr-3'
-                  />
-                ) : (
-                  <h2 className='text-4xl font-semibold mr-3'>#</h2>
-                )}
-                <div>
-                  <h2 className='text-2xl font-bold'>
-                    {tagDetails?.tag_details?.name}
-                  </h2>
-                  <p className='max-w-md'> {tagDetails?.tag_details?.desc}</p>
+            </>
+          ) : (
+            <>
+              <div className='w-full mb-5 border border-b-gray-200 border-x-gray-200 border-t-8 border-indigo-500 bg-white p-4 rounded-md flex items-center justify-between'>
+                <div className='flex items-center'>
+                  {tagDetails?.tag_details?.icon ? (
+                    <img
+                      src={tagDetails?.tag_details?.icon}
+                      className='w-24 h-24 object-contain mr-3'
+                    />
+                  ) : (
+                    <h2 className='text-4xl font-semibold mr-3'>#</h2>
+                  )}
+                  <div>
+                    <h2 className='text-2xl font-bold'>
+                      {tagDetails?.tag_details?.name}
+                    </h2>
+                    <p className='max-w-md'> {tagDetails?.tag_details?.desc}</p>
+                  </div>
                 </div>
+                <ComponentRequestAuth>
+                  <button
+                    onClick={() => {
+                      if (profile?.name) {
+                        handleFollow(tagDetails?.tag_details?.id)
+                      }
+                    }}
+                    disabled={loader}
+                    className={classNames(
+                      ' py-2 px-4 mt-2 rounded-md border font-medium text-white ',
+                      follow ? 'bg-indigo-400' : 'bg-indigo-600'
+                    )}>
+                    {follow ? 'Đã theo dõi' : 'Theo dõi'}
+                  </button>
+                </ComponentRequestAuth>
               </div>
-              <ComponentRequestAuth>
-                <button
-                  onClick={() => {
-                    if (profile?.name) {
-                      handleFollow(tagDetails?.tag_details?.id)
-                    }
-                  }}
-                  disabled={loader}
-                  className={classNames(
-                    ' py-2 px-4 mt-2 rounded-md border font-medium text-white ',
-                    follow ? 'bg-indigo-400' : 'bg-indigo-600'
-                  )}>
-                  {follow ? 'Đã theo dõi' : 'Theo dõi'}
-                </button>
-              </ComponentRequestAuth>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
+
         <div>
+          <div className='w-full px-4 border-b border-gray-200' >
           <h3 className=' font-semibold mb-2'>Danh sách bài viết</h3>
+
+          </div>
           {renderPosts()}
         </div>
       </div>

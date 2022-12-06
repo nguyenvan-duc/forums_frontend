@@ -41,7 +41,7 @@ export function SidebarLeft({}: Props) {
               <Link href={item.href}>
                 <a
                   className={
-                    classNames('flex items-center p-2 text-sm font-normal text-gray-900 hover:border-l-4 hover:border-indigo-600 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700',asPath == item.href && ('border-l-4 border-indigo-600 font-bold text-black'))
+                    classNames('flex items-center p-2 text-sm font-normal text-gray-900 hover:border-l-4 hover:border-indigo-600 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700',asPath == item.href && ('border-l-4 border-indigo-600 font-bold text-black bg-gray-200'))
                   }>
                   <item.icon className={classNames('w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white',asPath == item.href && ('font-bold text-black') )} />
                   <span className='ml-3'>{item.title}</span>

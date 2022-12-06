@@ -24,12 +24,13 @@ const Search: NextPageWithLayout = (props: Props) => {
   const [keyword, setKeyword] = useState<any>(query.q)
   const [result, setResult] = useState<any>([])
   const [loading, setLoading] = useState(false)
-  const [sort, setSort] = useState<any>(query?.type)
+  const [sort, setSort] = useState<any>(query.type ? query?.type : POST_SEARCH_SORT)
   useEffect(() => {
     setKeyword(query.q)
-    setSort(query?.type)
+    setSort(query.type ? query?.type : POST_SEARCH_SORT)
   }, [query.q,query?.type])
   useEffect(() => {
+    setLoading(true)
     const delayDebounceFn = setTimeout(() => {
       if (keyword?.length > 0) {
         fetchData()
@@ -62,7 +63,7 @@ const Search: NextPageWithLayout = (props: Props) => {
         </>
       )
     }
-    if (result.length == 0 || keyword.length == 0) {
+    if (result?.length == 0 || keyword?.length == 0) {
       return (
         <div className='w-full text-center'>
           <span className='text-center py-5'>Không có kết quả</span>
@@ -72,7 +73,8 @@ const Search: NextPageWithLayout = (props: Props) => {
     switch (sort) {
       case POST_SEARCH_SORT:
         return _.map(result, (item: any) => (
-          <Posts
+          <div className='border-x border-t mb-3 rounded-md'>
+             <Posts
             key={item.id}
             id={item.id}
             title={item.title}
@@ -85,6 +87,8 @@ const Search: NextPageWithLayout = (props: Props) => {
             author={item.account}
             createdAt={item.createdAt}
           />
+            </div>
+         
         ))
       case USER_SEARCH_SORT:
         return _.map(result, (item: any) => (
@@ -137,7 +141,7 @@ const Search: NextPageWithLayout = (props: Props) => {
     <>
       <SEO title='Tìm kiếm' />
 
-      <div className='max-w-[60%] mt-4 m-auto border bg-gray-50 mb-3 p-3 rounded-md'>
+      <div className='lg:max-w-[60%] max-w-[80%] mt-4 m-auto border bg-gray-50 p-3 rounded-md'>
         <input
           value={keyword}
           onChange={(value) => setKeyword(value.target.value)}

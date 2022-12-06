@@ -55,9 +55,12 @@ const DetailsPost = ({ post, slug }: any) => {
           type: 'website',
         }}
       />
-      <div className='md:border-x px-2 w-full h-full  bg-gray-50 border pb-3 rounded-md'>
-        <div className='w-full border-b py-3 border-gray-40 px-2'>
-          <div className={`flex items-center ${detailPost?.myPost&&('justify-between')}`}>
+      <div className='w-full h-full '>
+        <div className='w-full border-b py-3 border-gray-40 px-4'>
+          <div
+            className={`flex items-center ${
+              detailPost?.myPost && 'justify-between'
+            }`}>
             <div className='flex items-center'>
               <Link href={`/nguoi-dung/${post?.account?.username}`}>
                 <a className='flex items-center text-sm font-[500] hover:underline mr-2'>
@@ -132,7 +135,9 @@ const DetailsPost = ({ post, slug }: any) => {
             </div>
           </div>
         </div>
-        <AnswerOfPost id={post?.id} />
+        <div className='px-4'>
+          <AnswerOfPost id={post?.id} />
+        </div>
       </div>
     </>
   )

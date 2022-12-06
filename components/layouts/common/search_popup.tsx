@@ -146,7 +146,7 @@ export function SearchPopup(props: any) {
           as='div'
           className='fixed inset-0 z-10 bg-blend-hue overflow-y-auto'
           onClose={() => props.getChangerPopupSearch(false)}>
-          <div className='min-h-screen px-4 text-center bg-black bg-opacity-40 '>
+          <div className='min-h-screen px-1 lg:px-4 text-center bg-black bg-opacity-40 '>
             <Transition.Child
               as={Fragment}
               enter='ease-out duration-300'
@@ -166,7 +166,7 @@ export function SearchPopup(props: any) {
               leave='ease-in duration-200'
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'>
-              <div className='inline-block w-full max-w-3xl p-6 my-28 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl'>
+              <div className='inline-block w-full lg:max-w-3xl p-6 my-28 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl'>
                 <div className='flex justify-between items-start rounded-t '>
                   <button
                     onClick={() => {

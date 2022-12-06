@@ -5,7 +5,7 @@ type Props = {}
 
 export function Footer({}: Props) {
   return (
-    <footer className='p-4 bg-white  md:px-6 md:py-8 dark:bg-gray-800'>
+    <footer className='p-4 bg-white border-t border-t-gray-200 md:px-6 md:py-8 dark:bg-gray-800'>
       <div className='max-w-7xl m-auto'>
         <div className='sm:flex sm:items-center sm:justify-between'>
           <Link href={'/'}>
