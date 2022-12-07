@@ -45,7 +45,7 @@ const AccountDetail: NextPageWithLayout = (props: Props) => {
       type: "website",
     }}
     />
-     <div className='max-w-5xl m-auto'>
+    <div className='max-w-5xl m-auto'>
       <UseInfo
         loading={loading}
         info={userProfile?.info}

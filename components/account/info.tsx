@@ -268,7 +268,7 @@ export function UseInfo({
               )}
             </div>
             <h2 className='text-lg font-semibold mt-3 mb-2'>Bài đăng</h2>
-            <div>
+            <div className='border border-gray-200 mb-3 rounded-lg overflow-hidden'>
               {posts?.length == 0 ? (
                 <div className='text-center text-gray-600 mt-4'>
                   Không có gì!

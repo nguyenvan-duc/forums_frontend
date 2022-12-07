@@ -105,8 +105,8 @@ const DetailsPost = ({ post, slug }: any) => {
             ))}
           </div>
         </div>
-        <div className='flex  py-3'>
-          <div className='w-1/12 relative'>
+        <div className='flex py-3 px-2 md:px-0'>
+          <div className='w-1/12 relative '>
             <VoteComponent
               id={post?.id}
               loader={loader}
@@ -116,10 +116,10 @@ const DetailsPost = ({ post, slug }: any) => {
               getNotify={true}
             />
           </div>
-          <div className='w-11/12 pb-1 dark:text-gray-800 px-2 border-b border-gray-100'>
+          <div className='w-11/12 pb-1 dark:text-gray-800 pl-2 pr-3 md:pr-7 border-b border-gray-100'>
             <div className='mb-3'>
               <span className='text-xs text-gray-400'>Nội dung :</span>
-              <div className='ml-2 post-details relative'>
+              <div className='post-details relative'>
                 {/* <article className='prose lg:prose-xl'></article> */}
                 <Zoom>
                   <MarkdownPreview source={post?.content} />
@@ -135,7 +135,7 @@ const DetailsPost = ({ post, slug }: any) => {
             </div>
           </div>
         </div>
-        <div className='px-4'>
+        <div id="comments" className='px-4'>
           <AnswerOfPost id={post?.id} />
         </div>
       </div>

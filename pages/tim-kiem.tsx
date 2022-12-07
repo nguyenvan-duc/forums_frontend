@@ -65,7 +65,7 @@ const Search: NextPageWithLayout = (props: Props) => {
     }
     if (result?.length == 0 || keyword?.length == 0) {
       return (
-        <div className='w-full text-center'>
+        <div className='w-full text-center mt-4'>
           <span className='text-center py-5'>Không có kết quả</span>
         </div>
       )
@@ -73,8 +73,8 @@ const Search: NextPageWithLayout = (props: Props) => {
     switch (sort) {
       case POST_SEARCH_SORT:
         return _.map(result, (item: any) => (
-          <div className='border-x border-t mb-3 rounded-md'>
-             <Posts
+          <div className='border-x md:border-t md:mb-3 md:rounded-md'>
+            <Posts
             key={item.id}
             id={item.id}
             title={item.title}
@@ -93,11 +93,11 @@ const Search: NextPageWithLayout = (props: Props) => {
       case USER_SEARCH_SORT:
         return _.map(result, (item: any) => (
           <>
-            <div className='relative hover:cursor-pointer border mb-4 p-2 rounded-lg bg-white'>
+            <div className='relative hover:cursor-pointer border md:mb-4 p-2 md:rounded-lg bg-white'>
               <div className='flex items-center'>
                 <div className='mr-2'>
                   <img
-                    className='w-20 h-20 rounded-full'
+                    className='md:w-20 md:h-20 w-12 h-12 rounded-full'
                     src={item?.avatar}
                     alt={item?.name}
                   />
@@ -141,7 +141,7 @@ const Search: NextPageWithLayout = (props: Props) => {
     <>
       <SEO title='Tìm kiếm' />
 
-      <div className='lg:max-w-[60%] max-w-[80%] mt-4 m-auto border bg-gray-50 p-3 rounded-md'>
+      <div className='w-full md:max-w-[60%] mt-4 m-auto border bg-gray-50 p-3 rounded-md'>
         <input
           value={keyword}
           onChange={(value) => setKeyword(value.target.value)}
@@ -191,7 +191,7 @@ const Search: NextPageWithLayout = (props: Props) => {
           </button>
         </div>
       </div>
-      <div className='max-w-[60%] mt-3 m-auto min-h-[60vh] '>
+      <div className='w-full md:max-w-[60%] md:mt-3 m-auto min-h-[60vh] '>
         {renderData()}
       </div>
     </>

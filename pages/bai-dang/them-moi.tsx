@@ -296,7 +296,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
                 <button
                   disabled={loading}
                   onClick={() => handleNewPost()}
-                  className='px-4 py-2 rounded-md ml-3 bg-indigo-500 mt-2 text-gray-200'>
+                  className=' px-8 py-2 rounded-md ml-3 bg-indigo-500 mt-2 text-gray-200'>
                   {loading ? 'Đang tải lên' : 'Đăng tải'}
                 </button>
               </div>
@@ -304,13 +304,12 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
           ) : (
             <div className=' md:w-3/4 w-full min-h-[70vh] rounded-2xl border-2 border-gray-300 bg-white py-5 px-6'>
               <div className='w-full border-b py-3 border-gray-50'>
-                <span className='text-xs text-gray-600'>Tiêu đề :</span>
-                <h1 className='text-2xl ml-2 dark:text-gray-800'>{title}</h1>
+                <h1 className='text-4xl dark:text-gray-800 font-[500] mb-3 mt-2'>{title}</h1>
                 <div className='flex flex-wrap justify-starts items-center mt-4'>
                   {tagsSelected?.map((item: any) => (
                     <div
                       key={item?.id}
-                      className='text-xs mr-2 py-1.5 px-4 text-gray-600 bg-blue-50 rounded-2xl'>
+                      className='text-sm mr-2 py-1 px-1.5 text-gray-600 bg-blue-50 border border-blue-200 hover:bg-blue-100 rounded-md'>
                       {item?.name}
                     </div>
                   ))}
@@ -326,7 +325,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
               <div className='flex  py-3'>
                 <div className='w-11/12 dark:text-gray-800 px-2 pb-12'>
                   <span className='text-xs text-gray-400'>Nội dung :</span>
-                  <div className='ml-2'>
+                  <div className='post-details'>
                     <MarkdownPreview source={content} />
                   </div>
                 </div>

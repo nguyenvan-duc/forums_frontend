@@ -332,6 +332,20 @@ export function Navbar({}: NavbarProps) {
                     {item.title}
                   </Disclosure.Button>
                 ))}
+                <Disclosure.Button
+                  as='a'
+                  href={'/bai-dang/them-moi'}
+                  className={classNames(
+                    asPath == '/bai-dang/them-moi'
+                      ? 'border-l-4 border-indigo-600 text-gray-700 bg-gray-200'
+                      : 'text-gray-600 hover:bg-gray-700 hover:text-white',
+                    'block px-3 py-2  text-base font-medium w-full mb-2'
+                  )}
+                  aria-current={
+                    asPath == '/bai-dang/them-moi' ? 'page' : undefined
+                  }>
+                  Thêm bài đăng
+                </Disclosure.Button>
               </div>
             </Disclosure.Panel>
           </>

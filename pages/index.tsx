@@ -7,6 +7,8 @@ import { postApi } from '@/api-client'
 import { useAuth } from '@/hooks'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { SORT_POST_NEW, SORT_POST_HOT } from '@/constants'
+import Link from 'next/link'
+import { PlusIcon } from '@heroicons/react/24/outline'
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
@@ -125,8 +127,22 @@ const Home: NextPageWithLayout = () => {
   }
   return (
     <div>
-      <div className='pl-4 pr-6  pb-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-3 xl:border-t-0'>
-        <div className='flex items-center'>
+      <div className='pl-4 pr-6 bg-white pb-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-3 xl:border-t-0'>
+        <div className='mb-4 flex justify-end'>
+          <Link href={'/bai-dang/them-moi'}>
+           
+            <a className='px-2 flex bg-gray-50 text-sm block md:hidden hover:bg-gray-100 py-2 border rounded-lg'>
+            <PlusIcon
+              className='-ml-1 mr-2 h-5 w-5 text-gray-500'
+              aria-hidden='true'
+            />
+              Tạo bài đăng
+          
+              </a>
+          </Link>
+        </div>
+
+        <div className='flex items-center mb-3'>
           {profile?.name && (
             <button
               onClick={() => setSortType('relevant')}
@@ -157,7 +173,6 @@ const Home: NextPageWithLayout = () => {
         </div>
       </div>
       <Welcome />
-
       {renderPosts()}
     </div>
   )

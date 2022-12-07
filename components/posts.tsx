@@ -36,7 +36,7 @@ export function Posts({
 }: PostProps) {
   const route = useRouter()
   const { bookmarkPost } = useBookmarks()
-  const [statusBookmark, setStatusBookmark] = useState<any>(false)
+  const [statusBookmark, setStatusBookmark] = useState<any>(isBookmark)
   useEffect(()=>{
     setStatusBookmark(isBookmark)
   },[isBookmark])
@@ -106,13 +106,13 @@ export function Posts({
                 </div>
               </div>
               <div className='flex items-center mt-4 text-sm text-gray-600'>
-                <Link href='#'>
+                <Link href={`/bai-dang/${slug}`}>
                   <a className='flex items-center mr-4 p-2 hover:bg-gray-100 rounded-md'>
                     {/* <ChevronUpIcon className='h-5 w-5 mr-1' /> */}
                     <span>{voteCount} Đánh giá</span>
                   </a>
                 </Link>
-                <Link href='#'>
+                <Link href={`/bai-dang/${slug}/#comments`}>
                   <a className='flex items-center p-2 mr-4 hover:bg-gray-100 rounded-md'>
                     {/* <ChatBubbleOvalLeftIcon className='h-5 w-5 mr-1' />{' '} */}
                     <span>{commentCount} Bình luận</span>

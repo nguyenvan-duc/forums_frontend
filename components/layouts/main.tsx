@@ -35,7 +35,7 @@ export function MainLayout({
     }
   }, [router, profile, requestAuth, fistLoading])
   return (
-    <div className=' bg-white pt-16'>
+    <div className=' bg-gray-100 pt-16'>
       <Navbar />
       <LoginModal
         openModel={isRequestAuth}
@@ -61,7 +61,7 @@ export function MainLayout({
 
             <div className='flex container mx-auto'>
               <div
-              className={classNames(sidebarRight?'w-full  py-6 bg-landscape':'w-full')}
+              className={classNames(sidebarRight?'w-full  py-6 bg-landscape bg-white':'w-full')}
                 // className={ sidebarRight
                 //     ? ''
                 //     : ''}
