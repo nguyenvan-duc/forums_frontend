@@ -33,8 +33,8 @@ type Props = {}
 export function SidebarLeft({}: Props) {
   const { asPath } = useRouter()
   return (
-    <aside className='w-full min-w-[200px]'>
-      <div className='px-3 py-4 overflow-y-auto  '>
+    <aside className='w-full sticky top-16 z-20 min-w-[200px]'>
+      <div className='px-3 py-4 overflow-y-auto relative '>
         <ul className='space-y-2'>
           {menu.map((item) => (
             <li key={item.title}>

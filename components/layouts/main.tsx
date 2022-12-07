@@ -52,9 +52,9 @@ export function MainLayout({
         <Loader />
       ) : (
         <>
-          <div className='flex-grow w-full min-h-screen max-w-[100rem] 	mx-auto lg:flex'>
+          <div className='flex-grow relative w-full min-h-screen max-w-[100rem] 	mx-auto lg:flex'>
             {sidebarLeft && (
-              <div className=' hidden lg:block xl:flex-shrink-0 xl:w-80 xl:border-r xl:border-gray-200'>
+              <div className='relative min-h-screen hidden lg:block xl:flex-shrink-0 xl:w-80 xl:border-r xl:border-gray-200'>     
                 <SidebarLeft />
               </div>
             )}
@@ -75,6 +75,7 @@ export function MainLayout({
               </div>
               {sidebarRight && (
                 <div className={'px-4 sm:px-6 hidden lg:block lg:px-8 lg:flex-shrink-0 lg:border-l py-6 lg:border-gray-200 xl:pr-0 lg:w-96'}>
+                  
                   <SidebarRight />
                 </div>
               )}
