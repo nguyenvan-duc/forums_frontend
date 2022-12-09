@@ -5,6 +5,7 @@ import {
   ArrowsPointingOutIcon,
   ChatBubbleOvalLeftIcon,
   ArrowUturnRightIcon,
+  ArrowUpIcon,
 } from '@heroicons/react/24/outline'
 import Zoom from 'react-medium-image-zoom'
 import { VoteComponent } from './vote'
@@ -17,6 +18,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks'
 import format_date from '@/utils/format_date'
 import { ComponentRequestAuth } from './layouts/common'
+import { useRouter } from 'next/router'
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
 })
@@ -43,6 +45,8 @@ export function Answer({
   bookmark,
   createdAt,
 }: AnswerProps) {
+  let array = []
+  const router = useRouter()
   const [clicked, setClicked] = useState<any>(0)
   const [showFormComment, setShowFormComment] = useState(false)
   const [idCommentReply, setIdCommentReply] = useState<any>()
@@ -56,9 +60,9 @@ export function Answer({
     }
     setClicked(index)
   }
-  useEffect(()=>{
-    AppendReplyComments(reply)
-  },[])
+  useEffect(() => {
+    mergeReply()
+  }, [])
   const handleShowFormComment = () => {
     setShowFormComment(true)
   }
@@ -73,19 +77,26 @@ export function Answer({
         setLoading(false)
       })
   }
-  const AppendReplyComments = (reply: any) => {
-    if (reply.length == 0) {
-      return
-   }
-    for (let i = 0; i < reply.length; i++) {
-        setReplyList([...replyList,reply[i]])
-        AppendReplyComments(reply[i].reply)
+  const mergeReply = async () => {
+    let array: any = []
+    const AppendReplyComments = async (reply: any) => {
+      if (reply.length == 0) {
+        return
+      }
+      for (let i = 0; i < reply.length; i++) {
+        array = [...array, reply[i]]
+        console.log(array)
+        await AppendReplyComments(reply[i].reply)
       }
     }
+    await AppendReplyComments(reply)
+    setReplyList(array)
+  }
+
   return (
     <>
       {clicked == id ? (
-        <div className='flex mb-3 py-3 bg-gray-200'>
+        <div className='flex mb-3 py-3 bg-gray-200 rounded-md'>
           <div className='w-1/12 flex justify-center '>
             <div className='text-center flex flex-col justify-center items-center'>
               <button onClick={() => setClicked('')} title='Phóng To'>
@@ -94,11 +105,15 @@ export function Answer({
             </div>
           </div>
           <div className='w-11/12 dark:text-gray-800 px-2 border-gray-100'>
-            <div>
-              <span>
-                Trả lời bởi: <a href='#'>{account.name}</a>
-              </span>{' '}
-              - <span>{format_date.formatDate(createdAt)}</span>
+            <div className='flex'>
+              <span className='mr-2 flex'>
+              <img
+                    src={account.imageUrl}
+                    className='h-6 w-6 rounded-full mr-2'
+                  />
+                <a >{account.name}</a>
+              </span>
+              <span className='ml-3 flex items-center text-gray-500'><ArrowUturnRightIcon className='w-3 h-3 text-gray-700 mr-2'/> {replyList.length} câu trả lời</span>
             </div>
           </div>
         </div>
@@ -147,6 +162,7 @@ export function Answer({
                 <button
                   disabled={!profile?.name}
                   onClick={() => {
+                    router.push(`#form-reply-${id}`)
                     handleShowFormComment()
                     setIdCommentReply({
                       id: id,
@@ -166,54 +182,94 @@ export function Answer({
               />
             </div>
             <ul className='my-3'>
-              {_.map(replyList, (item) => (
-                <li
-                  id={`comment-${item?.id}`}
-                  key={item?.id}
-                  className='text-sm p-2 h-full bg-gray-100 border mb-2'>
-                  <div className='flex items-center'>
-                    <Link href={`/nguoi-dung/${item?.account?.username}`}>
-                      <a className='flex item-center mr-2 text-sm'>
-                        <img
-                          src={item?.account?.imageUrl}
-                          className='h-6 w-6 rounded-full mr-2'
-                        />
-                        {item?.account?.name}
-                      </a>
-                    </Link>
-                    <span className='text-sm text-gray-400'>
-                      {format_date?.formatDate(item.createdAt)}
-                    </span>
-                  </div>
-                  <div className='mt-2 ml-2'>
-                    <MarkdownPreview source={item?.content} />
-                    <div className='flex justify-end'>
-                      <ComponentRequestAuth>
-                        <button
-                          disabled={!profile?.name}
-                          onClick={() => {
-                            setShowFormComment(true)
-                            setIdCommentReply(item)
-                          }}
-                          className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
-                          <ArrowUturnRightIcon className='h-4 w-4 mr-2' />
-                          <span>Trả lời bình luận</span>
-                        </button>
-                      </ComponentRequestAuth>
+              {_.map(
+                _.orderBy(replyList, (it) => new Date(it.createdAt), ['asc']),
+                (item) => (
+                  <li
+                    id={`comment-${item?.id}`}
+                    key={item?.id}
+                    className='text-sm p-2 h-full rounded-md border mb-2'>
+                    {id !== item?.parent?.id && (
+                      <div className='bg-gray-100 border rounded-md p-2 mb-2'>
+                        <div className='flex items-center justify-between'>
+                          <div className='flex items-center'>
+                            <img
+                              src={item?.parent?.account?.imageUrl}
+                              className='h-5 w-5 rounded-full mr-2'
+                            />
+                            {item?.parent.account?.name}
+                          </div>
+                          <button
+                            onClick={() =>
+                              router.push(`#comment-${item?.parent?.id}`)
+                            }
+                            className='hover:bg-gray-200 p-2 rounded-full'>
+                            <ArrowUpIcon className='h-4 w-4 text-gray-800' />
+                          </button>
+                        </div>
+                        <div className='pt-2 max-h-5 cut-text-reply'>
+                          <MarkdownPreview source={item?.parent?.content} />
+                        </div>
+                      </div>
+                    )}
+
+                    <div className='flex items-center'>
+                      <Link href={`/nguoi-dung/${item?.account?.username}`}>
+                        <a className='flex item-center mr-2 text-sm'>
+                          <img
+                            src={item?.account?.imageUrl}
+                            className='h-6 w-6 rounded-full mr-2'
+                          />
+                          {item?.account?.name}
+                        </a>
+                      </Link>
+                      <span className='text-sm text-gray-400'>
+                        {format_date?.formatDate(item.createdAt)}
+                      </span>
                     </div>
-                  </div>
-                </li>
-              ))}
+                    <div className='mt-2 ml-2'>
+                      <MarkdownPreview source={item?.content} />
+                      <div className='flex justify-end'>
+                        <ComponentRequestAuth>
+                          <button
+                            disabled={!profile?.name}
+                            onClick={() => {
+                              setShowFormComment(true)
+                              setIdCommentReply(item)
+                            }}
+                            className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
+                            <ArrowUturnRightIcon className='h-4 w-4 mr-2' />
+                            <span>Trả lời bình luận</span>
+                          </button>
+                        </ComponentRequestAuth>
+                      </div>
+                    </div>
+                  </li>
+                )
+              )}
             </ul>
             {showFormComment && (
-              <div>
-                <div>Trả lời: {idCommentReply?.account?.name}</div>
+              <div
+                id={`form-reply-${id}`}
+                className='p-2 border border-indigo-700 rounded-md top-16 bg-gray-50'>
+                <div className='w-full bg-gray-100 border rounded-md p-2 mt-3'>
+                  <div className='flex items-center mr-2'>
+                    <ArrowUturnRightIcon className='w-4 h-4 mr-2' />
+                    <div className='flex items-center'>
+                      <img
+                        src={idCommentReply?.account?.imageUrl}
+                        className='h-5 w-5 rounded-full mr-2'
+                      />
+                      {idCommentReply?.account?.name}
+                    </div>
+                  </div>
+                </div>
+
                 <textarea
+                  value={value}
                   onChange={(value) => setValue(value.target.value)}
-                  className='mt-2 w-full rounded-md min-h-[100px] outline-none p-2 text-gray-600'
-                  placeholder='Viết bình luận'>
-                  {value}
-                </textarea>
+                  className='mt-2 w-full rounded-md min-h-[100px] border  outline-none p-2 text-gray-600'
+                  placeholder='Viết bình luận'/>
                 <div className='flex justify-end mt-2'>
                   <button
                     disabled={loading}
