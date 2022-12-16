@@ -227,7 +227,7 @@ export function Navbar({}: NavbarProps) {
     <>
       <Disclosure
         as='nav'
-        className=' fixed top-0 z-50 w-full text-xs lg:text-sm font-semibold lg:font-medium text-white border-b bg-gray-50'>
+        className='top-0 z-20 w-full text-xs lg:text-sm font-semibold lg:font-medium text-white border-b bg-gray-50'>
         {({ open }) => (
           <>
             <div className='mx-auto max-w-[100rem] px-2'>

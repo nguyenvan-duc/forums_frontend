@@ -12,7 +12,9 @@ import {
   HashtagIcon,
   FireIcon,
   UsersIcon,
-  CakeIcon,
+  TagIcon,
+  QuestionMarkCircleIcon,
+  ChatBubbleLeftRightIcon
 } from '@heroicons/react/24/outline'
 import { useAuth } from '@/hooks'
 import { useTagsFollow } from '@/hooks/use-tag'
@@ -24,16 +26,38 @@ const menu = [
     icon: HomeIcon,
   },
   {
-    title: 'Thẻ',
+    title: 'Hỏi đáp',
+    href: '/tag/hoi-dap',
+    icon: QuestionMarkCircleIcon
+    ,
+  },
+  {
+    title: 'Thảo luận',
+    href: '/tag/thao-luan',
+    icon: ChatBubbleLeftRightIcon
+    ,
+  },
+  {
+    title: 'Chủ đề',
     href: '/tags',
-    icon: HashtagIcon,
+    icon: TagIcon,
+  },
+  {
+    title: 'Người dùng',
+    href: '/nguoi-dung',
+    icon: UsersIcon,
+  },
+  {
+    title: 'Giới thiệu',
+    href: '/tags',
+    icon: FireIcon,
   }
 ]
 type Props = {}
 export function SidebarLeft({}: Props) {
   const { asPath } = useRouter()
   return (
-    <aside className='w-full sticky top-16 z-20 min-w-[200px]'>
+    <aside className='w-full sticky top-5 z-10 mt-5 bg-white border rounded-lg'>
       <div className='px-3 py-4 overflow-y-auto relative '>
         <ul className='space-y-2'>
           {menu.map((item) => (
@@ -41,7 +65,7 @@ export function SidebarLeft({}: Props) {
               <Link href={item.href}>
                 <a
                   className={
-                    classNames('flex items-center p-2 text-sm font-normal text-gray-900 hover:border-l-4 hover:border-indigo-600 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700',asPath == item.href && ('border-l-4 border-indigo-600 font-bold text-black bg-gray-200'))
+                    classNames('flex items-center p-2 text-sm font-normal text-gray-900 hover:border-l-4 hover:border-indigo-600 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700',asPath == item.href && ('border-l-4 border-indigo-600 font-bold text-black font-bold'))
                   }>
                   <item.icon className={classNames('w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white',asPath == item.href && ('font-bold text-black') )} />
                   <span className='ml-3'>{item.title}</span>

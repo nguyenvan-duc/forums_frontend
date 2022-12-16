@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 import { commentApi } from '@/api-client/comment-api'
 import { Comment } from '@/models/comment'
 import _ from 'lodash'
@@ -11,6 +11,8 @@ interface AOPProps {
 export function AnswerOfPost({ id }: AOPProps) {
   const route = useRouter()
   const [answers, setAnswers] = useState<any>([])
+  const scrollToFormReply = useRef<any>([])
+  const [displayFormComm, setDisplayFormComm] = useState(false)
   const [value, setValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [loadWhenSend, setLoadWhenSend] = useState(false)
@@ -23,7 +25,6 @@ export function AnswerOfPost({ id }: AOPProps) {
     await commentApi.findCommentByPost(id).then((res: any) => {
       setAnswers(res)
       setLoading(false)
-      route?.push(route?.asPath)
     })
   }
   const onChange = useCallback((value: any) => {
@@ -35,7 +36,7 @@ export function AnswerOfPost({ id }: AOPProps) {
     }
     setLoadWhenSend(true)
     await commentApi.replyPost(id, value).then((res: any) => {
-      setAnswers([...answers, res])
+      setAnswers([res, ...answers])
       setValue('')
       setLoadWhenSend(false)
     })
@@ -43,7 +44,7 @@ export function AnswerOfPost({ id }: AOPProps) {
   const renderComments = () => {
     if (loading) {
       return (
-        <div>
+        <div className='bg-white px-5 py-5 border border-gray-200 mt-5 rounded-lg'>
           <div className='pl-8 mb-3'>
             <div className='flex items-center mb-3'>
               <div className='animate-pulse bg-gray-300 w-6 h-6 mr-2 rounded-full' />
@@ -62,37 +63,55 @@ export function AnswerOfPost({ id }: AOPProps) {
       )
     }
     return (
-      <>
-        <h2 className='text-lg font-semibold'>Có {answers?.length} câu Trả Lời: </h2>
-        {_.map(answers, (item: Comment) => (
-          <>
-            {item?.children == false ? (
-              <Answer
-                key={item?.id}
-                post_id={id}
-                id={item?.id}
-                reply={item.reply}
-                account={item?.account}
-                content={item?.content}
-                vote={item.vote}
-                voteType={item?.voteType}
-                voteCount={item?.voteCount}
-                bookmark={item?.bookmark}
-                createdAt={item?.createdAt}
-              />
-            ) : (
-              ''
-            )}
-          </>
-        ))}
-        <AnswersForm
-          loading={loadWhenSend}
-          onChange={onChange}
-          handleSend={handleSend}
-          value={value}
-        />
-      </>
+      <div>
+        <div className='bg-white px-2 py-2 md:px-5 md:py-5 border border-gray-200 mt-5 rounded-lg'>
+          <div className='flex justify-between items-center'>
+            <h2 className='text-lg font-bold'>
+              Có {answers?.length} bình luận:{' '}
+            </h2>
+            <button
+              onClick={() => setDisplayFormComm(true)}
+              className='px-3 py-2 bg-indigo-600 hover:bg-indigo-400 text-white rounded-lg'>
+              Viết bình luận
+            </button>
+          </div>
+          {displayFormComm && (
+            <AnswersForm
+              handleCancel={(value: any) => setDisplayFormComm(value)}
+              loading={loadWhenSend}
+              onChange={onChange}
+              handleSend={handleSend}
+              value={value}
+            />
+          )}
+        </div>
+        <div className='mt-5 py-5 bg-white border border-gray-200 rounded-lg'>
+          {_.map(answers, (item: Comment) => (
+            <>
+              {item?.children == false ? (
+                <div>
+                  <Answer
+                    key={item?.id}
+                    post_id={id}
+                    id={item?.id}
+                    reply={item.reply}
+                    account={item?.account}
+                    content={item?.content}
+                    vote={item.vote}
+                    voteType={item?.voteType}
+                    voteCount={item?.voteCount}
+                    bookmark={item?.bookmark}
+                    createdAt={item?.createdAt}
+                  />
+                </div>
+              ) : (
+                ''
+              )}
+            </>
+          ))}
+        </div>
+      </div>
     )
   }
-  return <>{renderComments()}</>
+  return <div>{renderComments()}</div>
 }

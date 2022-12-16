@@ -52,7 +52,7 @@ export function TagItem(item: TagItemProps) {
     <>
       <div
         key={item?.id}
-        className={`border bg-gray-50 border-t-[12px]  rounded-md p-3`}>
+        className={`border bg-white border-t-[12px]  rounded-md p-3`}>
         <div className='mb-3'>
           <Link href={`/tag/${item?.slug}`}>
             <a

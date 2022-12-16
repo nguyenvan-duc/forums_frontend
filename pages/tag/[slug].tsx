@@ -1,13 +1,14 @@
-import { tagApi } from '@/api-client'
-import { Posts } from '@/components'
+import React, { useEffect, useState } from 'react'
+import { Filter, Posts } from '@/components'
 import { MainLayout } from '@/components/layouts'
 import { ComponentRequestAuth } from '@/components/layouts/common'
 import { useAuth } from '@/hooks'
 import { useTagsFollow } from '@/hooks/use-tag'
+import { SORT_POST_NEW, SORT_POST_HOT } from '@/constants'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import { FunnelIcon } from '@heroicons/react/24/outline'
 type Props = {}
 function classNames(...classNames: any) {
   return classNames.filter(Boolean).join(' ')
@@ -23,7 +24,7 @@ const Tag = (props: Props) => {
     dedupingInterval: 5 * 60 * 1000,
     revalidateOnFocus: false,
   })
-
+  const [sortType, setSortType] = useState('relevant')
   const { profile, fistLoading } = useAuth()
   const { followTag } = useTagsFollow()
   const [follow, setFollow] = useState(false)
@@ -83,7 +84,7 @@ const Tag = (props: Props) => {
       )
     }
     if (tagDetails?.posts?.length == 0) {
-      return <div className='text-center mt-4'>Không có gì ¯\_(ツ)_/¯</div>
+      return <div className='text-center mt-4 py-4'>Không có gì ¯\_(ツ)_/¯</div>
     }
     return _.map(tagDetails?.posts, (item) => (
       <Posts
@@ -103,11 +104,11 @@ const Tag = (props: Props) => {
   }
   return (
     <>
-      <div className=''>
-        <div className='px-4'>
+      <div>
+        <div>
           {loading ? (
             <>
-              <div className='w-full border mb-5 border-t-8 border-indigo-500 bg-white p-4 rounded-md flex items-center justify-between'>
+              <div className='w-full mb-5 border-t-8 border-indigo-500 bg-white p-4 rounded-md flex items-center justify-between'>
                 <div className='flex items-center'>
                   <div className='animate-pulse bg-gray-300 w-24 h-24 rounded-md' />
                   <div className='ml-2'>
@@ -156,13 +157,16 @@ const Tag = (props: Props) => {
             </>
           )}
         </div>
-
         <div>
-          <div className='w-full px-4 border-b border-gray-200' >
-          <h3 className=' font-semibold mb-2'>Danh sách bài viết</h3>
-
+          <div className='w-full'>
+            <h3 className=' font-semibold mb-2'>Danh sách bài viết</h3>
           </div>
-          {renderPosts()}
+          <div className='border border-gray-200 rounded-lg bg-white'>
+            <div className='px-4 border-b border-gray-200'>
+              <Filter sortPopularByTime={(value:any)=>console.log(value)} sortPostsByTags={(value:any)=>console.log(value)} sortViewPostsBy={(value:any)=>console.log(value)}/>
+            </div>
+            {renderPosts()}
+          </div>
         </div>
       </div>
     </>

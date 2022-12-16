@@ -4,7 +4,7 @@ import { useAuth } from '@/hooks'
 import format_date from '@/utils/format_date'
 
 export function Welcome() {
-  const [display, setDisplay] = useState(false)
+  const [display, setDisplay] = useState(true)
   const { profile } = useAuth()
   useEffect(() => {
     if (format_date.countDay(profile?.createdAt) <= 2) {
@@ -16,7 +16,7 @@ export function Welcome() {
   return (
     <>
       {display &&  profile?.name && (
-        <div className='border w-full rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 mb-2'>
+        <div className='border w-full rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 mb-5'>
           <div className='w-full flex justify-end px-5 py-5'>
             <button
               onClick={()=>setDisplay(false)}

@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { appApi } from '@/api-client'
 import { useAuth, useBookmarks } from '@/hooks'
 import { useStore } from '@/store'
-import { StarIcon } from '@heroicons/react/24/outline'
+import { StarIcon } from '@heroicons/react/24/solid'
 import useSWR from 'swr'
 import Link from 'next/link'
 
@@ -96,13 +96,18 @@ export function SidebarRight({}: Props) {
         key={item?.username}
         className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
         <div className='flex items-center'>
+          <div className='relative'>
+
           <img src={item?.avatar} className=' w-8 h-8 rounded-full mr-3' />
+          {/* {index == 0 && <StarIcon className='h-5 w-5 ml-1 text-yellow-500 absolute -top-1 right-1 ' />} */}
+
+          </div>
           <div>
             <div className='flex items-center text-xs text-gray-500'>
               <span className='mr-1'>{index + 1}</span>
               <span className='mr-1'>·</span>
               <span>Nổi bật </span>
-              {index == 0 && <StarIcon className='h-3 w-3 ml-1' />}
+              {index == 0 && <StarIcon className='h-3 w-3 ml-1 text-yellow-500' />}
             </div>
             <Link href={`/nguoi-dung/${item?.username}`}>
               <a>
@@ -120,7 +125,7 @@ export function SidebarRight({}: Props) {
   }
   return (
     <>
-      <div className='w-full border rounded-md bg-gray-50 mb-3 overflow-hidden'>
+      <div className='w-full border rounded-lg bg-gray-50 mb-5 overflow-hidden'>
         <div
           className='w-full border-b flex items-center px-3 pt-5 pb-1'
           style={{
@@ -144,9 +149,9 @@ export function SidebarRight({}: Props) {
         </div>
       </div>
       {profile?.name && (
-        <div className='w-full border p-3 rounded-md bg-gray-50'>
+        <div className='w-full border p-3 rounded-lg bg-gray-50'>
           <div className='w-full border-b pb-2 flex justify-between items-center'>
-            <h2 className='text-lg font-semibold'>Bookmark</h2>
+            <h2 className='text-lg font-semibold'>Bookmarks</h2>
             <a className='text-sm text-blue-500 hover:underline hover:cursor-pointer'>
               xem tất cả
             </a>

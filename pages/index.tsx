@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import _ from 'lodash'
 import { MainLayout } from '@/components/layouts'
 import { NextPageWithLayout, PostModel } from '@/models'
-import { Posts, Welcome } from '@/components'
+import { Filter, Posts, Welcome } from '@/components'
 import { postApi } from '@/api-client'
 import { useAuth } from '@/hooks'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -15,26 +15,22 @@ function classNames(...classes: any) {
 const Home: NextPageWithLayout = () => {
   const [posts, setPosts] = useState<Array<PostModel>>([])
   const [noMore, setNoMore] = useState(true)
+  const [sortByTags,setSortByTags] = useState('')
+  const [sortByTime,setSortByTime] = useState('')
   const [page, setPage] = useState(2)
   const [loader, setLoader] = useState(true)
   const [sortType, setSortType] = useState('relevant')
   const { profile } = useAuth()
 
   useEffect(() => {
-    if (!profile?.name) {
-      setSortType(SORT_POST_NEW)
-      fetchInitDataPosts()
-    } else {
-      setSortType(sortType)
-      fetchInitDataPosts()
-    }
+    fetchInitDataPosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile?.name, sortType])
 
   const fetchInitDataPosts = async () => {
     setLoader(true)
     setNoMore(true)
-    await postApi.getAllPost(sortType, 1).then((res: any) => {
+    await postApi.getAllPost(sortByTime,sortByTags,sortType, 1).then((res: any) => {
       setLoader(false)
       setPosts(res?.content)
       setPage(2)
@@ -42,7 +38,7 @@ const Home: NextPageWithLayout = () => {
   }
   const fetchWhenScroll = async () => {
     const result = await await postApi
-      .getAllPost(sortType, page)
+      .getAllPost(sortByTime,sortByTags,sortType, page)
       .then((res: any) => {
         return res?.content
       })
@@ -127,52 +123,26 @@ const Home: NextPageWithLayout = () => {
   }
   return (
     <div>
-      <div className='pl-4 pr-6 bg-white pb-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-3 xl:border-t-0'>
-        {profile?.name && (
-          <div className='mb-4 flex justify-end'>
-            <Link href={'/bai-dang/them-moi'}>
-              <a className='px-2 flex bg-gray-50 text-sm block md:hidden hover:bg-gray-100 py-2 border rounded-lg'>
-                <PlusIcon
-                  className='-ml-1 mr-2 h-5 w-5 text-gray-500'
-                  aria-hidden='true'
-                />
-                Tạo bài đăng
-              </a>
-            </Link>
-          </div>
-        )}
-        <div className='flex items-center mb-3'>
-          {profile?.name && (
-            <button
-              onClick={() => setSortType('relevant')}
-              className={classNames(
-                'px-2 py-2 mr-2 hover:bg-gray-50  rounded-md',
-                sortType == 'relevant' && 'font-medium bg-gray-200'
-              )}>
-              Liên Quan
-            </button>
-          )}
-
-          <button
-            onClick={() => setSortType(SORT_POST_NEW)}
-            className={classNames(
-              'px-2 py-2 hover:bg-gray-50 rounded-md mr-2',
-              sortType == SORT_POST_NEW && 'font-medium bg-gray-200'
-            )}>
-            Mới nhất
-          </button>
-          <button
-            onClick={() => setSortType(SORT_POST_HOT)}
-            className={classNames(
-              'px-2 py-2 hover:bg-gray-50 rounded-md',
-              sortType == SORT_POST_HOT && 'font-medium bg-gray-200'
-            )}>
-            Phổ biến
-          </button>
-        </div>
-      </div>
       <Welcome />
-      {renderPosts()}
+      <div className='md:border border-gray-200 rounded-lg overflow-hidden bg-white'>
+        <div className='bg-white  px-4 border-b border-gray-200'>
+          {profile?.name && (
+            <div className='flex justify-end mb-4 md:hidden mt-5 md:mt-0'>
+              <Link href={'/bai-dang/them-moi'}>
+                <a className='px-2 flex bg-gray-50 text-sm md:hidden hover:bg-gray-100 py-2 border rounded-lg'>
+                  <PlusIcon
+                    className='-ml-1 mr-2 h-5 w-5 text-gray-500'
+                    aria-hidden='true'
+                  />
+                  Tạo bài đăng
+                </a>
+              </Link>
+            </div>
+          )}
+          <Filter sortPopularByTime={(value:any)=>setSortByTime(value)} sortPostsByTags={(value:any)=>setSortByTags(value)} sortViewPostsBy={(value: any) => setSortType(value)} />
+        </div>
+        {renderPosts()}
+      </div>
     </div>
   )
 }

@@ -9,10 +9,11 @@ const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
 interface AnswerFormProp{
   onChange:any,
   handleSend:any,
+  handleCancel:any,
   value:string
   loading:boolean
 }
-export function AnswersForm({onChange,handleSend,value,loading}:AnswerFormProp) {
+export function AnswersForm({onChange,handleSend,handleCancel,value,loading}:AnswerFormProp) {
   const { profile, fistLoading } = useAuth()
   // const onChange = useCallback((value: any) => {
   //   setValue(value)
@@ -50,6 +51,9 @@ export function AnswersForm({onChange,handleSend,value,loading}:AnswerFormProp) 
               </div>
 
               <div className='flex justify-end mt-3'>
+                <button onClick={()=>handleCancel(false)} className=' px-6 py-2 mr-5 hover:bg-gray-100 rounded-full'>
+                  Hủy bỏ
+                </button>
                 <button
                 disabled={loading}
                   onClick={() => handleSend()}

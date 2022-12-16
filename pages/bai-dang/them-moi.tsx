@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  FormEventHandler,
+} from 'react'
 import dynamic from 'next/dynamic'
 import useSWR from 'swr'
 import SEO from '@bradgarropy/next-seo'
@@ -11,7 +17,7 @@ import { postApi } from '@/api-client'
 import { BlankLayout } from '@/components/layouts'
 import { NextPageWithLayout, PostModel, PostNewModel, TagModel } from '@/models'
 import { Modal, EditorMarkdown } from '@/components'
-import { AxiosResponse } from 'axios'
+import TextareaAutosize from 'react-textarea-autosize'
 import { Loader } from '@/components/layouts/common'
 
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
@@ -77,7 +83,10 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
     setContent(dataAutoSave?.contentMarkdown)
     setTagsSelected(dataAutoSave?.tags)
   }, [autosavedValue])
-
+  function auto_grow(element: any) {
+    element.style.height = '5px'
+    element.style.height = element.scrollHeight + 'px'
+  }
   const onChange = useCallback(
     (value: any) => {
       setContent(value)
@@ -226,19 +235,30 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
                   </div>
                 )}
                 <div className='py-5'>
-                  <input
+                  <TextareaAutosize
+                    onChange={(value) => {
+                      setTitleError('')
+                      setError(false)
+                      setTitle(value.target.value)
+                    }}
+                    placeholder='Nhập Tiêu Đề Câu Hỏi...'
+                    value={title}
+                    className='w-full bg-transparent h-20 text-2xl md:text-4xl font-bold p outline-none textarea-auto-resize'
+                  />
+                  {/* <input
                     autoFocus
                     onChange={(value) => {
                       setTitleError('')
                       setError(false)
                       setTitle(value.target.value)
                     }}
+                    
                     value={title}
                     className={classNames(
                       'w-full bg-transparent h-20 text-2xl md:text-4xl font-bold p outline-none'
                     )}
                     placeholder='Nhập Tiêu Đề Câu Hỏi...'
-                  />
+                  /> */}
                   <div className='h-30 my-3 w-full'>
                     <div className='Multiselect'>
                       <Multiselect
@@ -304,7 +324,9 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
           ) : (
             <div className=' md:w-3/4 w-full min-h-[70vh] rounded-2xl border-2 border-gray-300 bg-white py-5 px-6'>
               <div className='w-full border-b py-3 border-gray-50'>
-                <h1 className='text-4xl dark:text-gray-800 font-[500] mb-3 mt-2'>{title}</h1>
+                <h1 className='text-4xl dark:text-gray-800 font-[500] mb-3 mt-2'>
+                  {title}
+                </h1>
                 <div className='flex flex-wrap justify-starts items-center mt-4'>
                   {tagsSelected?.map((item: any) => (
                     <div

@@ -55,8 +55,8 @@ const DetailsPost = ({ post, slug }: any) => {
           type: 'website',
         }}
       />
-      <div className='w-full h-full '>
-        <div className='w-full border-b py-3 border-gray-40 px-4'>
+      <div className='w-full bg-white rounded-lg border border-gray-200'>
+        <div className='w-full border-b px-2 py-2 md:px-5 md:py-5 order-gray-40 '>
           <div
             className={`flex items-center ${
               detailPost?.myPost && 'justify-between'
@@ -106,7 +106,7 @@ const DetailsPost = ({ post, slug }: any) => {
           </div>
         </div>
         <div className='flex py-3 px-2 md:px-0'>
-          <div className='w-1/12 relative '>
+          <div className='md:w-1/12 relative hidden md:block'>
             <VoteComponent
               id={post?.id}
               loader={loader}
@@ -116,10 +116,10 @@ const DetailsPost = ({ post, slug }: any) => {
               getNotify={true}
             />
           </div>
-          <div className='w-11/12 pb-1 dark:text-gray-800 pl-2 pr-3 md:pr-7 border-b border-gray-100'>
+          <div className='w-full md:w-11/12 pb-1 dark:text-gray-800 pl-2 pr-3 md:pr-7 border-b border-gray-100'>
             <div className='mb-3'>
               <span className='text-xs text-gray-400'>Nội dung :</span>
-              <div className='post-details relative'>
+              <div className='post-details relative '>
                 {/* <article className='prose lg:prose-xl'></article> */}
                 <Zoom>
                   <MarkdownPreview source={post?.content} />
@@ -135,10 +135,11 @@ const DetailsPost = ({ post, slug }: any) => {
             </div>
           </div>
         </div>
-        <div id="comments" className='px-4'>
-          <AnswerOfPost id={post?.id} />
-        </div>
+      
       </div>
+      <div id="comments">
+          <AnswerOfPost id={post?.id} />
+       </div>
     </>
   )
 }
