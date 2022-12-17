@@ -145,7 +145,6 @@ export function SidebarRight({}: Props) {
         <div className='w-full border p-3 rounded-lg bg-gray-50'>
           <div className='w-full border-b pb-2 flex justify-start items-center'>
             <h2 className='text-lg font-semibold'>Bookmarks ({bookmarks.length})</h2>
-           
           </div>
           <ul className='w-full'>{renderBookmark()}</ul>
         </div>
