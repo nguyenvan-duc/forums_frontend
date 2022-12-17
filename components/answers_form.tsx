@@ -45,7 +45,8 @@ export function AnswersForm({onChange,handleSend,handleCancel,value,loading}:Ans
                   value={value}
                   onChange={onChange}
                   Option={{
-                    maxHeight: '120px',
+                    minHeight:'100px',
+                    maxHeight: '200px',
                   }}
                 />
               </div>

@@ -11,6 +11,8 @@
   "dependencies": {
     "@bradgarropy/next-google-analytics": "^1.0.2",
     "@bradgarropy/next-seo": "^1.2.0",
+    "@flyyer/flyyer": "^3.4.1",
+    "@flyyer/types": "^2.0.3",
     "@headlessui/react": "^1.7.0",
     "@heroicons/react": "^2.0.10",
     "@types/lodash": "^4.14.186",

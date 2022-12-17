@@ -289,6 +289,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
                     onChange={onChange}
                     Option={{
                       minHeight: '200px',
+                      maxHeight:'400px'
                     }}
                   />
                 </div>

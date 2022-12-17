@@ -56,7 +56,7 @@ const DetailsPost = ({ post, slug }: any) => {
         }}
       />
       <div className='w-full bg-white rounded-lg border border-gray-200'>
-        <div className='w-full border-b px-2 py-2 md:px-5 md:py-5 order-gray-40 '>
+        <div className='w-full px-2 py-2 md:px-5 md:py-5 '>
           <div
             className={`flex items-center ${
               detailPost?.myPost && 'justify-between'
@@ -116,10 +116,10 @@ const DetailsPost = ({ post, slug }: any) => {
               getNotify={true}
             />
           </div>
-          <div className='w-full md:w-11/12 pb-1 dark:text-gray-800 pl-2 pr-3 md:pr-7 border-b border-gray-100'>
+          <div className='w-full md:w-11/12 pb-1 dark:text-gray-800 pl-2 pr-3 md:pr-7 '>
             <div className='mb-3'>
               <span className='text-xs text-gray-400'>Nội dung :</span>
-              <div className='post-details relative '>
+              <div className='post-details relative mt-2'>
                 {/* <article className='prose lg:prose-xl'></article> */}
                 <Zoom>
                   <MarkdownPreview source={post?.content} />

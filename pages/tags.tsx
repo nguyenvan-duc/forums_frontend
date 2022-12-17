@@ -75,8 +75,8 @@ const Tags = (props: Props) => {
     description='Danh sách tags'
     />
     <div>
-      <div className=' p-3 min-h-[90vh]'>
-        <div className='mt-1 w-3/12 relative rounded-md shadow-sm mb-6'>
+      <div className='p-5 min-h-[90vh]'>
+        <div className='w-3/12 relative rounded-md shadow-sm mb-6'>
           <input
            onChange={(value:any)=>searchByTextInput(value.target.value)}
             type='text'

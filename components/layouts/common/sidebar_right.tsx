@@ -140,21 +140,12 @@ export function SidebarRight({}: Props) {
         <div className='px-2'>
           <ul>{renderUsersFamous()}</ul>
         </div>
-        <div className='p-2 text-center'>
-          <Link href={'#'}>
-            <a className='text-blue-500 hover:underline text-sm hover:cursor-pointer'>
-              Xem tất cả
-            </a>
-          </Link>
-        </div>
       </div>
       {profile?.name && (
         <div className='w-full border p-3 rounded-lg bg-gray-50'>
-          <div className='w-full border-b pb-2 flex justify-between items-center'>
-            <h2 className='text-lg font-semibold'>Bookmarks</h2>
-            <a className='text-sm text-blue-500 hover:underline hover:cursor-pointer'>
-              xem tất cả
-            </a>
+          <div className='w-full border-b pb-2 flex justify-start items-center'>
+            <h2 className='text-lg font-semibold'>Bookmarks ({bookmarks.length})</h2>
+           
           </div>
           <ul className='w-full'>{renderBookmark()}</ul>
         </div>

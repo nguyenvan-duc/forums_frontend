@@ -58,13 +58,13 @@ export function UseInfo({
     if (loading) {
       return (
         <>
-          <div className='w-full mt-6 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
+          <div className='w-full mt-5 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
             <div className='flex flex-col items-center pb-10 pt-10'>
               <div className='animate-pulse bg-gray-300 w-24 h-24 rounded-full mb-3' />
               <div className='animate-pulse bg-gray-300 w-52 h-8 rounded-md' />
             </div>
           </div>
-          <div className='md:flex mt-3 '>
+          <div className='md:flex mt-5 '>
             <div className='w-full md:w-1/4'>
               <div className='rounded-lg border bg-white mb-3 '>
                 <div className='animate-pulse bg-gray-300 w-full h-32 rounded-md' />
@@ -111,7 +111,7 @@ export function UseInfo({
     }
     return (
       <>
-        <div className='w-full mt-6 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
+        <div className='w-full md:mt-5 bg-white md:rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
           <div className='flex justify-end px-4 pt-4'>
             {isMe ? (
               <>
@@ -158,9 +158,9 @@ export function UseInfo({
             </div>
           </div>
         </div>
-        <div className='md:flex mt-3 '>
+        <div className='md:flex mt-5 '>
           <div className='w-full md:w-1/4'>
-            <div className='rounded-lg border bg-white mb-3'>
+            <div className='rounded-lg border bg-white mb-5'>
               <div className='py-3 px-3 border-b border-gray-300'>
                 <h3 className='font-medium text-gray-700 text-md'>
                   Thông tin tài khoản
@@ -197,7 +197,7 @@ export function UseInfo({
                 </div>
               </div>
             </div>
-            <div className='rounded-lg border bg-white mb-3 '>
+            <div className='rounded-lg border bg-white mb-5 '>
               <div className='py-3 px-3 border-b border-gray-300'>
                 <h3 className='font-medium text-gray-700 text-md'>Danh hiệu</h3>
               </div>
@@ -224,7 +224,7 @@ export function UseInfo({
               </div>
             </div>
             {info?.github_username && (
-              <div className='rounded-lg border bg-white mb-3'>
+              <div className='rounded-lg border bg-white mb-5'>
                 <div className='py-3 px-3 border-b border-gray-300'>
                   <h3 className='font-medium text-gray-700 text-md'>
                     Thông tin Github
@@ -243,7 +243,7 @@ export function UseInfo({
               </div>
             )}
           </div>
-          <div className='w-full md:w-3/4 md:pl-3'>
+          <div className='w-full md:w-3/4 md:pl-5'>
             <div className='bg-white w-full rounded-md border'>
               <div className='w-full px-3 py-3 text-lg font-medium border-b'>
                 Ý kiến đóng góp gần đây.
@@ -254,21 +254,23 @@ export function UseInfo({
                 </div>
               ) : (
                 _.map(comments, (item) => (
-                  <Link href={'#'} key={item?.id}>
+                  <Link href={`/bai-dang/${item?.post?.slug}?to_comment=comment-${item?.id}`} key={item?.id}>
                     <a>
                       <div className='py-3 px-3 border-b hover:bg-gray-50'>
                         <h3 className='text-lg font-semibold'>
                           {item?.post?.title}
                         </h3>
-                        <MarkdownPreview source={item?.content} />
+                        <div className='cut-text-reply'>
+                          <MarkdownPreview source={item?.content} />
+                        </div>
                       </div>
                     </a>
                   </Link>
                 ))
               )}
             </div>
-            <h2 className='text-lg font-semibold mt-3 mb-2'>Bài đăng</h2>
-            <div className='border border-gray-200 mb-3 rounded-lg overflow-hidden'>
+            <h2 className='text-lg font-semibold mt-5 mb-2'>Bài đăng</h2>
+            <div className='border border-gray-200 bg-white mb-5 rounded-lg overflow-hidden'>
               {posts?.length == 0 ? (
                 <div className='text-center text-gray-600 mt-4'>
                   Không có gì!

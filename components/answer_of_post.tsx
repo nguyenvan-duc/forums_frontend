@@ -37,6 +37,10 @@ export function AnswerOfPost({ id }: AOPProps) {
     setLoadWhenSend(true)
     await commentApi.replyPost(id, value).then((res: any) => {
       setAnswers([res, ...answers])
+      scrollToFormReply.current[`comment-${res?.id}`]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
       setValue('')
       setLoadWhenSend(false)
     })
@@ -85,31 +89,40 @@ export function AnswerOfPost({ id }: AOPProps) {
             />
           )}
         </div>
-        <div className='mt-5 py-5 bg-white border border-gray-200 rounded-lg'>
-          {_.map(answers, (item: Comment) => (
-            <>
-              {item?.children == false ? (
-                <div>
-                  <Answer
-                    key={item?.id}
-                    post_id={id}
-                    id={item?.id}
-                    reply={item.reply}
-                    account={item?.account}
-                    content={item?.content}
-                    vote={item.vote}
-                    voteType={item?.voteType}
-                    voteCount={item?.voteCount}
-                    bookmark={item?.bookmark}
-                    createdAt={item?.createdAt}
-                  />
-                </div>
-              ) : (
-                ''
-              )}
-            </>
-          ))}
-        </div>
+        {answers.length == 0 ? (
+          <div className='py-5 mt-5 px-5 text-center bg-white rounded-lg border border-gray-200'>
+            Chưa có bình luận nào.
+          </div>
+        ) : (
+          <div className='mt-5 py-5 bg-white border border-gray-200 rounded-lg'>
+            {_.map(answers, (item: Comment) => (
+              <>
+                {item?.children == false ? (
+                  <div
+                    ref={(element) => {
+                      scrollToFormReply.current[`comment-${id}`] = element
+                    }}>
+                    <Answer
+                      key={item?.id}
+                      post_id={id}
+                      id={item?.id}
+                      reply={item.reply}
+                      account={item?.account}
+                      content={item?.content}
+                      vote={item.vote}
+                      voteType={item?.voteType}
+                      voteCount={item?.voteCount}
+                      bookmark={item?.bookmark}
+                      createdAt={item?.createdAt}
+                    />
+                  </div>
+                ) : (
+                  ''
+                )}
+              </>
+            ))}
+          </div>
+        )}
       </div>
     )
   }

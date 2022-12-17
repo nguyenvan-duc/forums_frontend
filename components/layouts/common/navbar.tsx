@@ -58,8 +58,11 @@ export function Navbar({}: NavbarProps) {
   useHotkeys('ctrl+alt+k', () => setSearchIsOpen(true))
   const menu = [
     { title: 'Trang Chủ', href: '/', current: asPath === '/' },
-    { title: 'Thẻ', href: '/tags', current: asPath === '/tags/' },
-    { title: 'Thành Viên', href: '/users', current: asPath === '/users/' },
+    { title: 'Hỏi đáp', href: '/tag/hoi-dap', current: asPath === '/tag/hoi-dap' },
+    { title: 'Thảo luận', href: '/tag/thao-luan', current: asPath === '/tag/thao-luan' },
+    { title: 'Bookmarks', href: '/bookmarks', current: asPath === '/bookmarks' },
+    { title: 'Chủ đề', href: '/tags', current: asPath === '/tags' },
+    { title: 'Giới thiệu', href: '/gioi-thieu', current: asPath === '/gioi-thieu' },
   ]
   const handleLogout = async () => {
     await logout()
@@ -227,7 +230,7 @@ export function Navbar({}: NavbarProps) {
     <>
       <Disclosure
         as='nav'
-        className='top-0 z-20 w-full text-xs lg:text-sm font-semibold lg:font-medium text-white border-b bg-gray-50'>
+        className='top-0 z-30 w-full fixed text-xs lg:text-sm font-semibold lg:font-medium text-white border-b bg-gray-50'>
         {({ open }) => (
           <>
             <div className='mx-auto max-w-[100rem] px-2'>
