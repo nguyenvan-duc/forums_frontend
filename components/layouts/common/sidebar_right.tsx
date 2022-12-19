@@ -94,7 +94,7 @@ export function SidebarRight({}: Props) {
     return _.map(userFamous, (item, index: any) => (
       <li
         key={item?.username}
-        className='w-full py-2 px-1 border-b hover:bg-white text-sm hover:cursor-pointer'>
+        className='w-full py-2 px-1 border-b dark:border-gray-500 hover:bg-white dark:hover:bg-slate-800 text-sm hover:cursor-pointer'>
         <div className='flex items-center'>
           <div className='relative'>
 
@@ -103,7 +103,7 @@ export function SidebarRight({}: Props) {
 
           </div>
           <div>
-            <div className='flex items-center text-xs text-gray-500'>
+            <div className='flex items-center text-xs text-gray-500 dark:text-gray-100'>
               <span className='mr-1'>{index + 1}</span>
               <span className='mr-1'>·</span>
               <span>Nổi bật </span>
@@ -125,9 +125,9 @@ export function SidebarRight({}: Props) {
   }
   return (
     <>
-      <div className='w-full border rounded-lg bg-gray-50 mb-5 overflow-hidden'>
+      <div className='w-full border rounded-lg bg-gray-50 dark:bg-slate-900 dark:border-gray-500 mb-5 overflow-hidden'>
         <div
-          className='w-full border-b flex items-center px-3 pt-5 pb-1'
+          className='w-full border-b flex items-center px-3 pt-5 pb-1 dark:border-gray-500'
           style={{
             backgroundImage: 'url("/home-banner.png")',
             backgroundPosition: 'center',
@@ -142,8 +142,8 @@ export function SidebarRight({}: Props) {
         </div>
       </div>
       {profile?.name && (
-        <div className='w-full border p-3 rounded-lg bg-gray-50'>
-          <div className='w-full border-b pb-2 flex justify-start items-center'>
+        <div className='w-full border p-3 rounded-lg dark:bg-slate-900 dark:border-gray-500  '>
+          <div className='w-full border-b pb-2 flex justify-start items-center dark:border-gray-500 '>
             <h2 className='text-lg font-semibold'>Bookmarks ({bookmarks.length})</h2>
           </div>
           <ul className='w-full'>{renderBookmark()}</ul>

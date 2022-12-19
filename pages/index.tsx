@@ -56,10 +56,10 @@ const Home: NextPageWithLayout = () => {
             return (
               <div
                 key={i}
-                className='overflow-hidden  border-b border-gray-200 w-full mb-4 m-auto'>
+                className='overflow-hidden  border-b border-gray-200 w-full m-auto'>
                 <div className='w-full block h-full'>
                   {/* <img alt="blog photo" src="https://i.pinimg.com/564x/69/18/6a/69186a31ada4b1bf94edae291f54ec85.jpg" className="max-h-40 w-full object-cover" /> */}
-                  <div className='bg-white hover:bg-gray-50 hover:dark:bg-gray-600 dark:bg-gray-800 w-full p-4'>
+                  <div className='bg-white  dark:bg-slate-900 w-full p-4'>
                     <div className='animate-pulse  bg-gray-300 w-72 rounded-md h-8' />
                     <div className='flex flex-wrap mb-2  justify-starts items-center mt-2'>
                       <div className='animate-pulse  bg-gray-300 w-96 rounded-md h-8' />
@@ -82,10 +82,10 @@ const Home: NextPageWithLayout = () => {
           dataLength={posts.length}
           hasMore={noMore}
           loader={
-            <div className='overflow-hidden  border-b border-gray-200 w-full mb-4 m-auto'>
+            <div className='overflow-hidden  border-b border-gray-200 dark:bg-slate-900 w-full m-auto'>
               <div className='w-full block h-full'>
                 {/* <img alt="blog photo" src="https://i.pinimg.com/564x/69/18/6a/69186a31ada4b1bf94edae291f54ec85.jpg" className="max-h-40 w-full object-cover" /> */}
-                <div className='bg-white hover:bg-gray-50 hover:dark:bg-gray-600 dark:bg-gray-800 w-full p-4'>
+                <div className='bg-white  dark:bg-slate-900 w-full p-4'>
                   <div className='animate-pulse  bg-gray-300 w-72 rounded-md h-8' />
                   <div className='flex flex-wrap mb-2  justify-starts items-center mt-2'>
                     <div className='animate-pulse  bg-gray-300 w-96 rounded-md h-8' />
@@ -98,7 +98,7 @@ const Home: NextPageWithLayout = () => {
             </div>
           }
           endMessage={
-            <div className='py-5' style={{ textAlign: 'center' }}>
+            <div className='py-5 dark:bg-slate-900' style={{ textAlign: 'center' }}>
               <b>Yay! You have seen it all</b>
             </div>
           }>
@@ -124,14 +124,14 @@ const Home: NextPageWithLayout = () => {
   return (
     <div>
       <Welcome />
-      <div className='md:border border-gray-200 rounded-lg overflow-hidden bg-white'>
-        <div className='bg-white  px-4 border-b border-gray-200'>
+      <div className='md:border border-gray-200 dark:border-gray-500 md:rounded-lg overflow-hidden bg-white dark:bg-slate-900'>
+        <div className='bg-white  px-4 border-b border-gray-200 dark:border-gray-500 dark:bg-slate-900'>
           {profile?.name && (
             <div className='flex justify-end mb-4 md:hidden mt-5 md:mt-0'>
               <Link href={'/bai-dang/them-moi'}>
-                <a className='px-2 flex bg-gray-50 text-sm md:hidden hover:bg-gray-100 py-2 border rounded-lg'>
+                <a className='px-2 flex bg-gray-50 text-sm md:hidden hover:bg-gray-100 py-2 border rounded-lg dark:bg-blue-600 dark:border-0 dark:text-gray-100'>
                   <PlusIcon
-                    className='-ml-1 mr-2 h-5 w-5 text-gray-500'
+                    className='-ml-1 mr-2 h-5 w-5 text-gray-500 dark:text-gray-100'
                     aria-hidden='true'
                   />
                   Tạo bài đăng

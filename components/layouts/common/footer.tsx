@@ -5,8 +5,8 @@ type Props = {}
 
 export function Footer({}: Props) {
   return (
-    <footer className='p-4 bg-white border-t border-t-gray-200 md:px-6 md:py-8 dark:bg-gray-800'>
-      <div className='max-w-7xl m-auto'>
+    <footer className='p-4 bg-white border-t border-t-gray-200 md:px-6 md:py-8 dark:bg-slate-900'>
+      <div className='w-full md:max-w-[90rem] lg:max-w-[100rem] m-auto'>
         <div className='sm:flex sm:items-center sm:justify-between'>
           <Link href={'/'}>
             <a className='flex items-center mb-4 sm:mb-0'>

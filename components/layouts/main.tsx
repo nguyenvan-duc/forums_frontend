@@ -35,7 +35,7 @@ export function MainLayout({
     }
   }, [router, profile, requestAuth, fistLoading])
   return (
-    <div className=' bg-gray-100 pt-16'>
+    <div className=' bg-gray-100 dark:bg-black pt-16'>
       <Navbar />
       <LoginModal
         openModel={isRequestAuth}
@@ -52,7 +52,7 @@ export function MainLayout({
         <Loader />
       ) : (
         <>
-          <div className='flex-grow relative w-full min-h-screen max-w-[100rem]	mx-auto lg:flex'>
+          <div className='flex-grow relative w-full min-h-screen md:max-w-[90rem] lg:max-w-[100rem]	mx-auto lg:flex'>
             {sidebarLeft && (
               <div className='relative min-h-screen pr-5 hidden lg:block xl:flex-shrink-0 xl:w-80 0'>     
                 <SidebarLeft />
@@ -61,7 +61,7 @@ export function MainLayout({
 
             <div className='flex container mx-auto'>
               <div
-              className={classNames(sidebarRight?'w-full py-0 md:py-5 bg-landscape bg-white md:bg-gray-100':'w-full')}
+              className={classNames(sidebarRight?'w-full py-0 md:py-5 bg-landscape bg-white  md:bg-gray-100 dark:dark:bg-slate-900 dark:md:bg-black':'w-full')}
                 // className={ sidebarRight
                 //     ? ''
                 //     : ''}

@@ -1,9 +1,8 @@
 import React, { useState, Fragment, useEffect } from 'react'
-import { Switch } from '@headlessui/react'
 import Link from 'next/link'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useRouter } from 'next/router'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { Disclosure, Menu, Transition, Switch } from '@headlessui/react'
 import {
   BellIcon,
   PlusIcon,
@@ -24,6 +23,8 @@ function classNames(...classes: any) {
 }
 export function Navbar({}: NavbarProps) {
   const { theme, setTheme } = useTheme()
+  const currentTheme =
+    typeof window !== 'undefined' ? localStorage.getItem('theme') : 'light'
   const { profile, logout, fistLoading } = useAuth()
   const { asPath, events, push, reload } = useRouter()
   const [searchIsOpen, setSearchIsOpen] = useState(false)
@@ -36,6 +37,12 @@ export function Navbar({}: NavbarProps) {
       fetchData()
     }
   }, [profile?.name, asPath == '/'])
+  useEffect(() => {
+    setTheme(currentTheme as string)
+  }, [currentTheme, theme])
+  const handleClick = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
   const fetchData = async () => {
     await appApi.getNotify().then((res: any) => {
       setNotification(res)
@@ -51,18 +58,33 @@ export function Navbar({}: NavbarProps) {
   const getChangerPopupSearch = (status: any) => {
     setSearchIsOpen(status)
   }
-  const handleClickChangeTheme = (e: any) => {
-    e.preventDefault()
+  const handleClickChangeTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
   useHotkeys('ctrl+alt+k', () => setSearchIsOpen(true))
   const menu = [
     { title: 'Trang Chủ', href: '/', current: asPath === '/' },
-    { title: 'Hỏi đáp', href: '/tag/hoi-dap', current: asPath === '/tag/hoi-dap' },
-    { title: 'Thảo luận', href: '/tag/thao-luan', current: asPath === '/tag/thao-luan' },
-    { title: 'Bookmarks', href: '/bookmarks', current: asPath === '/bookmarks' },
+    {
+      title: 'Hỏi đáp',
+      href: '/tag/hoi-dap',
+      current: asPath === '/tag/hoi-dap',
+    },
+    {
+      title: 'Thảo luận',
+      href: '/tag/thao-luan',
+      current: asPath === '/tag/thao-luan',
+    },
+    {
+      title: 'Bookmarks',
+      href: '/bookmarks',
+      current: asPath === '/bookmarks',
+    },
     { title: 'Chủ đề', href: '/tags', current: asPath === '/tags' },
-    { title: 'Giới thiệu', href: '/gioi-thieu', current: asPath === '/gioi-thieu' },
+    {
+      title: 'Giới thiệu',
+      href: '/gioi-thieu',
+      current: asPath === '/gioi-thieu',
+    },
   ]
   const handleLogout = async () => {
     await logout()
@@ -90,8 +112,11 @@ export function Navbar({}: NavbarProps) {
           <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
             <button
               onClick={() => setOpenLoginModal(true)}
-              className='flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 outline-0 shadow-none'>
-              <UserIcon className='h-5 w-5 text-gray-500' aria-hidden='true' />
+              className='flex items-center px-4 py-2 border border-gray-300 dark:bg-blue-600 dark:border-0 dark:text-gray-100 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 outline-0 shadow-none'>
+              <UserIcon
+                className='h-5 w-5 text-gray-500 dark:text-gray-100'
+                aria-hidden='true'
+              />
               <span className='hidden md:block ml-2'>Đăng nhập / Đăng ký</span>
             </button>
           </div>
@@ -99,9 +124,9 @@ export function Navbar({}: NavbarProps) {
         {profile?.name && (
           <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
             <Link href={'/bai-dang/them-moi'}>
-              <a className=' hidden md:inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
+              <a className=' hidden md:inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 dark:bg-blue-600 dark:border-0 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
                 <PlusIcon
-                  className='-ml-1 mr-2 h-5 w-5 text-gray-500'
+                  className='-ml-1 mr-2 h-5 w-5 text-gray-500 dark:text-gray-100'
                   aria-hidden='true'
                 />
                 Tạo bài đăng
@@ -230,10 +255,10 @@ export function Navbar({}: NavbarProps) {
     <>
       <Disclosure
         as='nav'
-        className='top-0 z-30 w-full fixed text-xs lg:text-sm font-semibold lg:font-medium text-white border-b bg-gray-50'>
+        className='top-0 z-30 w-full fixed text-xs lg:text-sm font-semibold lg:font-medium text-white border-b dark:border-slate-800 bg-gray-50 dark:bg-slate-900'>
         {({ open }) => (
           <>
-            <div className='mx-auto max-w-[100rem] px-2'>
+            <div className='mx-auto w-full md:max-w-[90rem] lg:max-w-[100rem] px-2'>
               <div className='relative flex items-center justify-between h-16'>
                 <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
                   {/* Mobile menu button*/}
@@ -294,26 +319,26 @@ export function Navbar({}: NavbarProps) {
                     </div>
                   </div>
                 </div>
-                {/* <button className='px-2 py-2 border rounded-md' onClick={handleClickChangeTheme}>
-                  {theme === 'dark'? '🌜' : '🌞'}
-                </button> */}
-                {/* <Switch
-                  checked={theme === 'dark' ? true : false}
-                  onChange={handleClickChangeTheme}
-                  className={`${
-                    theme === 'dark' ? 'bg-gray-300' : 'bg-gray-200'
-                  }
-                                     relative inline-flex flex-shrink-0 h-[25px] w-[60px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}>
-                  <span className='sr-only'>Use setting</span>
-                  <span
-                    aria-hidden='true'
+                <div className='hidden md:block'>
+                  <Switch
+                    checked={theme === 'dark' ? true : false}
+                    onChange={handleClickChangeTheme}
                     className={`${
-                      theme === 'dark' ? 'translate-x-9' : 'translate-x-0'
+                      theme === 'dark' ? 'bg-gray-300' : 'bg-gray-200'
                     }
+                                     relative inline-flex flex-shrink-0 h-[25px] w-[60px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}>
+                    <span className='sr-only'>Use setting</span>
+                    <span
+                      aria-hidden='true'
+                      className={`${
+                        theme === 'dark' ? 'translate-x-9' : 'translate-x-0'
+                      }
                                         pointer-events-none inline-block h-[23px] w-[23px] justify-center items-center rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}>
-                    {theme === 'dark' ? '🌜' : '🌞'}
-                  </span>
-                </Switch> */}
+                      {theme === 'dark' ? '🌜' : '🌞'}
+                    </span>
+                  </Switch>
+                </div>
+
                 <div className='flex'>{AccountInfo()}</div>
               </div>
             </div>
@@ -327,8 +352,8 @@ export function Navbar({}: NavbarProps) {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? 'border-l-4 border-indigo-600 text-gray-700 bg-gray-200'
-                        : 'text-gray-600 hover:bg-gray-700 hover:text-white',
+                      ? 'border-l-4 border-indigo-600 font-bold text-gray-700 dark:text-gray-100 bg-gray-200'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-700 hover:text-white',
                       'block px-3 py-2  text-base font-medium w-full mb-2'
                     )}
                     aria-current={item.current ? 'page' : undefined}>
@@ -340,8 +365,8 @@ export function Navbar({}: NavbarProps) {
                   href={'/bai-dang/them-moi'}
                   className={classNames(
                     asPath == '/bai-dang/them-moi'
-                      ? 'border-l-4 border-indigo-600 text-gray-700 bg-gray-200'
-                      : 'text-gray-600 hover:bg-gray-700 hover:text-white',
+                      ? 'border-l-4 border-indigo-600 font-bold text-gray-700 dark:text-gray-100 bg-gray-200'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block px-3 py-2  text-base font-medium w-full mb-2'
                   )}
                   aria-current={
@@ -349,6 +374,25 @@ export function Navbar({}: NavbarProps) {
                   }>
                   Thêm bài đăng
                 </Disclosure.Button>
+                <div className='flex justify-end px-4 border-t pt-4'>
+                  <Switch
+                    checked={theme === 'dark' ? true : false}
+                    onChange={handleClickChangeTheme}
+                    className={`${
+                      theme === 'dark' ? 'bg-gray-300' : 'bg-gray-200'
+                    }
+                                     relative inline-flex flex-shrink-0 h-[25px] w-[60px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}>
+                    <span className='sr-only'>Use setting</span>
+                    <span
+                      aria-hidden='true'
+                      className={`${
+                        theme === 'dark' ? 'translate-x-9' : 'translate-x-0'
+                      }
+                                        pointer-events-none inline-block h-[23px] w-[23px] justify-center items-center rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}>
+                      {theme === 'dark' ? '🌜' : '🌞'}
+                    </span>
+                  </Switch>
+                </div>
               </div>
             </Disclosure.Panel>
           </>

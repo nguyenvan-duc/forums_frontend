@@ -53,7 +53,7 @@ export function TagForSidebar() {
   }
   return (
     <div className='w-full max-w-md px-2 sm:px-0'>
-      <h2 className='text-lg font-bold'>Danh sách chủ đề</h2>
+      <h2 className='text-lg font-bold text-gray-900 dark:text-gray-50'>Danh sách chủ đề</h2>
       {profile?.name ? (
         <Tab.Group>
           <Tab.List className='flex space-x-1 rounded-xl  p-1'>

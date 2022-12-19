@@ -107,8 +107,8 @@ export function Filter({ sortViewPostsBy, sortPostsByTags, sortPopularByTime }: 
             <button
               onClick={() => setSortType('relevant')}
               className={classNames(
-                'px-2 py-2 mr-2 hover:bg-gray-50  rounded-md',
-                sortType == 'relevant' && 'font-medium bg-gray-200'
+                'px-2 py-2 mr-2 hover:bg-gray-50 hover:dark:bg-slate-700  rounded-md',
+                sortType == 'relevant' && 'font-medium bg-gray-200  dark:bg-slate-700'
               )}>
               Liên Quan
             </button>
@@ -117,16 +117,16 @@ export function Filter({ sortViewPostsBy, sortPostsByTags, sortPopularByTime }: 
           <button
             onClick={() => setSortType(SORT_POST_NEW)}
             className={classNames(
-              'px-2 py-2 hover:bg-gray-50 rounded-md mr-2',
-              sortType == SORT_POST_NEW && 'font-medium bg-gray-200'
+              'px-2 py-2 hover:bg-gray-50 hover:dark:bg-slate-700 rounded-md mr-2',
+              sortType == SORT_POST_NEW && 'font-medium bg-gray-200 dark:bg-slate-700'
             )}>
             Mới nhất
           </button>
           <button
             onClick={() => setSortType(SORT_POST_HOT)}
             className={classNames(
-              'px-2 py-2 hover:bg-gray-50 rounded-md',
-              sortType == SORT_POST_HOT && 'font-medium bg-gray-200'
+              'px-2 py-2 hover:bg-gray-50 hover:dark:bg-slate-700 rounded-md',
+              sortType == SORT_POST_HOT && 'font-medium bg-gray-200 dark:bg-slate-700'
             )}>
             Phổ biến
           </button>
@@ -135,14 +135,14 @@ export function Filter({ sortViewPostsBy, sortPostsByTags, sortPopularByTime }: 
         {filterByTags ? (
           <button
             onClick={() => setFilterByTags(false)}
-            className='px-3 py-3 hover:bg-gray-100 rounded-full'>
-            <XMarkIcon className='h-5 w-5 text-gray-700' />
+            className='px-3 py-3 hover:bg-gray-100 hover:dark:bg-slate-700 rounded-full'>
+            <XMarkIcon className='h-5 w-5 text-gray-700 dark:text-gray-100' />
           </button>
         ) : (
           <button
             onClick={() => setFilterByTags(true)}
-            className='px-3 py-3 hover:bg-gray-100 rounded-full'>
-            <FunnelIcon className='h-5 w-5 text-gray-700' />
+            className='px-3 py-3 hover:bg-gray-100 rounded-full hover:dark:bg-slate-700'>
+            <FunnelIcon className='h-5 w-5 text-gray-700 dark:text-gray-100' />
           </button>
         )}
       </div>
@@ -151,7 +151,7 @@ export function Filter({ sortViewPostsBy, sortPostsByTags, sortPopularByTime }: 
           <div className='flex items-center'>
             <Listbox value={selected} onChange={setSelected}>
               <div className='relative mt-1 w-full md:w-[130px]'>
-                <Listbox.Button className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left border focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
+                <Listbox.Button className='relative w-full cursor-default rounded-lg bg-white  dark:bg-slate-700 py-2 pl-3 pr-10 text-left border focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
                   <span className='block truncate'>{selected.name}</span>
                   <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
                     <ChevronUpDownIcon
@@ -165,7 +165,7 @@ export function Filter({ sortViewPostsBy, sortPostsByTags, sortPopularByTime }: 
                   leave='transition ease-in duration-100'
                   leaveFrom='opacity-100'
                   leaveTo='opacity-0'>
-                  <Listbox.Options className='absolute z-40 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+                  <Listbox.Options className='absolute z-40 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white  dark:bg-slate-700 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
                     {people.map((person, personIdx) => (
                       <Listbox.Option
                         key={personIdx}
@@ -203,7 +203,7 @@ export function Filter({ sortViewPostsBy, sortPostsByTags, sortPopularByTime }: 
             </Listbox>
           </div>
           <div className='md:flex md:items-center mt-3 md:mt-0'>
-            <div className='border px-2 rounded-lg'>
+            <div className='border px-2 rounded-lg w-full'>
               <Multiselect
                 customCloseIcon={
                   <XMarkIcon className='h-4 w-4 cursor-pointer ml-2 hover:text-red-400  text-gray-800' />

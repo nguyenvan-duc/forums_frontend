@@ -52,17 +52,12 @@ export function TagItem(item: TagItemProps) {
     <>
       <div
         key={item?.id}
-        className={`border bg-white border-t-[12px]  rounded-md p-3`}>
+        className={`border bg-white dark:bg-slate-900 border-t-[12px] dark:border-slate-700  rounded-md p-3`}>
         <div className='mb-3'>
           <Link href={`/tag/${item?.slug}`}>
             <a
-              className={`px-2 text-lg font-medium  rounded-sm py-1 bg-${
-                item?.color_bg ? item?.color_bg : 'indigo'
-              }-50`}>
-              <span
-                className={`text-${
-                  item?.color_bg ? item?.color_bg : 'gray'
-                }-800`}>
+              className={`px-2 text-lg font-medium  rounded-sm py-1 `}>
+              <span>
                 #
               </span>
               {item?.name}

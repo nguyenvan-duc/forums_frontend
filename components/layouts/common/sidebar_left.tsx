@@ -57,13 +57,13 @@ export function SidebarLeft({}: Props) {
     },
   ]
   return (
-    <aside className='w-full sticky top-[85px] z-10 mt-5 bg-white border rounded-lg'>
+    <aside className='w-full sticky top-[85px] z-10 mt-5 bg-white dark:bg-slate-900 border rounded-lg dark:border-gray-500'>
       <div className='px-3 py-4 overflow-y-auto relative '>
         <ul className='space-y-2'>
           {menu.map((item) => (
             <>
               {item?.display && (
-                <li key={item.title}>
+                <li key={item.href}>
                   <Link href={item.href}>
                     <a
                       className={classNames(
@@ -73,7 +73,7 @@ export function SidebarLeft({}: Props) {
                       )}>
                       <item.icon
                         className={classNames(
-                          'w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white',
+                          'w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-50 group-hover:text-gray-900 dark:group-hover:text-white',
                           asPath == item.href && 'font-bold text-black'
                         )}
                       />

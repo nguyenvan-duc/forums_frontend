@@ -108,7 +108,7 @@ const Tag = (props: Props) => {
         <div>
           {loading ? (
             <>
-              <div className='w-full mb-5 border-t-8 border-indigo-500 bg-white p-4 rounded-md flex items-center justify-between'>
+              <div className='w-full mb-5 border-t-8 border-indigo-500 bg-white dark:bg-slate-900 p-4 rounded-md flex items-center justify-between'>
                 <div className='flex items-center'>
                   <div className='animate-pulse bg-gray-300 w-24 h-24 rounded-md' />
                   <div className='ml-2'>
@@ -121,7 +121,7 @@ const Tag = (props: Props) => {
             </>
           ) : (
             <>
-              <div className='w-full mb-5 border border-b-gray-200 border-x-gray-200 border-t-8 border-indigo-500 bg-white p-4 rounded-md flex items-center justify-between'>
+              <div className='w-full mb-5 border border-b-gray-200 border-x-gray-200 dark:border-x-slate-700 dark:border-b-slate-700 border-t-8 border-indigo-500 bg-white dark:bg-slate-900  p-4 rounded-md flex items-center justify-between'>
                 <div className='flex items-center'>
                   {tagDetails?.tag_details?.icon ? (
                     <img
@@ -161,8 +161,8 @@ const Tag = (props: Props) => {
           <div className='w-full'>
             <h3 className=' font-semibold mb-2'>Danh sách bài viết</h3>
           </div>
-          <div className='border border-gray-200 rounded-lg bg-white'>
-            <div className='px-4 border-b border-gray-200'>
+          <div className='border border-gray-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-900'>
+            <div className='px-4 border-b border-gray-200 dark:border-slate-700'>
               <Filter sortPopularByTime={(value:any)=>console.log(value)} sortPostsByTags={(value:any)=>console.log(value)} sortViewPostsBy={(value:any)=>console.log(value)}/>
             </div>
             {renderPosts()}
