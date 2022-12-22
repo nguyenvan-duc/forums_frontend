@@ -203,7 +203,7 @@ export function Filter({ sortViewPostsBy, sortPostsByTags, sortPopularByTime }: 
             </Listbox>
           </div>
           <div className='md:flex md:items-center mt-3 md:mt-0'>
-            <div className='border px-2 rounded-lg w-full'>
+            <div className='border px-2 rounded-lg w-full filter '>
               <Multiselect
                 customCloseIcon={
                   <XMarkIcon className='h-4 w-4 cursor-pointer ml-2 hover:text-red-400  text-gray-800' />

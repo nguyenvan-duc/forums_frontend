@@ -61,7 +61,7 @@ export function MainLayout({
 
             <div className='flex container mx-auto'>
               <div
-              className={classNames(sidebarRight?'w-full py-0 md:py-5 bg-landscape bg-white  md:bg-gray-100 dark:dark:bg-slate-900 dark:md:bg-black':'w-full')}
+              className={classNames(sidebarRight?'w-full py-0 md:py-5 bg-landscape bg-gray-100 dark:dark:bg-slate-900 dark:md:bg-black':'w-full')}
                 // className={ sidebarRight
                 //     ? ''
                 //     : ''}

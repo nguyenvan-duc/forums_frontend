@@ -9,6 +9,7 @@ import HeroIcon from './hero_icon'
 import { postApi } from '@/api-client'
 import { useAuth, useBookmarks } from '@/hooks'
 import { ComponentRequestAuth } from './layouts/common'
+import { ChatBubbleLeftRightIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline'
 
 interface PostProps {
   id: number
@@ -49,7 +50,6 @@ export function Posts({
       if (res.status == 200) {
         setStatusBookmark(res.data)
       }
-      console.log(res)
     } catch (err) {
       console.log(err)
     }
@@ -109,13 +109,13 @@ export function Posts({
                 <Link href={`/bai-dang/${slug}`}>
                   <a className='flex items-center mr-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-500 rounded-md'>
                     {/* <ChevronUpIcon className='h-5 w-5 mr-1' /> */}
-                    <span>{voteCount} Đánh giá</span>
+                    <span className='flex items-center'><ChevronUpDownIcon className='w-4 h-4 text-gray-600 mr-1 block md:hidden'/>{voteCount}<span className='hidden md:block ml-1'>Đánh giá</span></span>
                   </a>
                 </Link>
                 <Link href={`/bai-dang/${slug}/#comments`}>
                   <a className='flex items-center p-2 mr-4 hover:bg-gray-100 dark:hover:bg-gray-500 rounded-md'>
                     {/* <ChatBubbleOvalLeftIcon className='h-5 w-5 mr-1' />{' '} */}
-                    <span>{commentCount} Bình luận</span>
+                    <span className='flex items-center'> <ChatBubbleLeftRightIcon className='w-4 h-4 text-gray-600 mr-1 block md:hidden'/> {commentCount} <span className='hidden md:block ml-1'>Bình luận</span></span>
                   </a>
                 </Link>
                 <ComponentRequestAuth>

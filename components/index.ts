@@ -1,5 +1,5 @@
 export * from './modal'
-export * from './posts'
+export * from './post_item'
 export * from './answer'
 export * from './answers_form'
 export * from './share_button'

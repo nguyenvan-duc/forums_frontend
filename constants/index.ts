@@ -1,5 +1,5 @@
-// export const OAUTH2_REDIRECT_URI = 'http://localhost:3000/api/oauth2/redirect'
-export const OAUTH2_REDIRECT_URI = 'https://www.itforum.site/api/oauth2/redirect'
+export const OAUTH2_REDIRECT_URI = 'http://localhost:3000/api/oauth2/redirect'
+// export const OAUTH2_REDIRECT_URI = 'https://www.itforum.site/api/oauth2/redirect'
 
 //oauth 2 redirect
 export const GOOGLE_AUTH_URL =

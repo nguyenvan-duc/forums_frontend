@@ -14,7 +14,7 @@ import { accountApi } from '@/api-client/account-api'
 import { Profile } from '@/models'
 import _ from 'lodash'
 import format_date from '@/utils/format_date'
-import { Posts } from '../posts'
+import { Posts } from '../post_item'
 import Link from 'next/link'
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,

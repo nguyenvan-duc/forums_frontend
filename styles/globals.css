@@ -25,7 +25,9 @@ body {
 .multiSelectContainer .optionListContainer {
   width: 50%;
 }
-
+.filter .multiSelectContainer .optionListContainer {
+  width: 80%;
+}
 .multiSelectContainer .optionListContainer .optionContainer li.option.highlightOption {
   background-color: #fff !important;
   color: black;
