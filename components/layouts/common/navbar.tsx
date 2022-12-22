@@ -38,8 +38,8 @@ export function Navbar({}: NavbarProps) {
     }
   }, [profile?.name, asPath == '/'])
   useEffect(() => {
-    setTheme(currentTheme as string)
-  }, [currentTheme, theme])
+    setTheme('light')
+  }, [])
   const handleClick = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
@@ -319,7 +319,7 @@ export function Navbar({}: NavbarProps) {
                     </div>
                   </div>
                 </div>
-                <div className='hidden md:block'>
+                {/* <div className='hidden md:block'>
                   <Switch
                     checked={theme === 'dark' ? true : false}
                     onChange={handleClickChangeTheme}
@@ -337,7 +337,7 @@ export function Navbar({}: NavbarProps) {
                       {theme === 'dark' ? '🌜' : '🌞'}
                     </span>
                   </Switch>
-                </div>
+                </div> */}
 
                 <div className='flex'>{AccountInfo()}</div>
               </div>
@@ -374,7 +374,7 @@ export function Navbar({}: NavbarProps) {
                   }>
                   Thêm bài đăng
                 </Disclosure.Button>
-                <div className='flex justify-end px-4 border-t pt-4'>
+                {/* <div className='flex justify-end px-4 border-t pt-4'>
                   <Switch
                     checked={theme === 'dark' ? true : false}
                     onChange={handleClickChangeTheme}
@@ -392,7 +392,7 @@ export function Navbar({}: NavbarProps) {
                       {theme === 'dark' ? '🌜' : '🌞'}
                     </span>
                   </Switch>
-                </div>
+                </div> */}
               </div>
             </Disclosure.Panel>
           </>

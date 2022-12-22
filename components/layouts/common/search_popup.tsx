@@ -166,7 +166,7 @@ export function SearchPopup(props: any) {
               leave='ease-in duration-200'
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'>
-              <div className='inline-block w-full lg:max-w-3xl p-6 my-28 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl'>
+              <div className='inline-block w-full lg:max-w-3xl p-6 my-28 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-slate-900 shadow-xl rounded-2xl'>
                 <div className='flex justify-between items-start rounded-t '>
                   <button
                     onClick={() => {
@@ -192,7 +192,7 @@ export function SearchPopup(props: any) {
                   onChange={(value) => setKeyword(value.target.value)}
                   autoFocus={true}
                   placeholder='Search...'
-                  className='w-full outline-none bg-transparent border-l-2 border-l-indigo-200 focus:border-l-indigo-600 text-3xl mt-3 h-16 px-4 py-2'
+                  className='w-full outline-none bg-transparent border-l-2 border-l-indigo-200 focus:border-l-indigo-600 text-3xl mt-3 h-16 px-4 py-2 dark:hover:text-gray-700'
                 />
                 <div className='border-b-2 mt-2' />
                 <div className='w-full mt-4 sm:px-0 '>
@@ -204,9 +204,9 @@ export function SearchPopup(props: any) {
                         setSort(POST_SEARCH_SORT)
                       }}
                       className={classNames(
-                        'ring-white  w-full rounded-lg py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100',
+                        'ring-white  w-full rounded-lg py-2.5 dark:text-gray-100 text-sm leading-5 text-gray-700 hover:bg-gray-100 dark:hover:text-gray-700',
                         sort == POST_SEARCH_SORT &&
-                          'bg-white hover:bg-white border font-medium'
+                          'bg-white dark:bg-gray-200 hover:bg-white border font-medium dark:text-black'
                       )}>
                       Bài đăng
                     </button>
@@ -217,9 +217,9 @@ export function SearchPopup(props: any) {
                         setSort(USER_SEARCH_SORT)
                       }}
                       className={classNames(
-                        'ring-white  w-full rounded-lg py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100',
+                        'ring-white  w-full rounded-lg py-2.5 text-sm dark:text-gray-100 leading-5 text-gray-700 hover:bg-gray-100 dark:hover:text-gray-700',
                         sort == USER_SEARCH_SORT &&
-                          'bg-white hover:bg-white border font-medium'
+                          'bg-white dark:bg-gray-200 hover:bg-white border font-medium dark:text-black'
                       )}>
                       Người dùng
                     </button>
@@ -230,9 +230,9 @@ export function SearchPopup(props: any) {
                         setSort(TAG_SEARCH_SORT)
                       }}
                       className={classNames(
-                        'ring-white  w-full rounded-lg py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100',
+                        'ring-white  w-full rounded-lg py-2.5 dark:text-gray-100 text-sm leading-5 text-gray-700 hover:bg-gray-100',
                         sort == TAG_SEARCH_SORT &&
-                          'bg-white hover:bg-white border font-medium'
+                          'bg-white dark:bg-gray-200 hover:bg-white border font-medium dark:text-black'
                       )}>
                       Thẻ
                     </button>

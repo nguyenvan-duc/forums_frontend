@@ -55,7 +55,7 @@ const DetailsPost = ({ post, slug }: any) => {
           type: 'website',
         }}
       />
-      <div className='w-full bg-white rounded-lg border border-gray-200'>
+      <div className='w-full bg-white dark:bg-slate-900 rounded-lg border border-gray-200'>
         <div className='w-full px-2 py-2 md:px-5 md:py-5 '>
           <div
             className={`flex items-center ${

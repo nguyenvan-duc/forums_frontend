@@ -59,7 +59,7 @@ export function Modal(props: ModalProps) {
               leaveTo='opacity-0 scale-95'>
               <div
                 className={classNames(
-                  'inline-block w-full p-6 my-28 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl',
+                  'inline-block w-full p-6 my-28 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-slate-900 shadow-xl rounded-2xl',
                   size
                 )}>
                

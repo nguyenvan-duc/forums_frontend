@@ -142,7 +142,7 @@ export function SidebarRight({}: Props) {
         </div>
       </div>
       {profile?.name && (
-        <div className='w-full border p-3 rounded-lg dark:bg-slate-900 dark:border-gray-500  '>
+        <div className='w-full border p-3 rounded-lg bg-gray-50 dark:bg-slate-900 dark:border-gray-500  '>
           <div className='w-full border-b pb-2 flex justify-start items-center dark:border-gray-500 '>
             <h2 className='text-lg font-semibold'>Bookmarks ({bookmarks.length})</h2>
           </div>

@@ -16,9 +16,9 @@ export function TagForSidebar() {
     revalidateOnFocus: false,
   })
   useEffect(() => {
-    if(!profile?.name){
-      mutate([],false)
-    }else{
+    if (!profile?.name) {
+      mutate([], false)
+    } else {
       mutate()
     }
   }, [profile?.name])
@@ -42,7 +42,7 @@ export function TagForSidebar() {
             <span
               className={`text-${
                 item?.color_bg ? item?.color_bg : 'gray'
-              }-800`}>
+              }-800 dark:text-gray-100`}>
               #
             </span>
             {item?.name}
@@ -53,15 +53,19 @@ export function TagForSidebar() {
   }
   return (
     <div className='w-full max-w-md px-2 sm:px-0'>
-      <h2 className='text-lg font-bold text-gray-900 dark:text-gray-50'>Danh sách chủ đề</h2>
+      <h2 className='text-lg font-bold text-gray-900 dark:text-gray-50'>
+        Danh sách chủ đề
+      </h2>
       {profile?.name ? (
         <Tab.Group>
           <Tab.List className='flex space-x-1 rounded-xl  p-1'>
             <Tab
               className={({ selected }) =>
                 classNames(
-                  'w-full text-sm  hover:bg-gray-200 py-1 rounded-md font-medium  border-none shadow-none outline-none text-black',
-                  selected ? ' underline bg-gray-200' : 'hover:underline'
+                  'w-full text-sm  hover:bg-gray-200 py-1 rounded-md font-medium hover:text-black  border-none shadow-none outline-none',
+                  selected
+                    ? ' underline bg-gray-200 text-black'
+                    : 'hover:underline dark:text-gray-400'
                 )
               }>
               Theo dõi
@@ -69,8 +73,10 @@ export function TagForSidebar() {
             <Tab
               className={({ selected }) =>
                 classNames(
-                  'w-full text-sm  hover:bg-gray-200 py-1 rounded-md font-medium  border-none shadow-none outline-none text-black',
-                  selected ? ' underline bg-gray-200' : 'hover:underline'
+                  'w-full text-sm  hover:bg-gray-200 py-1 rounded-md font-medium hover:text-black  border-none shadow-none outline-none',
+                  selected
+                    ? ' underline bg-gray-200 text-black'
+                    : 'hover:underline dark:text-gray-400'
                 )
               }>
               Tất cả

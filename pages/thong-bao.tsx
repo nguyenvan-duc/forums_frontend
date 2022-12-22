@@ -78,7 +78,7 @@ const Notifications: NextPageWithLayout = (props: Props) => {
   return (
     <>
       <SEO title='Danh sách thông báo' description='Danh sách thông báo' />
-      <div className=' min-h-screen md:min-h-[80vh] max-w-xl md:mt-5 m-auto border bg-gray-50 md:mb-3 p-3 rounded-md'>
+      <div className=' min-h-screen md:min-h-[80vh] max-w-xl md:mt-5 m-auto border bg-gray-50 dark:border-gray-500 dark:bg-slate-900 md:mb-3 p-3 rounded-md'>
         <h2 className='text-2xl font-bold mb-3'>Thông báo</h2>
         <div className='flex mb-3'>
           <button
@@ -88,7 +88,7 @@ const Notifications: NextPageWithLayout = (props: Props) => {
             }}
             className={classNames(
               ' px-3 py-1 mr-2  rounded-md text-sm',
-              filter === 'ALL' && 'bg-gray-200 font-semibold'
+              filter === 'ALL' && 'bg-gray-200 font-semibold text-black'
             )}>
             Tất cả
           </button>
@@ -99,7 +99,7 @@ const Notifications: NextPageWithLayout = (props: Props) => {
             }}
             className={classNames(
               ' px-3 py-1 mr-2  rounded-md text-sm',
-              filter === 'NOT_SENT' && 'bg-gray-200 font-semibold'
+              filter === 'NOT_SENT' && 'bg-gray-200 font-semibold text-black'
             )}>
             Chưa đọc
           </button>

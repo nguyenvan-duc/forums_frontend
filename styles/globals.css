@@ -100,6 +100,10 @@ body {
   padding: 10px 0;
 }
 
+.dark .EasyMDEContainer .CodeMirror {
+  background: #475569;
+  color: #ffffff;
+}
 .comment-form .EasyMDEContainer {
   background-color: #ffff;
 }
@@ -129,6 +133,9 @@ body {
 
 .wmde-markdown {
   background-color: transparent !important;
+}
+.dark .post-details .wmde-markdown {
+  color: #ffff;
 }
 
 .cut-text {

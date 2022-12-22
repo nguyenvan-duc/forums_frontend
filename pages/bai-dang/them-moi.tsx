@@ -143,7 +143,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
   return (
     <>
       <SEO title='Thêm mới bài viết' description='Thêm mới bài viết' />
-      <div id='myText' className='bg-gray-primary min-h-screen'>
+      <div id='myText' className='bg-gray-primary dark:bg-slate-900 min-h-screen'>
         <Disclosure as='nav'>
           {({ open }) => (
             <>
@@ -198,7 +198,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
                     <Modal
                       isOpen={modalOpen}
                       setIsOpen={() => setModalOpen(false)}>
-                      <div className='py-2'>
+                      <div className='py-2 dark:text-gray-50'>
                         Bạn đang có nội dung chưa được đăng tải, bạn có muốn
                         thoát không?
                       </div>
@@ -224,7 +224,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
         <div className='md:max-w-6xl w-full m-auto flex justify-start md:pb-32 md:px-0'>
           {!preview ? (
             <div className='md:w-3/4 w-full'>
-              <div className='w-full rounded-t-2xl md:rounded-2xl border-2 border-gray-300 bg-white h-full  px-2 md:px-6'>
+              <div className='w-full rounded-t-2xl md:rounded-2xl border-2 border-gray-300 bg-white dark:bg-slate-600 h-full  px-2 md:px-6'>
                 {error && (
                   <div className='w-full px-2 bg-red-300 py-4 mt-3 border border-red-700'>
                     <ul className=' list-disc ml-5'>
@@ -323,9 +323,9 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
               </div>
             </div>
           ) : (
-            <div className=' md:w-3/4 w-full min-h-[70vh] rounded-2xl border-2 border-gray-300 bg-white py-5 px-6'>
+            <div className=' md:w-3/4 w-full min-h-[70vh] rounded-2xl border-2 border-gray-300 dark:bg-slate-600 bg-white py-5 px-6'>
               <div className='w-full border-b py-3 border-gray-50'>
-                <h1 className='text-4xl dark:text-gray-800 font-[500] mb-3 mt-2'>
+                <h1 className='text-4xl dark:text-gray-50 font-[500]  mb-3 mt-2'>
                   {title}
                 </h1>
                 <div className='flex flex-wrap justify-starts items-center mt-4'>
@@ -347,7 +347,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
               </div>
               <div className='flex  py-3'>
                 <div className='w-11/12 dark:text-gray-800 px-2 pb-12'>
-                  <span className='text-xs text-gray-400'>Nội dung :</span>
+                  <span className='text-xs text-gray-400 dark:text-gray-200'>Nội dung :</span>
                   <div className='post-details'>
                     <MarkdownPreview source={content} />
                   </div>
