@@ -120,7 +120,7 @@ export function VoteComponent({
     }
     return (
       <>
-        <ul className='w-full sticky top-11 z-10  block'>
+        <ul className='w-full sticky top-20 z-10  block'>
           <li className='text-center flex flex-col justify-center items-center mb-4'>
             <ComponentRequestAuth>
               <button

@@ -9,7 +9,11 @@ import HeroIcon from './hero_icon'
 import { postApi } from '@/api-client'
 import { useAuth, useBookmarks } from '@/hooks'
 import { ComponentRequestAuth } from './layouts/common'
-import { ChatBubbleLeftRightIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline'
+import {
+  ChatBubbleLeftRightIcon,
+  ChevronUpDownIcon,
+  EyeIcon,
+} from '@heroicons/react/24/outline'
 
 interface PostProps {
   id: number
@@ -38,10 +42,10 @@ export function Posts({
   const route = useRouter()
   const { bookmarkPost } = useBookmarks()
   const [statusBookmark, setStatusBookmark] = useState<any>(isBookmark)
-  useEffect(()=>{
+  useEffect(() => {
     setStatusBookmark(isBookmark)
-  },[isBookmark])
-  const {profile} = useAuth()
+  }, [isBookmark])
+  const { profile } = useAuth()
   const handleBookmark = async (e: any) => {
     e.preventDefault()
     try {
@@ -54,11 +58,11 @@ export function Posts({
       console.log(err)
     }
   }
-  useEffect(()=>{
-    if(!profile?.name){
+  useEffect(() => {
+    if (!profile?.name) {
       setStatusBookmark(false)
     }
-  },[profile?.name])
+  }, [profile?.name])
   return (
     <>
       <div className='overflow-hidden w-full border-b border-gray-200 dark:border-gray-600 m-auto'>
@@ -107,22 +111,41 @@ export function Posts({
               </div>
               <div className='flex items-center mt-4 text-sm text-gray-600 dark:text-gray-300'>
                 <Link href={`/bai-dang/${slug}`}>
-                  <a className='flex items-center mr-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-500 rounded-md'>
+                  <a className='flex items-center mr-1 md:mr-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-500 rounded-md'>
                     {/* <ChevronUpIcon className='h-5 w-5 mr-1' /> */}
-                    <span className='flex items-center'><ChevronUpDownIcon className='w-4 h-4 text-gray-600 mr-1 block md:hidden'/>{voteCount}<span className='hidden md:block ml-1'>Đánh giá</span></span>
+                    <span className='flex items-center'>
+                      <ChevronUpDownIcon className='w-4 h-4 text-gray-600 mr-1' />
+                      {voteCount}
+                      <span className='hidden md:block ml-1'>Đánh giá</span>
+                    </span>
                   </a>
                 </Link>
                 <Link href={`/bai-dang/${slug}/#comments`}>
-                  <a className='flex items-center p-2 mr-4 hover:bg-gray-100 dark:hover:bg-gray-500 rounded-md'>
+                  <a className='flex items-center p-2 mr-1 md:mr-4 hover:bg-gray-100 dark:hover:bg-gray-500 rounded-md'>
                     {/* <ChatBubbleOvalLeftIcon className='h-5 w-5 mr-1' />{' '} */}
-                    <span className='flex items-center'> <ChatBubbleLeftRightIcon className='w-4 h-4 text-gray-600 mr-1 block md:hidden'/> {commentCount} <span className='hidden md:block ml-1'>Bình luận</span></span>
+                    <span className='flex items-center'>
+                      {' '}
+                      <ChatBubbleLeftRightIcon className='w-4 h-4 text-gray-600 mr-1 ' />{' '}
+                      {commentCount}{' '}
+                      <span className='hidden md:block ml-1'>Bình luận</span>
+                    </span>
+                  </a>
+                </Link>
+                <Link href={`/bai-dang/${slug}`}>
+                  <a className='flex items-center mr-1 md:mr-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-500 rounded-md'>
+                    {/* <ChevronUpIcon className='h-5 w-5 mr-1' /> */}
+                    <span className='flex items-center'>
+                      <EyeIcon className='w-4 h-4 text-gray-600 mr-1' />
+                      {voteCount}
+                      <span className='hidden md:block ml-1'>Lượt xem</span>
+                    </span>
                   </a>
                 </Link>
                 <ComponentRequestAuth>
                   <button
                     disabled={!profile?.name}
                     onClick={handleBookmark}
-                    className='p-3 hover:bg-indigo-100 dark:hover:bg-gray-500 rounded-full hover:cursor-pointer' >
+                    className='p-3 hover:bg-indigo-100 dark:hover:bg-gray-500 rounded-full hover:cursor-pointer'>
                     <HeroIcon
                       name='BookmarkIcon'
                       className='h-4 w-4'

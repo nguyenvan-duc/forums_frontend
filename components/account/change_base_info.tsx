@@ -19,7 +19,10 @@ export function ChangeBaseInfo() {
           github_username:profile?.github_username,
           username:profile?.username,
           bio:profile?.bio,
-          skill:profile?.skill
+          skill:profile?.skill,
+          web_url:profile?.web_url,
+          education:profile?.education,
+          email_display:profile?.email_display
      }
   })
   const onSubmit = async(data: any) => {
@@ -91,6 +94,19 @@ export function ChangeBaseInfo() {
           </div>
           <div className='mb-6'>
             <label
+              htmlFor='email_display'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+              Email hiển thị
+            </label>
+            <input
+              type='email'
+              {...register('email_display')}
+              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          
+            />
+          </div>
+          <div className='mb-6'>
+            <label
               htmlFor='email'
               className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
               Username
@@ -103,7 +119,7 @@ export function ChangeBaseInfo() {
           </div>
           <div className='mb-6'>
             <label
-              htmlFor='email'
+              htmlFor='github_username'
               className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
               Github username
             </label>
@@ -111,6 +127,32 @@ export function ChangeBaseInfo() {
               type='text'
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               {...register('github_username')}
+            />
+          </div>
+          <div className='mb-6'>
+            <label
+              htmlFor='web_url'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+              Website
+            </label>
+            <input
+              type='url'
+              {...register('web_url')}
+              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          
+            />
+          </div>
+          <div className='mb-6'>
+            <label
+              htmlFor='education'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+              Bạn đang học trường nào?
+            </label>
+            <input
+              type='education'
+              {...register('education')}
+              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          
             />
           </div>
           <div className='mb-6'>

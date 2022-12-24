@@ -17,10 +17,12 @@ function classNames(...classes: any) {
 export function SearchPopup(props: any) {
   const [keyword, setKeyword] = useState('')
   const [result, setResult] = useState<any>([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [sort, setSort] = useState(POST_SEARCH_SORT)
   useEffect(() => {
+    setLoading(true)
     const delayDebounceFn = setTimeout(() => {
+      setLoading(true)
       if (keyword.length > 0) {
         fetchData()
       }
@@ -88,22 +90,26 @@ export function SearchPopup(props: any) {
             onClick={() => props.getChangerPopupSearch(false)}
             key={item?.username}
             className='relative p-3 rounded-md hover:bg-coolGray-100 hover:bg-gray-100'>
-              <div className='flex'>
-                <div className='mr-2'>
-                  <img src={item?.avatar} alt={item?.name} className=' w-10 h-10 rounded-full object-cover'/>
-                </div>
-                <div>
-                <h3 className='text-sm font-medium leading-5'>{item.name}</h3>
-            <ul className='flex mt-1 space-x-1 text-xs font-normal leading-4 text-coolGray-500'>
-              <li>Reputation: {item?.reputation}</li>
-              <li>&middot;</li>
-              <li>Bài đăng: {item?.post_count}</li>
-              <li>&middot;</li>
-              <li>Ý kiến đóng góp: {item?.comment_count}</li>
-            </ul>
-                </div>
+            <div className='flex'>
+              <div className='mr-2'>
+                <img
+                  src={item?.avatar}
+                  alt={item?.name}
+                  className=' w-10 h-10 rounded-full object-cover'
+                />
               </div>
-           
+              <div>
+                <h3 className='text-sm font-medium leading-5'>{item.name}</h3>
+                <ul className='flex mt-1 space-x-1 text-xs font-normal leading-4 text-coolGray-500'>
+                  <li>Reputation: {item?.reputation}</li>
+                  <li>&middot;</li>
+                  <li>Bài đăng: {item?.post_count}</li>
+                  <li>&middot;</li>
+                  <li>Ý kiến đóng góp: {item?.comment_count}</li>
+                </ul>
+              </div>
+            </div>
+
             <Link href={`/nguoi-dung/${item?.username}`}>
               <a
                 className={classNames(
@@ -125,7 +131,6 @@ export function SearchPopup(props: any) {
               <li>Lượt theo dõi: {item?.tag_follow_count}</li>
               <li>&middot;</li>
               <li>Số lượng bài đăng: {item?.posts_use}</li>
-            
             </ul>
             <Link href={`/tag/${item?.slug}`}>
               <a
@@ -239,12 +244,20 @@ export function SearchPopup(props: any) {
                   </div>
                   <div className='mb-3 flex justify-between'>
                     <div>Kết quả tìm kiếm:</div>
-                    <div><Link href={`/tim-kiem?q=${keyword}&type=${sort}&limit=${10}`}><a onClick={() => props.getChangerPopupSearch(false)} className=' text-indigo-600 hover:underline'>Xem thêm kết quả</a></Link></div>
+                    <div>
+                      <Link
+                        href={`/tim-kiem?q=${keyword}&type=${sort}&limit=${10}`}>
+                        <a
+                          onClick={() => props.getChangerPopupSearch(false)}
+                          className=' text-indigo-600 hover:underline'>
+                          Xem thêm kết quả
+                        </a>
+                      </Link>
+                    </div>
                   </div>
 
                   <ul>{renderData()}</ul>
                 </div>
-              
               </div>
             </Transition.Child>
           </div>

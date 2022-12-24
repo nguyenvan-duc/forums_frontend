@@ -1,12 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import {
-  UserIcon,
-  CogIcon,
+  LinkIcon,
   BriefcaseIcon,
   UsersIcon,
   PencilSquareIcon,
   ChatBubbleBottomCenterIcon,
   TagIcon,
+  CalendarDaysIcon,
+  GlobeAltIcon,
+  AcademicCapIcon,
 } from '@heroicons/react/24/outline'
 import dynamic from 'next/dynamic'
 import { Tab, Menu, Transition } from '@headlessui/react'
@@ -149,12 +151,24 @@ export function UseInfo({
               {info?.bio}
             </p>
             <div className='flex mt-4 items-center justify-center'>
-              <div className='text-gray-600'>
-                Đã tham gia vào{' '}
-                <span className='font-medium'>
+              <div className='text-gray-600 flex items-center'>
+                <CalendarDaysIcon className='w-5 h-5 mr-1' /> Đã tham gia
+                <span className='ml-1'>
                   {format_date?.formatDMY(info?.createdAt)}
                 </span>
               </div>
+              <div className='text-gray-600 flex items-center ml-5'>
+                <AcademicCapIcon className='w-5 h-5 mr-1' />
+                <span>
+                  FPT Education
+                </span>
+              </div>
+              <Link href={'https://dducnv.dev'}>
+                <a className='text-gray-600 flex ml-5 items-center hover:underline'>
+                  <GlobeAltIcon className='w-5 h-5 mr-1' />
+                  <span>https://dducnv.dev</span>
+                </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -197,7 +211,7 @@ export function UseInfo({
                 </div>
               </div>
             </div>
-            <div className='rounded-lg border bg-white mb-5 '>
+            {/* <div className='rounded-lg border bg-white mb-5 '>
               <div className='py-3 px-3 border-b border-gray-300'>
                 <h3 className='font-medium text-gray-700 text-md'>Danh hiệu</h3>
               </div>
@@ -208,7 +222,7 @@ export function UseInfo({
                   _.map(badges, (item) => <></>)
                 )}
               </div>
-            </div>
+            </div> */}
             <div className='rounded-lg border bg-white mb-3 '>
               <div className='py-3 px-3 border-b border-gray-300'>
                 <h3 className='font-medium text-gray-700 text-md'>
@@ -244,9 +258,9 @@ export function UseInfo({
             )}
           </div>
           <div className='w-full md:w-3/4 md:pl-5'>
-            <div className='bg-white w-full rounded-md border'>
+            <div className='bg-white w-full rounded-md border mb-5'>
               <div className='w-full px-3 py-3 text-lg font-medium border-b'>
-                Ý kiến đóng góp gần đây.
+                Ý kiến đóng góp gần đây
               </div>
               {comments?.length == 0 ? (
                 <div className='text-center text-gray-600 my-4'>
@@ -254,7 +268,9 @@ export function UseInfo({
                 </div>
               ) : (
                 _.map(comments, (item) => (
-                  <Link href={`/bai-dang/${item?.post?.slug}?to_comment=comment-${item?.id}`} key={item?.id}>
+                  <Link
+                    href={`/bai-dang/${item?.post?.slug}?to_comment=comment-${item?.id}`}
+                    key={item?.id}>
                     <a>
                       <div className='py-3 px-3 border-b hover:bg-gray-50'>
                         <h3 className='text-lg font-semibold'>
@@ -269,8 +285,10 @@ export function UseInfo({
                 ))
               )}
             </div>
-            <h2 className='text-lg font-semibold mt-5 mb-2'>Bài đăng</h2>
             <div className='border border-gray-200 bg-white mb-5 rounded-lg overflow-hidden'>
+              <div className='w-full px-3 py-3 text-lg font-medium border-b'>
+                Bài đăng
+              </div>
               {posts?.length == 0 ? (
                 <div className='text-center text-gray-600 mt-4'>
                   Không có gì!

@@ -104,7 +104,7 @@ export function Answer({
           }
         )
       }
-    }, 1000)
+    }, 500)
   }
 
   return (
