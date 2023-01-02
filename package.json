@@ -43,6 +43,7 @@
     "react-hotkeys-hook": "^3.4.7",
     "react-infinite-scroll-component": "^6.1.0",
     "react-medium-image-zoom": "^5.1.2",
+    "react-select": "^5.7.0",
     "react-simplemde-editor": "^5.0.2",
     "react-textarea-autosize": "^8.4.0",
     "react-transition-group": "^4.4.5",

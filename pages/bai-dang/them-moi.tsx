@@ -19,6 +19,7 @@ import { NextPageWithLayout, PostModel, PostNewModel, TagModel } from '@/models'
 import { Modal, EditorMarkdown } from '@/components'
 import TextareaAutosize from 'react-textarea-autosize'
 import { Loader } from '@/components/layouts/common'
+import _ from 'lodash'
 
 const MarkdownPreview = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
@@ -114,8 +115,15 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
       return
     }
     if (tagsSelected.length <= 0) {
-      setTagError('Vui lòng chọn tags')
-      setError(true)
+      alert('vui long chon tag')
+      return
+    }
+    if (filerIfExits('hoi-dap') && filerIfExits('thao-luan')) {
+      alert('Chỉ được chọn 1 trong 2 chủ đề  Hỏi đáp và Thảo Luận')
+      return
+    }
+    if (!filerIfExits('hoi-dap') || !filerIfExits('thao-luan')) {
+      alert('Vui lòng chọn 1 trong 2 chủ đề  Hỏi đáp và Thảo Luận')
       return
     }
     if (content == '' || content == null) {
@@ -139,11 +147,19 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
     }
   }
 
+  const filerIfExits = (value: string) => {
+    if (tagsSelected.filter((e: any) => e.slug === value).length > 0) {
+      return true
+    }
+    return false
+  }
   if (loadWhenSuccess) return <Loader />
   return (
     <>
       <SEO title='Thêm mới bài viết' description='Thêm mới bài viết' />
-      <div id='myText' className='bg-gray-primary dark:bg-slate-900 min-h-screen'>
+      <div
+        id='myText'
+        className='bg-gray-primary dark:bg-slate-900 min-h-screen'>
         <Disclosure as='nav'>
           {({ open }) => (
             <>
@@ -278,7 +294,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
                         selectionLimit={4}
                         style={styleMultiSelect}
                         closeIcon='close'
-                        options={tags}
+                        options={_.orderBy(tags,(it) => it?.important)}
                         placeholder='Chọn tối đa 4 thẻ...'
                         displayValue='name' // Property name to display in the dropdown options
                       />
@@ -289,7 +305,7 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
                     onChange={onChange}
                     Option={{
                       minHeight: '200px',
-                      maxHeight:'400px'
+                      maxHeight: '400px',
                     }}
                   />
                 </div>
@@ -347,7 +363,9 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
               </div>
               <div className='flex  py-3'>
                 <div className='w-11/12 dark:text-gray-800 px-2 pb-12'>
-                  <span className='text-xs text-gray-400 dark:text-gray-200'>Nội dung :</span>
+                  <span className='text-xs text-gray-400 dark:text-gray-200'>
+                    Nội dung :
+                  </span>
                   <div className='post-details'>
                     <MarkdownPreview source={content} />
                   </div>
