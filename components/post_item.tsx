@@ -26,6 +26,7 @@ interface PostProps {
   isBookmark?: boolean
   commentCount?: number
   voteCount?: number
+  viewCount?:number
 }
 export function Posts({
   id,
@@ -38,6 +39,7 @@ export function Posts({
   commentCount,
   voteCount,
   isBookmark,
+  viewCount
 }: PostProps) {
   const route = useRouter()
   const { bookmarkPost } = useBookmarks()
@@ -136,7 +138,7 @@ export function Posts({
                     {/* <ChevronUpIcon className='h-5 w-5 mr-1' /> */}
                     <span className='flex items-center'>
                       <EyeIcon className='w-4 h-4 text-gray-600 mr-1' />
-                      {voteCount}
+                      {viewCount}
                       <span className='hidden md:block ml-1'>Lượt xem</span>
                     </span>
                   </a>

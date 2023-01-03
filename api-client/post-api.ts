@@ -8,9 +8,9 @@ export const postApi = {
   async getAllPostForStaticProps() {
     return await axiosConfig.get<Array<PostModel>>('/posts/list')
   },
-  async getAllPost(byTime:any,byTags:string,sort: string, page: number) {
+  async getAllPost(byTags:string,sort: string, page: number,tags?:string) {
     return await axiosConfig.get<Array<PostModel>>(
-      `/posts?by_tags=${byTags}&read_time=${byTime?.value}&sort=${sort}&page=${page}&size=10`
+      `/posts?by_tags=${byTags}&sort=${sort}&page=${page}&size=10${tags ?(`&tags=${tags}`):''}`
     )
   },
   async createNewPost(data: PostNewModel) {

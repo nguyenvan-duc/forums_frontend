@@ -9,6 +9,7 @@ import _ from 'lodash'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { FunnelIcon } from '@heroicons/react/24/outline'
+import { tagApi } from '@/api-client'
 type Props = {}
 function classNames(...classNames: any) {
   return classNames.filter(Boolean).join(' ')
@@ -16,20 +17,30 @@ function classNames(...classNames: any) {
 const Tag = (props: Props) => {
   const router = useRouter()
   let slug: string = router?.query?.slug as string
+
+  const [sortType, setSortType] = useState('relevant')
+  const [sortPostsByTags, setSortPostsByTags] = useState('')
+
+  const { profile, fistLoading } = useAuth()
+  const { followTag } = useTagsFollow()
+  const [follow, setFollow] = useState(false)
+  const [followCount, setFollowCount] = useState(0)
+  const [loader, setLoader] = useState(false)
   const {
-    data: tagDetails,
+    data: tagData,
     error,
     mutate,
   } = useSWR<any>(`/filter/${slug}/posts-by-tag`, {
     dedupingInterval: 5 * 60 * 1000,
     revalidateOnFocus: false,
   })
-  const [sortType, setSortType] = useState('relevant')
-  const { profile, fistLoading } = useAuth()
-  const { followTag } = useTagsFollow()
-  const [follow, setFollow] = useState(false)
-  const [followCount, setFollowCount] = useState(0)
-  const [loader, setLoader] = useState(false)
+  const [tagDetails, setTagDetails] = useState(tagData)
+
+  const handleSort = async () => {
+    await tagApi.filterPostsByTag(slug, sortPostsByTags).then((res) => {
+      setTagDetails(res)
+    })
+  }
   useEffect(() => {
     setFollow(tagDetails?.tag_details?.follow)
     setFollowCount(tagDetails?.tag_details?.tag_follow_count)
@@ -179,13 +190,16 @@ const Tag = (props: Props) => {
         </div>
         <div>
           <div className='w-full'>
-            <h3 className=' font-semibold mb-2 px-2 md:px-0'>Danh sách bài viết</h3>
+            <h3 className=' font-semibold mb-2 px-2 md:px-0'>
+              Danh sách bài viết
+            </h3>
           </div>
           <div className='border border-gray-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-900'>
             <div className='px-4 border-b border-gray-200 dark:border-slate-700'>
               <Filter
+                handleSort={() => handleSort()}
                 sortPopularByTime={(value: any) => console.log(value)}
-                sortPostsByTags={(value: any) => console.log(value)}
+                sortPostsByTags={(value: any) => setSortPostsByTags(value)}
                 sortViewPostsBy={(value: any) => console.log(value)}
               />
             </div>

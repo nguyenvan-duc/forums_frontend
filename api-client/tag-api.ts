@@ -6,7 +6,7 @@ export const tagApi = {
      followTag(id:number){
           return axiosConfig.post('/tag/follow',{tag:{id:id}})
      },
-     filterPostsByTag(slug:string){
-          return axiosConfig.get(`/filter/${slug}/posts-by-tag`);
+     filterPostsByTag(slug:string,tags?:string){
+          return axiosConfig.get(`/filter/${slug}/posts-by-tag${tags ?(`&tags=${tags}`):''}`);
      }
 }

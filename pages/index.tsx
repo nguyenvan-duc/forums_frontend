@@ -26,11 +26,19 @@ const Home: NextPageWithLayout = () => {
     fetchInitDataPosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile?.name, sortType])
-
+  const filterPostByTags = async () => {
+    setLoader(true)
+    setNoMore(true)
+    await postApi.getAllPost(sortByTags,sortType, 1,sortByTags).then((res: any) => {
+      setLoader(false)
+      setPosts(res?.content)
+      setPage(2)
+    })
+  } 
   const fetchInitDataPosts = async () => {
     setLoader(true)
     setNoMore(true)
-    await postApi.getAllPost(sortByTime,sortByTags,sortType, 1).then((res: any) => {
+    await postApi.getAllPost(sortByTags,sortType, 1).then((res: any) => {
       setLoader(false)
       setPosts(res?.content)
       setPage(2)
@@ -38,7 +46,7 @@ const Home: NextPageWithLayout = () => {
   }
   const fetchWhenScroll = async () => {
     const result = await await postApi
-      .getAllPost(sortByTime,sortByTags,sortType, page)
+      .getAllPost(sortByTags,sortType, page)
       .then((res: any) => {
         return res?.content
       })
@@ -115,6 +123,7 @@ const Home: NextPageWithLayout = () => {
               isBookmark={item.bookmark}
               author={item.account}
               createdAt={item.createdAt}
+              viewCount={item.viewCount}
             />
           ))}
         </InfiniteScroll>
@@ -139,7 +148,7 @@ const Home: NextPageWithLayout = () => {
               </Link>
             </div>
           )}
-          <Filter sortPopularByTime={(value:any)=>setSortByTime(value)} sortPostsByTags={(value:any)=>setSortByTags(value)} sortViewPostsBy={(value: any) => setSortType(value)} />
+          <Filter handleSort={()=>filterPostByTags()}  sortPostsByTags={(value:any)=>setSortByTags(value)} sortViewPostsBy={(value: any) => setSortType(value)} />
         </div>
         {renderPosts()}
       </div>
