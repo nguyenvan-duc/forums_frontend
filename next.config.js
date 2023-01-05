@@ -16,7 +16,7 @@ module.exports = removeImports({
   reactStrictMode: true,
   swcMinify: true,
   env: {
-    API_URL: "https://appcuaduc.as.r.appspot.com",
+    API_URL: "https://newbiedev-pqvws.appengine.bfcplatform.vn",
     // API_URL: "http://localhost:8080",
     CLOUDINARY_API_SECRET:"cEgfkcCeMDbDnI_z2UAiUbDLsyo",
     CLOUDINARY_API_KEY:"998596363616345",
