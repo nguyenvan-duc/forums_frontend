@@ -14,7 +14,7 @@ import {
   QuestionMarkCircleIcon,
   ChatBubbleLeftRightIcon,
   ChartPieIcon,
-  BookmarkIcon
+  BookmarkIcon,
 } from '@heroicons/react/24/outline'
 import { useAuth } from '@/hooks'
 import { useTagsFollow } from '@/hooks/use-tag'
@@ -29,40 +29,40 @@ export function SidebarLeft({}: Props) {
       title: 'Trang Chủ',
       href: '/',
       icon: HomeIcon,
-      display: true
+      display: true,
     },
     {
       title: 'Hỏi đáp',
       href: '/tag/hoi-dap',
       icon: QuestionMarkCircleIcon,
-      display: true
+      display: true,
     },
     {
       title: 'Thảo luận',
       href: '/tag/thao-luan',
       icon: ChatBubbleLeftRightIcon,
-      display: true
+      display: true,
     },
     {
       title: 'Chủ đề',
       href: '/tags',
       icon: TagIcon,
-      display: true
+      display: true,
     },
     {
       title: 'Giới thiệu',
       href: '/gioi-thieu',
       icon: FireIcon,
-      display: true
+      display: true,
     },
   ]
   return (
     <aside className='w-full sticky top-[85px] z-10 mt-5 bg-white dark:bg-slate-900 border rounded-lg dark:border-gray-500'>
       <div className='px-3 py-4 overflow-y-auto relative '>
         <ul className='space-y-2'>
-          {menu.map((item) => (
-            <>
-              {item?.display && (
+          {menu.map(
+            (item) =>
+              item?.display && (
                 <li key={item.href}>
                   <Link href={item.href}>
                     <a
@@ -81,9 +81,8 @@ export function SidebarLeft({}: Props) {
                     </a>
                   </Link>
                 </li>
-              )}
-            </>
-          ))}
+              )
+          )}
         </ul>
         <div>
           <div className='pt-4 mt-4 space-y-2   border-t border-gray-200 dark:border-gray-700'>
