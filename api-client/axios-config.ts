@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 const axiosConfig = axios.create({
   // baseURL: 'http://localhost:3000/api',
-  baseURL:'https://www.itforum.site/api',
+  baseURL:'https://newbiedev-pqvws.appengine.bfcplatform.vn/api',
   headers: {
     'content-type': 'application/json',
   },
