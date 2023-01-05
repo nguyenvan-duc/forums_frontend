@@ -118,14 +118,6 @@ const NewPost: NextPageWithLayout = (props: PageProps) => {
       alert('vui long chon tag')
       return
     }
-    if (filerIfExits('hoi-dap') && filerIfExits('thao-luan')) {
-      alert('Chỉ được chọn 1 trong 2 chủ đề  Hỏi đáp và Thảo Luận')
-      return
-    }
-    if (!filerIfExits('hoi-dap') || !filerIfExits('thao-luan')) {
-      alert('Vui lòng chọn 1 trong 2 chủ đề  Hỏi đáp và Thảo Luận')
-      return
-    }
     if (content == '' || content == null) {
       setContentError('Vui lòng nhập nội dung')
       setError(true)
