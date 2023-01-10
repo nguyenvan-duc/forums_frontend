@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import useSWR from 'swr'
+import _ from 'lodash'
+import { useRouter } from 'next/router'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { Filter, Posts } from '@/components'
 import { MainLayout } from '@/components/layouts'
 import { ComponentRequestAuth } from '@/components/layouts/common'
 import { useAuth } from '@/hooks'
 import { useTagsFollow } from '@/hooks/use-tag'
 import { SORT_POST_NEW, SORT_POST_HOT } from '@/constants'
-import _ from 'lodash'
-import { useRouter } from 'next/router'
-import useSWR from 'swr'
 import { FunnelIcon } from '@heroicons/react/24/outline'
 import { tagApi } from '@/api-client'
+import { PostModel } from '@/models'
 type Props = {}
 function classNames(...classNames: any) {
   return classNames.filter(Boolean).join(' ')
@@ -17,7 +19,9 @@ function classNames(...classNames: any) {
 const Tag = (props: Props) => {
   const router = useRouter()
   let slug: string = router?.query?.slug as string
-
+  const [posts, setPosts] = useState<Array<PostModel>>([])
+  const [noMore, setNoMore] = useState(true)
+  const [page, setPage] = useState(2)
   const [sortType, setSortType] = useState('relevant')
   const [sortPostsByTags, setSortPostsByTags] = useState('')
 
@@ -27,30 +31,45 @@ const Tag = (props: Props) => {
   const [followCount, setFollowCount] = useState(0)
   const [loader, setLoader] = useState(false)
   const {
-    data: tagData,
+    data: tagDetails,
     error,
     mutate,
-  } = useSWR<any>(`/filter/${slug}/posts-by-tag`, {
+  } = useSWR<any>(`/tag/${slug}/details`, {
     dedupingInterval: 5 * 60 * 1000,
     revalidateOnFocus: false,
   })
-  const [tagDetails, setTagDetails] = useState(tagData)
 
-  const handleSort = async () => {
-    await tagApi.filterPostsByTag(slug, sortPostsByTags).then((res) => {
-      setTagDetails(res)
+  const handleSort = async () => {}
+  useEffect(() => {
+    setFollow(tagDetails?.follow)
+    setFollowCount(tagDetails?.tag_follow_count)
+  }, [tagDetails?.follow, slug])
+  useEffect(() => {
+    fetchInitDataPosts()
+  }, [slug])
+
+  const fetchInitDataPosts = async () => {
+    setLoader(true)
+    setNoMore(true)
+    await tagApi.filterPostsByTag(slug, sortType, 1).then((res: any) => {
+      setLoader(false)
+      setPosts(res?.content)
+      setPage(2)
     })
   }
-  useEffect(() => {
-    setFollow(tagDetails?.tag_details?.follow)
-    setFollowCount(tagDetails?.tag_details?.tag_follow_count)
-  }, [tagDetails?.tag_details?.follow, slug])
-  useEffect(() => {
-    if (!profile?.name) {
-      setFollow(false)
-      mutate()
+  const fetchWhenScroll = async () => {
+    const result = await await tagApi
+      .filterPostsByTag(slug, sortType, page)
+      .then((res: any) => {
+        return res?.content
+      })
+    setPosts([...posts, ...result])
+    if (result.length === 0 || result < 2) {
+      setNoMore(false)
     }
-  }, [profile?.name])
+    setPage(page + 1)
+  }
+
   const handleFollow = async (id: number) => {
     setFollow(!follow)
     setLoader(true)
@@ -94,24 +113,58 @@ const Tag = (props: Props) => {
         </>
       )
     }
-    if (tagDetails?.posts?.length == 0) {
+    if (posts?.length == 0) {
       return <div className='text-center mt-4 py-4'>Không có gì ¯\_(ツ)_/¯</div>
     }
-    return _.map(tagDetails?.posts, (item) => (
-      <Posts
-        key={item.id}
-        id={item.id}
-        title={item.title}
-        slug={item.slug}
-        tags={item.tags}
-        content={item.content}
-        voteCount={item.voteCount}
-        commentCount={item.commentCount}
-        isBookmark={item.bookmark}
-        author={item.account}
-        createdAt={item.createdAt}
-      />
-    ))
+
+    return (
+      <>
+        <InfiniteScroll
+          next={fetchWhenScroll}
+          dataLength={posts.length}
+          hasMore={noMore}
+          loader={
+            <div className='overflow-hidden  border-b border-gray-200 dark:bg-slate-900 w-full m-auto'>
+              <div className='w-full block h-full'>
+                {/* <img alt="blog photo" src="https://i.pinimg.com/564x/69/18/6a/69186a31ada4b1bf94edae291f54ec85.jpg" className="max-h-40 w-full object-cover" /> */}
+                <div className='bg-white  dark:bg-slate-900 w-full p-4'>
+                  <div className='animate-pulse  bg-gray-300 w-72 rounded-md h-8' />
+                  <div className='flex flex-wrap mb-2  justify-starts items-center mt-2'>
+                    <div className='animate-pulse  bg-gray-300 w-96 rounded-md h-8' />
+                  </div>
+                  <div className='flex justify-between items-end'>
+                    <div className='animate-pulse  bg-gray-300 w-[70%] rounded-md h-16' />
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+          endMessage={
+            <div
+              className='py-5 dark:bg-slate-900'
+              style={{ textAlign: 'center' }}>
+              <b>Yay! You have seen it all</b>
+            </div>
+          }>
+          {_.map(posts, (item) => (
+            <Posts
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              slug={item.slug}
+              tags={item.tags}
+              content={item.content}
+              voteCount={item.voteCount}
+              commentCount={item.commentCount}
+              isBookmark={item.bookmark}
+              author={item.account}
+              createdAt={item.createdAt}
+              viewCount={item.viewCount}
+            />
+          ))}
+        </InfiniteScroll>
+      </>
+    )
   }
   return (
     <>
@@ -134,26 +187,24 @@ const Tag = (props: Props) => {
             <>
               <div className='w-full mb-5 border border-b-gray-200 border-x-gray-200 dark:border-x-slate-700 dark:border-b-slate-700 border-t-8 border-indigo-500 bg-white dark:bg-slate-900  p-4 rounded-md flex items-center justify-between'>
                 <div className='flex items-center'>
-                  {tagDetails?.tag_details?.icon ? (
+                  {tagDetails?.icon ? (
                     <img
-                      src={tagDetails?.tag_details?.icon}
+                      src={tagDetails?.icon}
                       className='w-24 h-24 object-contain mr-3'
                     />
                   ) : (
                     <h2 className='text-4xl font-semibold mr-3'>#</h2>
                   )}
                   <div>
-                    <h2 className='text-2xl font-bold'>
-                      {tagDetails?.tag_details?.name}
-                    </h2>
+                    <h2 className='text-2xl font-bold'>{tagDetails?.name}</h2>
 
-                    <p className='max-w-md'> {tagDetails?.tag_details?.desc}</p>
+                    <p className='max-w-md'> {tagDetails?.desc}</p>
                     <div className='md:hidden block'>
                       <ComponentRequestAuth>
                         <button
                           onClick={() => {
                             if (profile?.name) {
-                              handleFollow(tagDetails?.tag_details?.id)
+                              handleFollow(tagDetails?.id)
                             }
                           }}
                           disabled={loader}
@@ -172,7 +223,7 @@ const Tag = (props: Props) => {
                     <button
                       onClick={() => {
                         if (profile?.name) {
-                          handleFollow(tagDetails?.tag_details?.id)
+                          handleFollow(tagDetails?.id)
                         }
                       }}
                       disabled={loader}

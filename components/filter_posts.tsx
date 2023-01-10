@@ -130,7 +130,7 @@ export function Filter({ sortViewPostsBy, sortPostsByTags, sortPopularByTime,han
           </button>
         </div>
 
-        {filterByTags ? (
+        {/* {filterByTags ? (
           <button
             onClick={() => setFilterByTags(false)}
             className='px-3 py-3 hover:bg-gray-100 hover:dark:bg-slate-700 rounded-full'>
@@ -142,7 +142,7 @@ export function Filter({ sortViewPostsBy, sortPostsByTags, sortPopularByTime,han
             className='px-3 py-3 hover:bg-gray-100 rounded-full hover:dark:bg-slate-700'>
             <FunnelIcon className='h-5 w-5 text-gray-700 dark:text-gray-100' />
           </button>
-        )}
+        )} */}
       </div>
       {filterByTags && (
         <div className='mb-2 md:flex md:justify-end items-center'>
