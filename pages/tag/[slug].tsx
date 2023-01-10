@@ -46,7 +46,7 @@ const Tag = (props: Props) => {
   }, [tagDetails?.follow, slug])
   useEffect(() => {
     fetchInitDataPosts()
-  }, [slug])
+  }, [slug,sortType])
 
   const fetchInitDataPosts = async () => {
     setLoader(true)
@@ -87,7 +87,7 @@ const Tag = (props: Props) => {
   }
   let loading = tagDetails === undefined && error === undefined
   const renderPosts = () => {
-    if (loading) {
+    if (loader) {
       return (
         <>
           {Array.from(Array(3), (e, i) => {
@@ -251,7 +251,7 @@ const Tag = (props: Props) => {
                 handleSort={() => handleSort()}
                 sortPopularByTime={(value: any) => console.log(value)}
                 sortPostsByTags={(value: any) => setSortPostsByTags(value)}
-                sortViewPostsBy={(value: any) => console.log(value)}
+                sortViewPostsBy={(value: any) => setSortType(value)}
               />
             </div>
             {renderPosts()}

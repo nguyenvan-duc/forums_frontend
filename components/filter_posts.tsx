@@ -68,10 +68,10 @@ export function Filter({ sortViewPostsBy, sortPostsByTags, sortPopularByTime,han
     if (!profile?.name) {
       setSortType(SORT_POST_NEW)
     } else {
-      setSortType(sortType)
+      setSortType('relevant')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile?.name, sortType])
+  }, [profile?.name])
 
   const onChangeTags = (tagsSelect: any) => {
     let params = covertToTagsParam(tagsSelect)
