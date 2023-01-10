@@ -9,7 +9,7 @@ interface AOPProps {
   id: number
 }
 export function AnswerOfPost({ id }: AOPProps) {
-  const route = useRouter()
+  const router = useRouter()
   const [answers, setAnswers] = useState<any>([])
   const scrollToFormReply = useRef<any>([])
   const [displayFormComm, setDisplayFormComm] = useState(false)
@@ -20,6 +20,16 @@ export function AnswerOfPost({ id }: AOPProps) {
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
+  useEffect(()=>{
+    if (router?.query.to_comment) {
+      scrollToFormReply.current[`${router.query.to_comment}`]?.scrollIntoView(
+        {
+          behavior: 'smooth',
+          block: 'center',
+        }
+      )
+    }
+  },[router?.query?.to_comment])
   const fetchData = async () => {
     setLoading(true)
     await commentApi.findCommentByPost(id).then((res: any) => {
