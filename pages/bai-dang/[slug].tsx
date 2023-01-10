@@ -163,7 +163,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   let slug = params?.slug
-  const post = await postApi.getDetails(slug).then((res) => {
+  const post = await postApi.getDetailsStatic(slug).then((res) => {
     return res
   })
   return {

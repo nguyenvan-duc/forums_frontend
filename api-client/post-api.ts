@@ -23,6 +23,13 @@ export const postApi = {
         return res
       })
   },
+  async getDetailsStatic(slug: string) {
+    return await axiosConfig
+      .get<PostModel>(`/post/${slug}/static/details`)
+      .then((res) => {
+        return res
+      })
+  },
   async bookmarkPost(id: number) {
     return axiosConfig.post(`/post/${id}/bookmark`)
   },
