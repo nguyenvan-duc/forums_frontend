@@ -132,7 +132,7 @@ export function UseInfo({
               ''
             )}
           </div>
-          <div className='flex flex-col items-center pb-10'>
+          <div className='flex flex-col items-center pb-5'>
             {info?.avatar ? (
               <img
                 className='w-24 h-24 object-cover rounded-full'
@@ -151,7 +151,7 @@ export function UseInfo({
             <p className='text-lg text-gray-700 w-full md:max-w-2xl m-auto dark:text-gray-400 text-center'>
               {info?.bio}
             </p>
-            <div className='flex mt-4 items-center justify-center'>
+            <div className='mt-4 items-center flex flex-wrap justify-center border-t w-full pt-5 px-3'>
               <div className='text-gray-600 flex items-center'>
                 <CalendarDaysIcon className='w-5 h-5 mr-1' /> Đã tham gia
                 <span className='ml-1'>
@@ -166,7 +166,7 @@ export function UseInfo({
               )}
               {info?.web_url && (
                 <Link href={info?.web_url}>
-                  <a className='text-gray-600 flex ml-5 items-center hover:underline'>
+                  <a className='text-gray-600 flex ml-5 items-center hover:underline '>
                     <GlobeAltIcon className='w-5 h-5 mr-1' />
                     <span>{info?.web_url}</span>
                   </a>
