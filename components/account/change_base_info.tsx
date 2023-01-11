@@ -26,12 +26,11 @@ export function ChangeBaseInfo() {
      }
   })
   const onSubmit = async(data: any) => {
-     console.log(data)
      setLoading(true)
      await accountApi.profileUpdate(data).then((res:any)=>{
-          console.log(res)
           mutate(res)
           setLoading(false);
+          toast.success("Thay đổi thông tin thành công")
      }).catch(()=>{
       setLoading(false)
       toast.error('User name đã được sử dụng')
@@ -57,7 +56,6 @@ export function ChangeBaseInfo() {
               <input
                 type='file'
                 className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-     
               />
               <input
               type='text'

@@ -13,4 +13,7 @@ export interface Profile {
   tag_flowing_count: string
   post_count: string
   createdAt: string
+  web_url:string,
+  education:string,
+  email_display:string
 }

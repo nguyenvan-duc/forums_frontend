@@ -66,16 +66,7 @@ export function Answer({
   useEffect(() => {
     mergeReply()
   }, [])
-  useEffect(()=>{
-    if (router?.query.to_comment) {
-      scrollToFormReply.current[`${router.query.to_comment}`]?.scrollIntoView(
-        {
-          behavior: 'smooth',
-          block: 'center',
-        }
-      )
-    }
-  },[router?.query?.to_comment])
+ 
     const handleShowFormComment = () => {
     setShowFormComment(true)
   }
