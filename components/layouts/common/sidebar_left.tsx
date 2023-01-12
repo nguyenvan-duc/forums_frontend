@@ -57,7 +57,7 @@ export function SidebarLeft({}: Props) {
     },
   ]
   return (
-    <aside className='w-full sticky top-[85px] z-10 mt-5 bg-white dark:bg-slate-900 border rounded-lg dark:border-gray-500'>
+    <aside className='w-full sticky top-[85px] z-10 mt-5 mb-5 bg-white dark:bg-slate-900 border rounded-lg dark:border-gray-500'>
       <div className='px-3 py-4 overflow-y-auto relative '>
         <ul className='space-y-2'>
           {menu.map(
