@@ -87,7 +87,7 @@ export function FunctionallyButtons({
               className='w-5 h-45  text-gray-400'
               outline={statusBookmark}
             />
-            <span className='ml-1 font-medium'>Lưu lại</span>
+            <span className='ml-1 font-medium hidden md:block'>Lưu lại</span>
           </button>
         </ComponentRequestAuth>
         {/* <button className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
@@ -98,7 +98,7 @@ export function FunctionallyButtons({
           <div>
             <Menu.Button className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
             <ShareIcon className='w-5 h-5 text-gray-400' />
-            <span className='ml-1 font-medium'>Chia sẻ</span>
+            <span className='ml-1 font-medium hidden md:block'>Chia sẻ</span>
             </Menu.Button>
           </div>
           <Transition
@@ -170,7 +170,7 @@ export function FunctionallyButtons({
         <ComponentRequestAuth>
           <button className='flex items-center mr-2 text-sm p-1 text-gray-500 hover:bg-gray-200 rounded-sm'>
             <FlagIcon className='w-5 h-5 text-gray-400' />
-            <span className='ml-1 font-medium'>Báo cáo</span>
+            <span className='ml-1 font-medium hidden md:block'>Báo cáo</span>
           </button>
         </ComponentRequestAuth>
       </div>
